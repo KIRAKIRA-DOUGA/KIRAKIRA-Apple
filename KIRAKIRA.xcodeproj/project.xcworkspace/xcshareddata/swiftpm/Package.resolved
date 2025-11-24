@@ -1,0 +1,24 @@
+{
+  "originHash" : "d2bfee6b336c0d11cfc7e6f00643eea9056c483c32e68003f3128405132d6e19",
+  "pins" : [
+    {
+      "identity" : "swiftui-flow",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tevelee/SwiftUI-Flow",
+      "state" : {
+        "revision" : "d227f999b2894ab737ef5786d9b14d02d3e5362e",
+        "version" : "3.1.1"
+      }
+    },
+    {
+      "identity" : "variableblur",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nikstar/VariableBlur",
+      "state" : {
+        "branch" : "main",
+        "revision" : "84ce30edfee2aaeebcaedcc2b352347f5734cf22"
+      }
+    }
+  ],
+  "version" : 3
+}
