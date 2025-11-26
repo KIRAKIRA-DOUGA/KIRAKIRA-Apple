@@ -48,11 +48,6 @@ struct VideoPlayerView: View {
 		NavigationStack {
 			VStack(spacing: 0) {
 				VStack(spacing: 0) {
-					Capsule()
-						.foregroundStyle(.secondary)
-						.frame(width: 48, height: 6)
-						.padding(.bottom, 8)
-
 					Rectangle()
 						.foregroundStyle(.green)
 						.aspectRatio(16 / 9, contentMode: .fit)
@@ -79,7 +74,7 @@ struct VideoPlayerView: View {
 											.bold()
 										Text("1024粉丝")
 											.foregroundStyle(.secondary)
-											.font(.callout)
+											.font(.caption)
 									}
 
 									Spacer()
@@ -200,8 +195,10 @@ struct VideoPlayerView: View {
 							.padding()
 
 							// 推荐视频
-							ForEach(1...10, id: \.self) { _ in
-								VideoListItemView()
+							VStack(spacing: 0) {
+								ForEach(1...10, id: \.self) { _ in
+									VideoListItemView()
+								}
 							}
 						}
 					}
@@ -210,14 +207,38 @@ struct VideoPlayerView: View {
 						systemImage: "bubble",
 						value: VideoPlayerTab.comments
 					) {
-
+						List {
+							Text("你好")
+							Text("你好")
+							Text("你好")
+							Text("你好")
+							Text("你好")
+							Text("你好")
+							Text("你好")
+							Text("你好")
+							Text("你好")
+							Text("你好")
+						}.listStyle(.plain)
 					}
 					Tab(
 						"弹幕",
 						systemImage: "line.3.horizontal",
 						value: VideoPlayerTab.danmakus
 					) {
-
+						List {
+							Text("好！")
+							Text("好！")
+							Text("好！")
+							Text("好！")
+							Text("好！")
+							Text("好！")
+							Text("好！")
+							Text("好！")
+							Text("好！")
+							Text("好！")
+							Text("好！")
+							Text("好！")
+						}.listStyle(.plain)
 					}
 				}
 			}

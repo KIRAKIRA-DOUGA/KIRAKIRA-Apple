@@ -18,7 +18,7 @@ struct KIRAKIRAApp: App {
 			ZStack {
 				MainView()
 					.onAppear(perform: {
-						DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+						DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
 							isSplashShowing = false
 							DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
 								isSplashHitAllowed = false
