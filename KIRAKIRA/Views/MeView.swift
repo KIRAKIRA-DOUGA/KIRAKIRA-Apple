@@ -74,7 +74,7 @@ struct MeView: View {
 
             }
             .contentMargins(.top, 16)
-            .navigationTitle("我")
+            .navigationTitle("个人")
             #if !os(macOS)
                 //				.navigationBarTitleDisplayMode(.inline)
                 .toolbarTitleDisplayMode(.inlineLarge)

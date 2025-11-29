@@ -22,7 +22,7 @@ struct MainView: View {
             Tab("关注", systemImage: "mail.stack", value: MainTab.feed) {
                 FeedView(tabSelection: $tabSelection)
             }
-            Tab("我", systemImage: "person", value: MainTab.me) {
+            Tab("个人", systemImage: "person", value: MainTab.me) {
                 MeView()
             }
             Tab(value: MainTab.search, role: .search) {
