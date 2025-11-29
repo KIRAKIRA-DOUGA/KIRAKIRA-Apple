@@ -8,94 +8,94 @@
 import SwiftUI
 
 struct SettingsView: View {
-	@Environment(\.dismiss) private var dismiss
+    @Environment(\.dismiss) private var dismiss
 
-	var body: some View {
-		NavigationStack {
-			List {
-				Section(header: Text("个人")) {
-					NavigationLink {
-						SettingsProfileView()
-					} label: {
-						Label("资料", systemImage: "person.crop.circle")
-					}
+    var body: some View {
+        NavigationStack {
+            List {
+                Section(header: Text("个人")) {
+                    NavigationLink {
+                        SettingsProfileView()
+                    } label: {
+                        Label("资料", systemImage: "person.crop.circle")
+                    }
 
-					NavigationLink {
+                    NavigationLink {
 
-					} label: {
-						Label("隐私", systemImage: "hand.raised")
-					}
+                    } label: {
+                        Label("隐私", systemImage: "hand.raised")
+                    }
 
-					NavigationLink {
+                    NavigationLink {
 
-					} label: {
-						Label("安全", systemImage: "lock")
-					}
+                    } label: {
+                        Label("安全", systemImage: "lock")
+                    }
 
-					NavigationLink {
+                    NavigationLink {
 
-					} label: {
-						Label("屏蔽和隐藏", systemImage: "nosign")
-					}
+                    } label: {
+                        Label("屏蔽和隐藏", systemImage: "nosign")
+                    }
 
-					NavigationLink {
+                    NavigationLink {
 
-					} label: {
-						Label("邀请码", systemImage: "app.gift")
-					}
-				}
+                    } label: {
+                        Label("邀请码", systemImage: "app.gift")
+                    }
+                }
 
-				Section(header: Text("通用")) {
-					NavigationLink {
+                Section(header: Text("通用")) {
+                    NavigationLink {
 
-					} label: {
-						Label("外观", systemImage: "paintbrush")
-					}
+                    } label: {
+                        Label("外观", systemImage: "paintbrush")
+                    }
 
-					NavigationLink {
+                    NavigationLink {
 
-					} label: {
-						Label("播放", systemImage: "play")
-					}
+                    } label: {
+                        Label("播放", systemImage: "play")
+                    }
 
-					NavigationLink {
+                    NavigationLink {
 
-					} label: {
-						Label("弹幕", systemImage: "list.bullet.indent")
-					}
+                    } label: {
+                        Label("弹幕", systemImage: "list.bullet.indent")
+                    }
 
-					NavigationLink {
-						SettingsAboutView()
-					} label: {
-						Label("关于", systemImage: "info.circle")
-					}
-				}
+                    NavigationLink {
+                        SettingsAboutView()
+                    } label: {
+                        Label("关于", systemImage: "info.circle")
+                    }
+                }
 
-				Section {
-					Button(action: {}) {
-						Label("切换账号", systemImage: "person.2")
-					}
-					
-					Button(role: .destructive, action: {}) {
-						Label("退出登入", systemImage: "door.right.hand.open")
-					}.foregroundStyle(.red)
-				}
-			}
-			.navigationTitle("设置")
-			.toolbar {
-				ToolbarItem(placement: .cancellationAction) {
-					Button(action: { dismiss() }) {
-						Image(systemName: "xmark")
-					}
-				}
-			}
-			#if !os(macOS)
-				.navigationBarTitleDisplayMode(.inline)
-			#endif
-		}
-	}
+                Section {
+                    Button(action: {}) {
+                        Label("切换账号", systemImage: "person.2")
+                    }
+
+                    Button(role: .destructive, action: {}) {
+                        Label("退出登入", systemImage: "door.right.hand.open")
+                    }.foregroundStyle(.red)
+                }
+            }
+            .navigationTitle("设置")
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: { dismiss() }) {
+                        Image(systemName: "xmark")
+                    }
+                }
+            }
+            #if !os(macOS)
+                .navigationBarTitleDisplayMode(.inline)
+            #endif
+        }
+    }
 }
 
 #Preview {
-	SettingsView()
+    SettingsView()
 }

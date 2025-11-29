@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct InfoItemView: View {
-	let systemImage: String
-	let text: String
-	
-	var body: some View {
-		HStack {
-			Image(systemName: systemImage)
-			Text(text).lineLimit(1)
-		}
-	}
+    let systemImage: String
+    let text: String
+
+    var body: some View {
+        HStack {
+            Image(systemName: systemImage)
+            Text(text).lineLimit(1)
+        }
+    }
 }

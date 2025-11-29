@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4567B2282EDABEE900235173 /* .swift-format in Sources */ = {isa = PBXBuildFile; fileRef = 4567B2272EDABEDC00235173 /* .swift-format */; };
 		456EE4462ED24F720040A84A /* VariableBlur in Frameworks */ = {isa = PBXBuildFile; productRef = 456EE4452ED24F720040A84A /* VariableBlur */; };
 		456EE4E22ED316140040A84A /* Flow in Frameworks */ = {isa = PBXBuildFile; productRef = 456EE4E12ED316140040A84A /* Flow */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4567B2272EDABEDC00235173 /* .swift-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-format"; sourceTree = "<group>"; };
 		456EE4032ED24D6B0040A84A /* KIRAKIRA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KIRAKIRA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -39,6 +41,7 @@
 		456EE3FA2ED24D6B0040A84A = {
 			isa = PBXGroup;
 			children = (
+				4567B2272EDABEDC00235173 /* .swift-format */,
 				456EE4052ED24D6B0040A84A /* KIRAKIRA */,
 				456EE4042ED24D6B0040A84A /* Products */,
 			);
@@ -132,6 +135,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4567B2282EDABEE900235173 /* .swift-format in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +290,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = moe.kirakira;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -322,6 +330,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = moe.kirakira;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
