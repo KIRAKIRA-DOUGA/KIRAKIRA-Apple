@@ -8,12 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		4567B2282EDABEE900235173 /* .swift-format in Sources */ = {isa = PBXBuildFile; fileRef = 4567B2272EDABEDC00235173 /* .swift-format */; };
+		4567B22A2EDAC52C00235173 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 4567B2292EDAC52C00235173 /* .gitignore */; };
+		4567B22D2EDAC53C00235173 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4567B22B2EDAC53C00235173 /* LICENSE */; };
+		4567B22E2EDAC53C00235173 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4567B22C2EDAC53C00235173 /* README.md */; };
 		456EE4462ED24F720040A84A /* VariableBlur in Frameworks */ = {isa = PBXBuildFile; productRef = 456EE4452ED24F720040A84A /* VariableBlur */; };
 		456EE4E22ED316140040A84A /* Flow in Frameworks */ = {isa = PBXBuildFile; productRef = 456EE4E12ED316140040A84A /* Flow */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4567B2272EDABEDC00235173 /* .swift-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-format"; sourceTree = "<group>"; };
+		4567B2292EDAC52C00235173 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		4567B22B2EDAC53C00235173 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		4567B22C2EDAC53C00235173 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		456EE4032ED24D6B0040A84A /* KIRAKIRA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KIRAKIRA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -41,6 +47,9 @@
 		456EE3FA2ED24D6B0040A84A = {
 			isa = PBXGroup;
 			children = (
+				4567B22B2EDAC53C00235173 /* LICENSE */,
+				4567B22C2EDAC53C00235173 /* README.md */,
+				4567B2292EDAC52C00235173 /* .gitignore */,
 				4567B2272EDABEDC00235173 /* .swift-format */,
 				456EE4052ED24D6B0040A84A /* KIRAKIRA */,
 				456EE4042ED24D6B0040A84A /* Products */,
@@ -125,6 +134,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4567B22A2EDAC52C00235173 /* .gitignore in Resources */,
+				4567B22D2EDAC53C00235173 /* LICENSE in Resources */,
+				4567B22E2EDAC53C00235173 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
