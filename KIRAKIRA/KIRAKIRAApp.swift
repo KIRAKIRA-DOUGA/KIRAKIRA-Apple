@@ -17,6 +17,7 @@ struct KIRAKIRAApp: App {
         WindowGroup {
             MainView()
                 .environmentObject(GlobalStateManager.shared)
+                .environmentObject(SettingsManager.shared)
                 .onAppear(perform: {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                         isSplashShowing = false

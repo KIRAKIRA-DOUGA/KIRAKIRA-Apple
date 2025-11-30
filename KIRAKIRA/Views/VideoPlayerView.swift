@@ -173,13 +173,6 @@ struct VideoPlayerView: View {
 
             }
             .padding()
-
-            // 推荐视频
-            VStack(spacing: 0) {
-                ForEach(1...10, id: \.self) { _ in
-                    VideoListItemView()
-                }
-            }
         }
     }
 

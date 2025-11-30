@@ -1,6 +1,15 @@
 {
-  "originHash" : "d2bfee6b336c0d11cfc7e6f00643eea9056c483c32e68003f3128405132d6e19",
+  "originHash" : "48d3f662f65bb05a27043b4778f38e33902f3a513dbc445f2f57c7d0bfd4edd2",
   "pins" : [
+    {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher.git",
+      "state" : {
+        "revision" : "d30a5fad881137e2267f96a8e3fc35c58999bb94",
+        "version" : "8.6.2"
+      }
+    },
     {
       "identity" : "swiftui-flow",
       "kind" : "remoteSourceControl",

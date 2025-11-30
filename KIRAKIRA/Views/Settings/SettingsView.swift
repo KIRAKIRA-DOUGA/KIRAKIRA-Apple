@@ -47,7 +47,7 @@ struct SettingsView: View {
 
                 Section(header: Text("通用")) {
                     NavigationLink {
-
+                        SettingsAppearanceView()
                     } label: {
                         Label("外观", systemImage: "paintbrush")
                     }

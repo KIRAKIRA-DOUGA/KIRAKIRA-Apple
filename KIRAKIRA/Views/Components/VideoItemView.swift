@@ -1,58 +1,94 @@
-//
-//  VideoItemView.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2025/11/15.
-//
-
 import Flow
 import SwiftUI
 
 struct VideoItemView: View {
-    //	let title: String?
-    //	let uploader: String?
-    //	let cover: URL?
-    //	let viewCount: Int?
-    //	let duration: String?
-    //	let date: Date?
+    let video: VideoListItemDTO
+    let style: ViewStyle
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Image("SampleLandscape")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(
-                    minWidth: 0,
-                    maxWidth: .infinity,
-                    minHeight: 0,
-                    maxHeight: .infinity
-                )
-                .aspectRatio(16 / 9, contentMode: .fit)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .allowsHitTesting(false)
-
-            HStack(spacing: 10) {
-                Text("艾了个拉")
-                Text("7天前")
-            }
-            .font(.caption)
-            .foregroundStyle(.secondary)
-            .padding(.top, 8)
-            .padding(.bottom, 4)
-            Text("这是一个视频标题啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊")
-                .font(.callout)
-                .lineLimit(2, reservesSpace: true)
-            HStack(spacing: 10) {
-                Label("1145", systemImage: "play")
-                Label("23:33", systemImage: "timer")
-            }
-            .padding(.top, 6)
-            .font(.caption)
-            .foregroundStyle(.secondary)
+        switch style {
+        case .row:
+            rowLayout
+        case .card, .smallCard:
+            cardLayout
         }
     }
-}
 
-#Preview {
-    VideoItemView()
+    @ViewBuilder
+    private var rowLayout: some View {
+        HStack(spacing: 8) {
+            CFImageView(imageId: video.image)
+                .frame(width: 128, height: 72)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text(video.title)
+                    .lineLimit(4)
+
+                Spacer()
+
+                metadata
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var cardLayout: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: 8) {
+                CFImageView(imageId: video.image)
+                    .aspectRatio(16 / 9, contentMode: .fit)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+
+                Text(video.title)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+            }
+
+            Spacer(minLength: 0)
+
+            metadata
+        }
+        .frame(maxHeight: 480, alignment: .top)
+    }
+
+    @ViewBuilder
+    private var metadata: some View {
+        HFlow(rowSpacing: 4) {
+            Label {
+                Text(video.uploaderNickname)
+            } icon: {
+                Image(systemName: "person.fill")
+            }
+            .lineLimit(1)
+
+            LineBreak()
+
+            Label {
+                Text("0")  // Views placeholder
+            } icon: {
+                Image(systemName: "play.fill")
+            }
+            .lineLimit(1)
+
+            Label {
+                Text("5:00")  // Duration placeholder
+            } icon: {
+                Image(systemName: "clock")
+            }
+            .lineLimit(1)
+
+            Label {
+                Text(video.uploadDate, style: .date)
+            } icon: {
+                Image(systemName: "calendar")
+            }
+            .lineLimit(1)
+        }
+        .labelIconToTitleSpacing(4)
+        .labelReservedIconWidth(20)
+        .foregroundStyle(.secondary)
+        .font(.caption)
+        .imageScale(.small)
+    }
 }

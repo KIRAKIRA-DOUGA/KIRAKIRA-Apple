@@ -1,64 +1,100 @@
-//
-//  HomeView.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2025/11/8.
-//
-
 import SwiftUI
 
 struct HomeView: View {
-    @EnvironmentObject private var globalStateManager: GlobalStateManager
-    @State private var showingView: viewTab = .latest
-
-    private let columns: [GridItem] = [
-        GridItem(.adaptive(minimum: 140), spacing: 12)
-    ]
+    @StateObject private var viewModel = VideoViewModel()
+    @State private var hasLoaded = false
+    @EnvironmentObject var settingsManager: SettingsManager
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(1...20, id: \.self) { _ in
-                        VideoItemView()
+            content
+                .navigationTitle("Home")
+                .toolbarTitleDisplayMode(.inlineLarge)
+                .task {
+                    if !hasLoaded {
+                        await viewModel.fetchHomeVideos()
+                        hasLoaded = true
                     }
-                }.padding()
-            }
-            .toolbarTitleDisplayMode(.inlineLarge)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Image("Logo")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(height: 40)
-                        .foregroundStyle(.accent)
-                }.sharedBackgroundVisibility(.hidden)
-                ToolbarItem(placement: .principal) {
-                    Picker("页面", selection: $showingView) {
-                        Text("最新").tag(viewTab.latest)
-                        Text("最热").tag(viewTab.hot)
-                    }
-                    .pickerStyle(.segmented)
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: { globalStateManager.mainTabSelection = .me }) {
-                        Image("SamplePortrait")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 40, height: 40)
-                            .clipShape(Circle())
-                    }.buttonStyle(.plain)
-                }.sharedBackgroundVisibility(.hidden)
+                .refreshable {
+                    await viewModel.fetchHomeVideos()
+                }
+                #if os(macOS)
+                    .toolbar {
+                        ToolbarItem {
+                            Button {
+                                Task {
+                                    await viewModel.fetchHomeVideos()
+                                }
+                            } label: {
+                                Label("Refresh", systemImage: "arrow.clockwise")
+                            }
+                        }
+                    }
+                #endif
+        }
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        if viewModel.isLoading {
+            VStack {
+                Spacer()
+                ProgressView("Loading videos...")
+                Spacer()
+            }
+        } else if let errorMessage = viewModel.errorMessage {
+            VStack(spacing: 16) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .font(.largeTitle)
+                    .foregroundStyle(.red)
+                Text(errorMessage)
+                Button("Try Again") {
+                    Task {
+                        await viewModel.fetchHomeVideos()
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+            }
+        } else {
+            if settingsManager.videoDisplayStyle == .row {
+                List(viewModel.videos) { video in
+                    VideoItemView(video: video, style: .row)
+                        .alignmentGuide(.listRowSeparatorLeading) { _ in
+                            128 + 8  // Image width + spacing
+                        }
+                        .navigationLinkIndicatorVisibility(.hidden)
+                }
+                .listStyle(.plain)
+            } else {
+                let columns =
+                if settingsManager.videoDisplayStyle == .card {
+                    [GridItem(.adaptive(minimum: 240, maximum: 480))]
+                } else if settingsManager.videoDisplayStyle == .smallCard {
+                    [GridItem(.adaptive(minimum: 120, maximum: 240))]
+                } else {
+                    fatalError("Unreachable")
+                }
+
+                ScrollView {
+                    LazyVGrid(
+                        columns: columns,
+                        alignment: .leading,
+                        spacing: 16
+                    ) {
+                        ForEach(viewModel.videos) { video in
+                            VideoItemView(video: video, style: settingsManager.videoDisplayStyle)
+                                .frame(alignment: .top)
+                        }
+                    }
+                    .padding()
+                }
             }
         }
     }
 }
 
-private enum viewTab: Hashable {
-    case latest
-    case hot
-}
 
 #Preview {
-    MainView()
+    HomeView()
 }
