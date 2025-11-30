@@ -45,208 +45,180 @@ struct VideoPlayerView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                VStack(spacing: 0) {
-                    Rectangle()
-                        .foregroundStyle(.green)
-                        .aspectRatio(16 / 9, contentMode: .fit)
-                }
+        VStack(spacing: 0) {
+            // Drag Indicator
+            Capsule()
+                .frame(width: 64, height: 5)
+                .padding(.bottom)
+                .foregroundStyle(.tertiary)
 
-                TabView(selection: $showingView) {
-                    Tab(
-                        "详情",
-                        systemImage: "info.circle",
-                        value: VideoPlayerTab.info
-                    ) {
-                        ScrollView {
-                            VStack(alignment: .leading, spacing: 16) {
-                                HStack {
-                                    Image("SamplePortrait")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 48, height: 48)
-                                        .clipShape(Circle())
-                                        .glassEffect(.regular.interactive())
+            Rectangle()
+                .foregroundStyle(.green)
+                .aspectRatio(16 / 9, contentMode: .fit)
 
-                                    VStack(alignment: .leading) {
-                                        Text("残月的余响")
-                                            .bold()
-                                        Text("1024粉丝")
-                                            .foregroundStyle(.secondary)
-                                            .font(.caption)
-                                    }
-
-                                    Spacer()
-
-                                    Button(action: {}) {
-                                        Label("关注", systemImage: "plus")
-                                    }.buttonStyle(.glassProminent)
-                                }
-
-                                VStack(alignment: .leading, spacing: 16) {
-                                    Text("我的天呐丰川祥子大人")
-                                        .font(.title2)
-                                        .bold()
-
-                                    HStack(spacing: 20) {
-                                        InfoItemView(
-                                            systemImage: "play",
-                                            text: "0"
-                                        )
-                                        InfoItemView(
-                                            systemImage: "calendar",
-                                            text: "7天前"
-                                        )
-                                        InfoItemView(
-                                            systemImage: "square.grid.2x2",
-                                            text: "游戏"
-                                        )
-                                    }
-                                    .font(.callout)
-                                    .foregroundStyle(.secondary)
-                                    .monospacedDigit()
-                                    .contentTransition(.numericText())
-
-                                    Text("我的天呐这简介太厉害了")
-                                }
-
-                                // 操作
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(spacing: 16) {
-                                        GlassEffectContainer {
-                                            HStack {
-                                                Button(action: { like() }) {
-                                                    Image(
-                                                        systemName:
-                                                            "hand.thumbsup"
-                                                    )
-                                                    .symbolVariant(
-                                                        liked ? .fill : .none
-                                                    )
-                                                    Text("\(countLike)")
-                                                        .contentTransition(
-                                                            .numericText(
-                                                                value: Double(
-                                                                    countLike
-                                                                )
-                                                            )
-                                                        )
-                                                }
-
-                                                Button(action: { dislike() }) {
-                                                    Image(
-                                                        systemName:
-                                                            "hand.thumbsdown"
-                                                    )
-                                                    .symbolVariant(
-                                                        disliked ? .fill : .none
-                                                    )
-                                                    Text("\(countDislike)")
-                                                        .contentTransition(
-                                                            .numericText(
-                                                                value: Double(
-                                                                    -countDislike
-                                                                )
-                                                            )
-                                                        )
-                                                }
-                                            }.glassEffectUnion(
-                                                id: "like",
-                                                namespace: namespace
-                                            )
-                                        }
-
-                                        Button(action: { collect() }) {
-                                            Image(systemName: "star")
-                                                .symbolVariant(
-                                                    collected ? .fill : .none
-                                                )
-                                            Text("\(countCollected)")
-                                                .contentTransition(
-                                                    .numericText(
-                                                        value: Double(
-                                                            countCollected
-                                                        )
-                                                    )
-                                                )
-                                        }
-
-                                        Button(action: {}) {
-                                            Label(
-                                                "分享",
-                                                systemImage:
-                                                    "square.and.arrow.up"
-                                            )
-                                        }.labelStyle(.iconOnly)
-
-                                        Button(action: {}) {
-                                            Label("更多", systemImage: "ellipsis")
-                                                .frame(height: 20)
-                                        }.labelStyle(.iconOnly)
-                                    }
-                                    .monospacedDigit()
-                                    .contentTransition(.symbolEffect(.replace))
-                                    .buttonStyle(.glass)
-                                }.scrollClipDisabled()
-
-                            }
-                            .padding()
-
-                            // 推荐视频
-                            VStack(spacing: 0) {
-                                ForEach(1...10, id: \.self) { _ in
-                                    VideoListItemView()
-                                }
-                            }
-                        }
-                    }
-                    Tab(
-                        "评论",
-                        systemImage: "bubble",
-                        value: VideoPlayerTab.comments
-                    ) {
-                        List {
-                            Text("你好")
-                            Text("你好")
-                            Text("你好")
-                            Text("你好")
-                            Text("你好")
-                            Text("你好")
-                            Text("你好")
-                            Text("你好")
-                            Text("你好")
-                            Text("你好")
-                        }.listStyle(.plain)
-                    }
-                    Tab(
-                        "弹幕",
-                        systemImage: "line.3.horizontal",
-                        value: VideoPlayerTab.danmakus
-                    ) {
-                        List {
-                            Text("好！")
-                            Text("好！")
-                            Text("好！")
-                            Text("好！")
-                            Text("好！")
-                            Text("好！")
-                            Text("好！")
-                            Text("好！")
-                            Text("好！")
-                            Text("好！")
-                            Text("好！")
-                            Text("好！")
-                        }.listStyle(.plain)
-                    }
+            Group {
+                switch showingView {
+                case .info:
+                    info
+                case .comments:
+                    comments
+                case .danmakus:
+                    danmaku
                 }
             }
-            //			.preferredColorScheme(.dark)
+            .safeAreaBar(edge: .top) {
+                Picker("", selection: $showingView) {
+                    Text("详情").tag(VideoPlayerTab.info)
+                    Text("评论").tag(VideoPlayerTab.comments)
+                    Text("弹幕").tag(VideoPlayerTab.danmakus)
+                }
+                .pickerStyle(.segmented)
+                .padding()
+            }
         }
+    }
+
+    var info: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                HStack {
+                    Image("SamplePortrait")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 48, height: 48)
+                        .clipShape(Circle())
+                        .glassEffect(.regular.interactive())
+
+                    VStack(alignment: .leading) {
+                        Text("残月的余响")
+                            .bold()
+                        Text("1024粉丝")
+                            .foregroundStyle(.secondary)
+                            .font(.caption)
+                    }
+
+                    Spacer()
+
+                    Button(action: {}) {
+                        Label("关注", systemImage: "plus")
+                    }.buttonStyle(.glassProminent)
+                }
+
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("我的天呐丰川祥子大人")
+                        .font(.title2)
+                        .bold()
+
+                    HStack(spacing: 20) {
+                        Label("0", systemImage: "play")
+                        Label("7 days ago", systemImage: "calendar")
+                        Label("Game", systemImage: "square.grid.2x2")
+                    }
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .monospacedDigit()
+                    .contentTransition(.numericText())
+
+                    Text("我的天呐这简介太厉害了")
+                }
+
+                // 操作
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 16) {
+                        GlassEffectContainer {
+                            HStack(spacing: 0) {
+                                Button(action: { like() }) {
+                                    Image(systemName: "hand.thumbsup")
+                                        .symbolVariant(liked ? .fill : .none)
+
+                                    Text("\(countLike)")
+                                        .contentTransition(.numericText(value: Double(countLike)))
+                                }
+
+                                Button(action: { dislike() }) {
+                                    Image(systemName: "hand.thumbsdown")
+                                        .symbolVariant(disliked ? .fill : .none)
+
+                                    Text("\(countDislike)")
+                                        .contentTransition(.numericText(value: Double(-countDislike)))
+                                }
+                            }
+                            .glassEffectUnion(id: "like", namespace: namespace)
+                        }
+
+                        Button(action: { collect() }) {
+                            Image(systemName: "star")
+                                .symbolVariant(collected ? .fill : .none)
+
+                            Text("\(countCollected)")
+                                .contentTransition(.numericText(value: Double(countCollected)))
+                        }
+
+                        Button(action: {}) {
+                            Label("分享", systemImage: "square.and.arrow.up")
+                        }
+                        .labelStyle(.iconOnly)
+
+                        Button(action: {}) {
+                            Label("更多", systemImage: "ellipsis")
+                                .frame(height: 20)
+                        }
+                        .labelStyle(.iconOnly)
+                    }
+                    .monospacedDigit()
+                    .contentTransition(.symbolEffect(.replace))
+                    .buttonStyle(.glass)
+                }
+                .scrollClipDisabled()
+
+            }
+            .padding()
+
+            // 推荐视频
+            VStack(spacing: 0) {
+                ForEach(1...10, id: \.self) { _ in
+                    VideoListItemView()
+                }
+            }
+        }
+    }
+
+    var comments: some View {
+        List {
+            Text("你好")
+            Text("你好")
+            Text("你好")
+            Text("你好")
+            Text("你好")
+            Text("你好")
+            Text("你好")
+            Text("你好")
+            Text("你好")
+            Text("你好")
+        }
+        .listStyle(.plain)
+    }
+
+    var danmaku: some View {
+        List {
+            Text("好！")
+            Text("好！")
+            Text("好！")
+            Text("好！")
+            Text("好！")
+            Text("好！")
+            Text("好！")
+            Text("好！")
+            Text("好！")
+            Text("好！")
+            Text("好！")
+            Text("好！")
+        }
+        .listStyle(.plain)
     }
 }
 
-private enum VideoPlayerTab: Hashable {
+private enum VideoPlayerTab: Hashable, CaseIterable {
     case info
     case comments
     case danmakus

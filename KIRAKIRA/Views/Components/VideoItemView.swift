@@ -43,8 +43,8 @@ struct VideoItemView: View {
                 .font(.callout)
                 .lineLimit(2, reservesSpace: true)
             HStack(spacing: 10) {
-                InfoItemView(systemImage: "play", text: "1145")
-                InfoItemView(systemImage: "timer", text: "23:33")
+                Label("1145", systemImage: "play")
+                Label("23:33", systemImage: "timer")
             }
             .padding(.top, 6)
             .font(.caption)
