@@ -94,5 +94,5 @@ struct MeView: View {
 }
 
 #Preview {
-    MainView(tabSelection: .me)
+    MainView()
 }

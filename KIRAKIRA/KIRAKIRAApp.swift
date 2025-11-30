@@ -15,23 +15,24 @@ struct KIRAKIRAApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                MainView()
-                    .onAppear(perform: {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                            isSplashShowing = false
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                isSplashHitAllowed = false
-                            }
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                isSplashVisible = false
-                            }
+            MainView()
+                .environmentObject(GlobalStateManager.shared)
+                .onAppear(perform: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                        isSplashShowing = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            isSplashHitAllowed = false
                         }
-                    })
-                if isSplashVisible {
-                    LaunchScreenView(isShowing: isSplashShowing, isHitAllowed: isSplashHitAllowed)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            isSplashVisible = false
+                        }
+                    }
+                })
+                .overlay {
+                    if isSplashVisible {
+                        LaunchScreenView(isShowing: isSplashShowing, isHitAllowed: isSplashHitAllowed)
+                    }
                 }
-            }
         }
     }
 }

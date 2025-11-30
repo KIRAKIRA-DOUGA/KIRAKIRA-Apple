@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @Binding var tabSelection: MainTab
+    @EnvironmentObject private var globalStateManager: GlobalStateManager
     @State private var showingView: viewTab = .latest
 
     private let columns: [GridItem] = [
@@ -24,9 +24,6 @@ struct HomeView: View {
                     }
                 }.padding()
             }
-            #if !os(macOS)
-                .navigationBarTitleDisplayMode(.inline)
-            #endif
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -40,10 +37,11 @@ struct HomeView: View {
                     Picker("页面", selection: $showingView) {
                         Text("最新").tag(viewTab.latest)
                         Text("最热").tag(viewTab.hot)
-                    }.pickerStyle(.segmented)
+                    }
+                    .pickerStyle(.segmented)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: { tabSelection = .me }) {
+                    Button(action: { globalStateManager.mainTabSelection = .me }) {
                         Image("SamplePortrait")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
