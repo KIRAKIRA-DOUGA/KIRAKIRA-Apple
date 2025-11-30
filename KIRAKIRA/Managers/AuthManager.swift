@@ -92,7 +92,7 @@ struct Credentials: Codable {
     }
 }
 
-class KeychainService {
+private class KeychainService {
     static let shared = KeychainService()
     private let logger = Logger(subsystem: "moe.kirakira", category: "KeyChain")
     private init() {}
