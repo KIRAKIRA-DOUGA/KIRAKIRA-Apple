@@ -40,6 +40,12 @@ actor APIService: APIServiceProtocol {
         var request = URLRequest(url: url)
         request.httpMethod = await endpoint.method.rawValue.uppercased()
 
+        // Get credentials from AuthManager
+        if let credentials = await AuthManager.shared.credentials {
+            let cookie = await credentials.cookieString
+            request.setValue(cookie, forHTTPHeaderField: "Cookie")
+        }
+
         // Set body for POST requests
         if let body {
             request.httpBody = try encoder.encode(body)
