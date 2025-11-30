@@ -17,10 +17,11 @@ struct SettingsDanmakuView: View {
             ZStack {
                 Image("SampleLandscape")
                     .resizable()
-                    .frame(height: 200)
+                    .aspectRatio(16 / 9, contentMode: .fill)
                 Text("这是一条弹幕")
                     .font(.system(size: danmakuSize))
                     .opacity(danmakuOpacity)
+                    .shadow(color: .black, radius: 1)
                     .foregroundStyle(.white)
             }
             .clipShape(RoundedRectangle(cornerRadius: 24))
@@ -29,7 +30,7 @@ struct SettingsDanmakuView: View {
             Section(header: Text("大小")) {
                 HStack {
                     Image(systemName: "textformat.size")
-                        .frame(width: 36, height: 20)
+                        .frame(width: 36)
                         .foregroundStyle(.secondary)
                     Slider(value: $danmakuSize, in: 9...25, step: 1)
                     Text("\(Int(danmakuSize))")
@@ -42,9 +43,9 @@ struct SettingsDanmakuView: View {
             Section(header: Text("不透明度")) {
                 HStack {
                     Image(systemName: "circle.lefthalf.filled")
-                        .frame(width: 36, height: 20)
+                        .frame(width: 36)
                         .foregroundStyle(.secondary)
-                    Slider(value: $danmakuOpacity, in: 0...1)
+                    Slider(value: $danmakuOpacity, in: 0.1...1)
                     Text("\(Int(danmakuOpacity * 100))")
                         .frame(width: 36)
                         .monospacedDigit()
