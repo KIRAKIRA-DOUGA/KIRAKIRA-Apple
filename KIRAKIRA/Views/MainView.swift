@@ -12,7 +12,7 @@ struct MainView: View {
     @State var searchText: String = ""
     @State private var isPlayerExpend: Bool = false
     @State private var isPlayerPlaying: Bool = false
-    @Namespace private var animation
+    @Namespace private var animationNamespace
 
     var body: some View {
         TabView(selection: $globalStateManager.mainTabSelection) {
@@ -56,7 +56,7 @@ struct MainView: View {
         .tabViewStyle(.sidebarAdaptable)
         .tabViewBottomAccessory {
             MiniPlayer(isPlayerPlaying: isPlayerPlaying)
-                .matchedTransitionSource(id: "player", in: animation)
+                .matchedTransitionSource(id: "player", in: animationNamespace)
                 .onTapGesture {
                     isPlayerExpend = true
                 }
@@ -64,21 +64,20 @@ struct MainView: View {
         .tabBarMinimizeBehavior(.onScrollDown)
         .fullScreenCover(isPresented: $isPlayerExpend) {
             VideoPlayerView()
-                .navigationTransition(.zoom(sourceID: "player", in: animation))
+                .navigationTransition(.zoom(sourceID: "player", in: animationNamespace))
         }
     }
 }
 
 private struct MiniPlayer: View {
-    @Environment(\.tabViewBottomAccessoryPlacement)
-    var tabViewBottomAccessoryPlacement
+    @Environment(\.tabViewBottomAccessoryPlacement) var tabViewBottomAccessoryPlacement
     @State var isPlayerPlaying: Bool
 
     var body: some View {
         HStack {
             RoundedRectangle(cornerRadius: 4)
                 .frame(width: 53, height: 30)
-                .foregroundStyle(.accent)
+                .foregroundStyle(.green)
 
             VStack(alignment: .leading) {
                 Text("Apple Event - September 9")
@@ -86,7 +85,8 @@ private struct MiniPlayer: View {
                     .bold()
                 Text("6月10日")
                     .font(.caption)
-            }.lineLimit(1)
+            }
+            .lineLimit(1)
 
             Spacer()
 
@@ -102,7 +102,8 @@ private struct MiniPlayer: View {
             .buttonBorderShape(.circle)
             .contentTransition(.symbolEffect)
             .labelStyle(.iconOnly)
-        }.padding(.horizontal)
+        }
+        .padding(.horizontal)
     }
 }
 
