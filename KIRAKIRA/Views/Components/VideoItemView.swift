@@ -23,31 +23,27 @@ struct VideoItemView: View {
 
             VStack(alignment: .leading, spacing: 8) {
                 Text(video.title)
-                    .lineLimit(4)
-
-                Spacer()
+                    .lineLimit(4, reservesSpace: true)
 
                 metadata
+                    .labelReservedIconWidth(20)
             }
         }
     }
 
     @ViewBuilder
     private var cardLayout: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            VStack(alignment: .leading, spacing: 8) {
-                CFImageView(imageId: video.image)
-                    .aspectRatio(16 / 9, contentMode: .fit)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-
-                Text(video.title)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.leading)
-            }
-
-            Spacer(minLength: 0)
+        VStack(alignment: .leading, spacing: 8) {
+            CFImageView(imageId: video.image)
+                .aspectRatio(16 / 9, contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+            
+            Text(video.title)
+                .lineLimit(2, reservesSpace: true)
+                .multilineTextAlignment(.leading)
 
             metadata
+                .labelReservedIconWidth(16)
         }
         .frame(maxHeight: 480, alignment: .top)
     }
@@ -86,7 +82,6 @@ struct VideoItemView: View {
             .lineLimit(1)
         }
         .labelIconToTitleSpacing(4)
-        .labelReservedIconWidth(20)
         .foregroundStyle(.secondary)
         .font(.caption)
         .imageScale(.small)
