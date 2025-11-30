@@ -14,7 +14,7 @@ struct LaunchScreenView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .foregroundStyle(.accent)
+                .foregroundStyle(.launchScreenBackground)
 
             ZStack {
                 Image("Logo")
@@ -27,7 +27,7 @@ struct LaunchScreenView: View {
                 // 白色层
                 Image("Logo")
                     .resizable()
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.launchScreenForeground)
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 128)
                     .opacity(isShowing ? 1.0 : 0.0)
