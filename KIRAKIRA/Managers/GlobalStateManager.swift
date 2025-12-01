@@ -6,6 +6,8 @@ class GlobalStateManager: ObservableObject {
 
     @Published var mainTabSelection: MainTab = .home
     @Published var selectedCategory: Category = categories.first!
+    @Published var isPlayerExpanded: Bool = false
+    @Published var playingVideo: Int? // Video ID
 
     private init() {}
 }

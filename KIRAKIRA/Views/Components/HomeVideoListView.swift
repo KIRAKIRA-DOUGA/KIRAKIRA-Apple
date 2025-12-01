@@ -1,51 +1,15 @@
 import SwiftUI
 
 struct HomeVideoListView: View {
-    @EnvironmentObject private var settingsManager: SettingsManager
     let videos: [VideoListItemDTO]
+    let animationNamespace: Namespace.ID
 
     var body: some View {
-        if settingsManager.videoDisplayStyle == .row {
-            List {
-                HomeTabPickerView()
-                    .listRowSeparator(.hidden)
-
-                ForEach(videos) { video in
-                    VideoListItemView(video: video, style: .row)
-                        .alignmentGuide(.listRowSeparatorLeading) { _ in
-                            128 + 8  // Image width + spacing
-                        }
-                        .navigationLinkIndicatorVisibility(.hidden)
-                }
-            }
-            .listStyle(.plain)
-
-        } else {
-            let columns =
-                if settingsManager.videoDisplayStyle == .card {
-                    [GridItem(.adaptive(minimum: 240, maximum: 480))]
-                } else if settingsManager.videoDisplayStyle == .smallCard {
-                    [GridItem(.adaptive(minimum: 120, maximum: 240))]
-                } else {
-                    fatalError("Unreachable")
-                }
-
-            ScrollView {
-                HomeTabPickerView()
-                    .padding(.horizontal)
-
-                LazyVGrid(
-                    columns: columns,
-                    alignment: .leading,
-                    spacing: 16
-                ) {
-                    ForEach(videos) { video in
-                        VideoListItemView(video: video, style: settingsManager.videoDisplayStyle)
-                            .frame(alignment: .top)
-                    }
-                }
-                .padding()
-            }
+        VideoListView(
+            videos: videos,
+            animationNamespace: animationNamespace
+        ) {
+            HomeTabPickerView()
         }
     }
 }
@@ -55,7 +19,7 @@ struct HomeTabPickerView: View {
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack {
+            HStack {
                 ForEach(categories, id: \.id) { category in
                     Button {
                         withAnimation {

@@ -3,6 +3,7 @@ import SwiftUI
 struct HomeView: View {
     @StateObject private var viewModel = VideoViewModel()
     @State private var hasLoaded = false
+    let animationNamespace: Namespace.ID
 
     var body: some View {
         NavigationStack {
@@ -56,7 +57,7 @@ struct HomeView: View {
                 .buttonStyle(.borderedProminent)
             }
         } else {
-            HomeVideoListView(videos: viewModel.videos)
+            HomeVideoListView(videos: viewModel.videos, animationNamespace: animationNamespace)
         }
     }
 }

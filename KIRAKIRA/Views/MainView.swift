@@ -10,14 +10,13 @@ import SwiftUI
 struct MainView: View {
     @EnvironmentObject private var globalStateManager: GlobalStateManager
     @State var searchText: String = ""
-    @State private var isPlayerExpend: Bool = false
     @State private var isPlayerPlaying: Bool = false
     @Namespace private var animationNamespace
 
     var body: some View {
         TabView(selection: $globalStateManager.mainTabSelection) {
             Tab("主页", systemImage: "house", value: MainTab.home) {
-                HomeView()
+                HomeView(animationNamespace: animationNamespace)
             }
             Tab("关注", systemImage: "mail.stack", value: MainTab.feed) {
                 FeedView()
@@ -32,15 +31,16 @@ struct MainView: View {
         }
         .tabViewBottomAccessory {
             MiniPlayer(isPlayerPlaying: isPlayerPlaying)
-                .matchedTransitionSource(id: "player", in: animationNamespace)
+                .matchedTransitionSource(id: globalStateManager.playingVideo, in: animationNamespace)
                 .onTapGesture {
-                    isPlayerExpend = true
+                    globalStateManager.isPlayerExpanded = true
                 }
         }
+
         .tabBarMinimizeBehavior(.onScrollDown)
-        .fullScreenCover(isPresented: $isPlayerExpend) {
+        .fullScreenCover(isPresented: $globalStateManager.isPlayerExpanded) {
             VideoPlayerView()
-                .navigationTransition(.zoom(sourceID: "player", in: animationNamespace))
+                .navigationTransition(.zoom(sourceID: globalStateManager.playingVideo, in: animationNamespace))
         }
     }
 }
