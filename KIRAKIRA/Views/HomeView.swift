@@ -3,7 +3,6 @@ import SwiftUI
 struct HomeView: View {
     @StateObject private var viewModel = VideoViewModel()
     @State private var hasLoaded = false
-    @EnvironmentObject var settingsManager: SettingsManager
 
     var body: some View {
         NavigationStack {
@@ -57,44 +56,7 @@ struct HomeView: View {
                 .buttonStyle(.borderedProminent)
             }
         } else {
-            if settingsManager.videoDisplayStyle == .row {
-                List(viewModel.videos) { video in
-                    VideoItemView(video: video, style: .row)
-                        .alignmentGuide(.listRowSeparatorLeading) { _ in
-                            128 + 8  // Image width + spacing
-                        }
-                        .navigationLinkIndicatorVisibility(.hidden)
-                }
-                .listStyle(.plain)
-            } else {
-                let columns =
-                if settingsManager.videoDisplayStyle == .card {
-                    [GridItem(.adaptive(minimum: 240, maximum: 480))]
-                } else if settingsManager.videoDisplayStyle == .smallCard {
-                    [GridItem(.adaptive(minimum: 120, maximum: 240))]
-                } else {
-                    fatalError("Unreachable")
-                }
-
-                ScrollView {
-                    LazyVGrid(
-                        columns: columns,
-                        alignment: .leading,
-                        spacing: 16
-                    ) {
-                        ForEach(viewModel.videos) { video in
-                            VideoItemView(video: video, style: settingsManager.videoDisplayStyle)
-                                .frame(alignment: .top)
-                        }
-                    }
-                    .padding()
-                }
-            }
+            VideoListView(videos: viewModel.videos)
         }
     }
-}
-
-
-#Preview {
-    HomeView()
 }

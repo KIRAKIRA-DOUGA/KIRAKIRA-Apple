@@ -15,7 +15,7 @@ struct FeedView: View {
             ScrollView {
                 VStack {
                     ForEach(1...20, id: \.self) { _ in
-                        // VideoItemView()
+                        // VideoListItemView()
                         EmptyView()
                     }
                 }.padding()

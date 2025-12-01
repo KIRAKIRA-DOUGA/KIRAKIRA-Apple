@@ -11,7 +11,7 @@ struct MyCollectionsView: View {
     var body: some View {
         ScrollView {
             ForEach(1...10, id: \.self) { _ in
-                // VideoItemView()
+                // VideoListItemView()
                 EmptyView()
             }
         }

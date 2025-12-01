@@ -1,7 +1,7 @@
 import Flow
 import SwiftUI
 
-struct VideoItemView: View {
+struct VideoListItemView: View {
     let video: VideoListItemDTO
     let style: ViewStyle
 
@@ -45,7 +45,6 @@ struct VideoItemView: View {
             metadata
                 .labelReservedIconWidth(16)
         }
-        .frame(maxHeight: 480, alignment: .top)
     }
 
     @ViewBuilder
