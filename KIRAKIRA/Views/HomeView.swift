@@ -8,7 +8,7 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             content
-                .navigationTitle("Home")
+                .navigationTitle("KIRAKIRA")
                 .toolbarTitleDisplayMode(.inlineLarge)
                 .task {
                     if !hasLoaded {
@@ -19,19 +19,23 @@ struct HomeView: View {
                 .refreshable {
                     await viewModel.fetchHomeVideos()
                 }
-                #if os(macOS)
-                    .toolbar {
-                        ToolbarItem {
-                            Button {
-                                Task {
-                                    await viewModel.fetchHomeVideos()
-                                }
-                            } label: {
-                                Label("Refresh", systemImage: "arrow.clockwise")
-                            }
+                .toolbar {
+                    ToolbarItem(placement: .largeTitle) {
+                        HStack {
+                            LogoIcon()
+                                .frame(width: 32, height: 32)
+
+                            Text("KIRAKIRA")
+                                .font(.largeTitle)
+                                .fontWeight(.semibold)
+
+                            Spacer()
                         }
+                        .foregroundStyle(.accent)
                     }
-                #endif
+
+                    ProfileToolbarItem()
+                }
         }
     }
 

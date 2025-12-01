@@ -134,9 +134,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4567B22A2EDAC52C00235173 /* .gitignore in Resources */,
-				4567B22D2EDAC53C00235173 /* LICENSE in Resources */,
-				4567B22E2EDAC53C00235173 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
