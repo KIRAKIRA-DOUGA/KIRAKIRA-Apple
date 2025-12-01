@@ -56,7 +56,7 @@ struct HomeView: View {
                 .buttonStyle(.borderedProminent)
             }
         } else {
-            VideoListView(videos: viewModel.videos)
+            HomeVideoListView(videos: viewModel.videos)
         }
     }
 }

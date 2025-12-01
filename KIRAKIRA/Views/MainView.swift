@@ -16,44 +16,20 @@ struct MainView: View {
 
     var body: some View {
         TabView(selection: $globalStateManager.mainTabSelection) {
-            TabSection {
-                Tab("主页", systemImage: "house", value: MainTab.home) {
-                    HomeView()
-                }
-                Tab("关注", systemImage: "mail.stack", value: MainTab.feed) {
-                    FeedView()
-                }
-                Tab("我", systemImage: "person", value: MainTab.me) {
-                    MeView()
-                }
-                Tab(value: MainTab.search, role: .search) {
-                    SearchView()
-                        .searchable(text: $searchText)
-                }
+            Tab("主页", systemImage: "house", value: MainTab.home) {
+                HomeView()
             }
-            .customizationBehavior(.disabled, for: .sidebar, .tabBar)
-
-            TabSection {
-                Tab("Animations", systemImage: "wand.and.rays", value: MainTab.category("animations")) {}
-
-                Tab("Music", systemImage: "music.note", value: MainTab.category("music")) {}
-
-                Tab("MAD", systemImage: "scissors", value: MainTab.category("MAD")) {}
-
-                Tab("Tech", systemImage: "cpu.fill", value: MainTab.category("tech")) {}
-
-                Tab("Design", systemImage: "pencil.and.ruler.fill", value: MainTab.category("design")) {}
-
-                Tab("Game", systemImage: "gamecontroller.fill", value: MainTab.category("game")) {}
-
-                Tab("Other", systemImage: "square.grid.3x3.fill", value: MainTab.category("other")) {}
-
-            } header: {
-                Text("Categories")
+            Tab("关注", systemImage: "mail.stack", value: MainTab.feed) {
+                FeedView()
             }
-            .defaultVisibility(.hidden, for: .tabBar)
+            Tab("我", systemImage: "person", value: MainTab.me) {
+                MeView()
+            }
+            Tab(value: MainTab.search, role: .search) {
+                SearchView()
+                    .searchable(text: $searchText)
+            }
         }
-        .tabViewStyle(.sidebarAdaptable)
         .tabViewBottomAccessory {
             MiniPlayer(isPlayerPlaying: isPlayerPlaying)
                 .matchedTransitionSource(id: "player", in: animationNamespace)
@@ -106,8 +82,6 @@ private struct MiniPlayer: View {
         .padding(.horizontal)
     }
 }
-
-
 
 #Preview {
     MainView()

@@ -23,7 +23,7 @@ struct VideoListItemView: View {
 
             VStack(alignment: .leading, spacing: 8) {
                 Text(video.title)
-                    .lineLimit(4, reservesSpace: true)
+                    .lineLimit(4)
 
                 metadata
                     .labelReservedIconWidth(20)

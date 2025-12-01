@@ -14,6 +14,7 @@ struct VideoListView: View {
                     .navigationLinkIndicatorVisibility(.hidden)
             }
             .listStyle(.plain)
+
         } else {
             let columns =
                 if settingsManager.videoDisplayStyle == .card {
