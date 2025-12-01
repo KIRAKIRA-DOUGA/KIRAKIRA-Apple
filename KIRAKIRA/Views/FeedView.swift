@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct FeedView: View {
-    @Binding var tabSelection: MainTab
+    @EnvironmentObject private var globalStateManager: GlobalStateManager
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack {
                     ForEach(1...20, id: \.self) { _ in
-                        VideoItemView()
+                        // VideoListItemView()
+                        EmptyView()
                     }
                 }.padding()
             }
@@ -23,7 +24,7 @@ struct FeedView: View {
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: { tabSelection = .me }) {
+                    Button(action: { globalStateManager.mainTabSelection = .me }) {
                         Image("SamplePortrait")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
@@ -37,5 +38,5 @@ struct FeedView: View {
 }
 
 #Preview {
-    MainView(tabSelection: .feed)
+    MainView()
 }

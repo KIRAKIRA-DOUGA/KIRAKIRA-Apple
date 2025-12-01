@@ -138,10 +138,7 @@ struct UserView: View {
             .padding(.horizontal)
 
             LazyVStack(spacing: 0) {
-                VideoListItemView()
-                VideoListItemView()
-                VideoListItemView()
-                VideoListItemView()
+                // VideoListItemView()
             }
 
         }

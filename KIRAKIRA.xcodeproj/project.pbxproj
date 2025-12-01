@@ -7,12 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4567B2282EDABEE900235173 /* .swift-format in Sources */ = {isa = PBXBuildFile; fileRef = 4567B2272EDABEDC00235173 /* .swift-format */; };
-		4567B22A2EDAC52C00235173 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 4567B2292EDAC52C00235173 /* .gitignore */; };
-		4567B22D2EDAC53C00235173 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4567B22B2EDAC53C00235173 /* LICENSE */; };
-		4567B22E2EDAC53C00235173 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4567B22C2EDAC53C00235173 /* README.md */; };
 		456EE4462ED24F720040A84A /* VariableBlur in Frameworks */ = {isa = PBXBuildFile; productRef = 456EE4452ED24F720040A84A /* VariableBlur */; };
-		456EE4E22ED316140040A84A /* Flow in Frameworks */ = {isa = PBXBuildFile; productRef = 456EE4E12ED316140040A84A /* Flow */; };
+		8DFD93542EDC997400F18746 /* Flow in Frameworks */ = {isa = PBXBuildFile; productRef = 8DFD93532EDC997400F18746 /* Flow */; };
+		8DFD93612EDC9D1000F18746 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8DFD93602EDC9D1000F18746 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +33,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				456EE4E22ED316140040A84A /* Flow in Frameworks */,
+				8DFD93612EDC9D1000F18746 /* Kingfisher in Frameworks */,
+				8DFD93542EDC997400F18746 /* Flow in Frameworks */,
 				456EE4462ED24F720040A84A /* VariableBlur in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -85,7 +83,8 @@
 			name = KIRAKIRA;
 			packageProductDependencies = (
 				456EE4452ED24F720040A84A /* VariableBlur */,
-				456EE4E12ED316140040A84A /* Flow */,
+				8DFD93532EDC997400F18746 /* Flow */,
+				8DFD93602EDC9D1000F18746 /* Kingfisher */,
 			);
 			productName = KIRAKIRA;
 			productReference = 456EE4032ED24D6B0040A84A /* KIRAKIRA.app */;
@@ -117,7 +116,8 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				456EE4442ED24F720040A84A /* XCRemoteSwiftPackageReference "VariableBlur" */,
-				456EE4E02ED316140040A84A /* XCRemoteSwiftPackageReference "SwiftUI-Flow" */,
+				8DFD93522EDC997400F18746 /* XCRemoteSwiftPackageReference "SwiftUI-Flow" */,
+				8DFD935F2EDC9D1000F18746 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 456EE4042ED24D6B0040A84A /* Products */;
@@ -147,7 +147,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4567B2282EDABEE900235173 /* .swift-format in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,7 +310,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
 		};
@@ -351,7 +350,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Release;
 		};
@@ -387,12 +386,20 @@
 				kind = branch;
 			};
 		};
-		456EE4E02ED316140040A84A /* XCRemoteSwiftPackageReference "SwiftUI-Flow" */ = {
+		8DFD93522EDC997400F18746 /* XCRemoteSwiftPackageReference "SwiftUI-Flow" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tevelee/SwiftUI-Flow";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.1.1;
+			};
+		};
+		8DFD935F2EDC9D1000F18746 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.6.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -403,10 +410,15 @@
 			package = 456EE4442ED24F720040A84A /* XCRemoteSwiftPackageReference "VariableBlur" */;
 			productName = VariableBlur;
 		};
-		456EE4E12ED316140040A84A /* Flow */ = {
+		8DFD93532EDC997400F18746 /* Flow */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 456EE4E02ED316140040A84A /* XCRemoteSwiftPackageReference "SwiftUI-Flow" */;
+			package = 8DFD93522EDC997400F18746 /* XCRemoteSwiftPackageReference "SwiftUI-Flow" */;
 			productName = Flow;
+		};
+		8DFD93602EDC9D1000F18746 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8DFD935F2EDC9D1000F18746 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
