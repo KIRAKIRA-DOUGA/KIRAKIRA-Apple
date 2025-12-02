@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct VideoListView<Header: View>: View {
-    @EnvironmentObject private var settingsManager: SettingsManager
-    @EnvironmentObject private var globalStateManager: GlobalStateManager
+    @Environment(GlobalStateManager.self) private var globalStateManager
+    @AppSetting(\.videoDisplayStyle) private var videoDisplayStyle
     let videos: [VideoListItemDTO]
     private let animationNamespace: Namespace.ID?
     private let header: () -> Header?
@@ -18,7 +18,7 @@ struct VideoListView<Header: View>: View {
     }
 
     var body: some View {
-        switch settingsManager.videoDisplayStyle {
+        switch videoDisplayStyle {
         case .row:
             rowList
         case .card, .smallCard:
@@ -64,7 +64,7 @@ struct VideoListView<Header: View>: View {
                     Button {
                         play(video)
                     } label: {
-                        videoContent(for: video, style: settingsManager.videoDisplayStyle)
+                        videoContent(for: video, style: videoDisplayStyle)
                             .frame(alignment: .top)
                     }
                     .buttonStyle(.plain)
@@ -75,7 +75,7 @@ struct VideoListView<Header: View>: View {
     }
 
     private var gridColumns: [GridItem] {
-        switch settingsManager.videoDisplayStyle {
+        switch videoDisplayStyle {
         case .card:
             return [GridItem(.adaptive(minimum: 240, maximum: 480))]
         case .smallCard:

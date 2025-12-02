@@ -1,10 +1,11 @@
 import Combine
 import Foundation
 
-class VideoViewModel: ObservableObject {
-    @Published var videos: [VideoListItemDTO] = []
-    @Published var isLoading = false
-    @Published var errorMessage: String?
+@Observable
+class VideoViewModel {
+    var videos: [VideoListItemDTO] = []
+    var isLoading = false
+    var errorMessage: String?
 
     private let apiService = APIService.shared
 

@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ProfileToolbarItem: ToolbarContent {
-    @EnvironmentObject var globalStateManager: GlobalStateManager
+    @Environment(GlobalStateManager.self) private var globalStateManager
 
     var body: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {

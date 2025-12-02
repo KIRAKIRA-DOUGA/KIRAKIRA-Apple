@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FeedView: View {
-    @EnvironmentObject private var globalStateManager: GlobalStateManager
+    @Environment(GlobalStateManager.self) private var globalStateManager
 
     var body: some View {
         NavigationStack {

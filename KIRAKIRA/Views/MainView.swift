@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct MainView: View {
-    @EnvironmentObject private var globalStateManager: GlobalStateManager
+    @Environment(GlobalStateManager.self) private var globalStateManager
     @State var searchText: String = ""
     @State private var isPlayerPlaying: Bool = false
     @Namespace private var animationNamespace
 
     var body: some View {
+        @Bindable var globalStateManager = globalStateManager
+
         TabView(selection: $globalStateManager.mainTabSelection) {
             Tab("主页", systemImage: "house", value: MainTab.home) {
                 HomeView(animationNamespace: animationNamespace)
