@@ -4,14 +4,14 @@ import Foundation
 import OSLog
 import Security
 
-@MainActor
-class AuthManager: ObservableObject {
+@Observable
+class AuthManager {
     static let shared = AuthManager()
 
-    @Published var isAuthenticated: Bool = false
-    @Published var credentials: Credentials? = nil
-    @Published var isLoading: Bool = false
-    @Published var errorMessage: String? = nil
+    var isAuthenticated: Bool = false
+    var credentials: Credentials? = nil
+    var isLoading: Bool = false
+    var errorMessage: String? = nil
 
     private let serviceName = "moe.kirakira"
     private let accountName = "userToken"

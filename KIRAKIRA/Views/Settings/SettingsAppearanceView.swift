@@ -1,11 +1,11 @@
 import SwiftUI
 
 struct SettingsAppearanceView: View {
-    @EnvironmentObject private var settingsManager: SettingsManager
+    @AppSetting(\.videoDisplayStyle) private var videoDisplayStyle
 
     var body: some View {
         Form {
-            Picker("Video Display Style", selection: $settingsManager.videoDisplayStyle) {
+            Picker("Video Display Style", selection: $videoDisplayStyle) {
                 ForEach(ViewStyle.allCases) { style in
                     Text(style.displayName)
                         .tag(style)

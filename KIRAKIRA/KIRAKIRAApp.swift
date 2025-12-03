@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct KIRAKIRAApp: App {
+    @State private var globalStateManager = GlobalStateManager()
     @State private var isSplashShowing = true
     @State private var isSplashVisible = true
     @State private var isSplashHitAllowed = true
@@ -16,8 +17,7 @@ struct KIRAKIRAApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
-                .environmentObject(GlobalStateManager.shared)
-                .environmentObject(SettingsManager.shared)
+                .environment(globalStateManager)
                 .onAppear(perform: {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                         isSplashShowing = false

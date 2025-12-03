@@ -15,7 +15,7 @@ struct HomeVideoListView: View {
 }
 
 struct HomeTabPickerView: View {
-    @EnvironmentObject private var globalStateManager: GlobalStateManager
+    @Environment(GlobalStateManager.self) private var globalStateManager
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {

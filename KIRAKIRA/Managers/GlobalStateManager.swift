@@ -1,15 +1,12 @@
 import Combine
 import SwiftUI
 
-class GlobalStateManager: ObservableObject {
-    static var shared = GlobalStateManager()
-
-    @Published var mainTabSelection: MainTab = .home
-    @Published var selectedCategory: Category = categories.first!
-    @Published var isPlayerExpanded: Bool = false
-    @Published var playingVideo: Int? // Video ID
-
-    private init() {}
+@Observable
+class GlobalStateManager {
+    var mainTabSelection: MainTab = .home
+    var selectedCategory: Category = categories.first!
+    var isPlayerExpanded: Bool = false
+    var playingVideo: Int? // Video ID
 }
 
 enum MainTab: Hashable {
