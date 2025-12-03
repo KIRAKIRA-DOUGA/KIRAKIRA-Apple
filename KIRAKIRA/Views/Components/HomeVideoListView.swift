@@ -29,6 +29,7 @@ struct HomeTabPickerView: View {
                         Label {
                             if globalStateManager.selectedCategory == category {
                                 Text(category.name)
+                                    .fontWeight(.medium)
                             }
                         } icon: {
                             Image(systemName: category.systemImage)
@@ -36,7 +37,7 @@ struct HomeTabPickerView: View {
                         .frame(minWidth: 24)
                     }
                     .tint(globalStateManager.selectedCategory == category ? .accent : .secondary)
-                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(.bordered)
                     .clipShape(Capsule())
                 }
             }

@@ -53,7 +53,7 @@ struct VideoListItemView: View {
             Label {
                 Text(video.uploaderNickname)
             } icon: {
-                Image(systemName: "person.fill")
+                Image(systemName: "person")
             }
             .lineLimit(1)
 
@@ -62,7 +62,7 @@ struct VideoListItemView: View {
             Label {
                 Text("0")  // Views placeholder
             } icon: {
-                Image(systemName: "play.fill")
+                Image(systemName: "play")
             }
             .lineLimit(1)
 
@@ -83,6 +83,11 @@ struct VideoListItemView: View {
         .labelIconToTitleSpacing(4)
         .foregroundStyle(.secondary)
         .font(.caption)
-        .imageScale(.small)
+//        .imageScale(.small)
     }
 }
+
+#Preview(traits: .commonPreviewTrait) {
+    MainView()
+}
+

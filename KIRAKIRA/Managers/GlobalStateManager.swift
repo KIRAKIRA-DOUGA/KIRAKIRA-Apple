@@ -12,7 +12,6 @@ class GlobalStateManager {
 enum MainTab: Hashable {
     case home
     case feed
-    case messages
     case me
     case search
 }
@@ -24,7 +23,8 @@ struct Category: Identifiable, Hashable {
 }
 
 let categories: [Category] = [
-    Category(name: "Popular", systemImage: "flame"),
+    Category(name: "Popular", systemImage: "flame.fill"),
+    Category(name: "Latest", systemImage: "plus.circle.fill"),
     Category(name: "Animation", systemImage: "wand.and.rays"),
     Category(name: "Music", systemImage: "music.note"),
     Category(name: "MAD", systemImage: "scissors"),

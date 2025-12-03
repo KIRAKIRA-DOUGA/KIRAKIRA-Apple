@@ -9,7 +9,7 @@ struct HomeView: View {
         NavigationStack {
             content
                 .navigationTitle("KIRAKIRA")
-                .toolbarTitleDisplayMode(.inlineLarge)
+//                .toolbarTitleDisplayMode(.inlineLarge)
                 .task {
                     if !hasLoaded {
                         await viewModel.fetchHomeVideos()
@@ -20,15 +20,32 @@ struct HomeView: View {
                     await viewModel.fetchHomeVideos()
                 }
                 .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        LogoIcon()
+                            .frame(width: 40, height: 40)
+                            .foregroundStyle(.accent)
+                            .padding(.leading, -8)
+                    }.sharedBackgroundVisibility(.hidden)
+                    
                     ToolbarItem(placement: .largeTitle) {
                         HStack {
-                            LogoIcon()
-                                .frame(width: 32, height: 32)
+//                            Text("KIRAKIRA")
+//                                .font(.largeTitle)
+//                                .fontWeight(.semibold)
 
-                            Text("KIRAKIRA")
-                                .font(.largeTitle)
-                                .fontWeight(.semibold)
-
+//                            Image("BrandingTextWithLogo")
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+//                                .frame(height: 38)
+//                                .padding(.top, -16)
+//                                .padding(.bottom, 6)
+                            
+                            Image("BrandingText")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 28)
+                                .padding(.vertical)
+                            
                             Spacer()
                         }
                         .foregroundStyle(.accent)
@@ -44,7 +61,7 @@ struct HomeView: View {
         if viewModel.isLoading {
             VStack {
                 Spacer()
-                ProgressView("Loading videos...")
+                ProgressView()
                 Spacer()
             }
         } else if let errorMessage = viewModel.errorMessage {

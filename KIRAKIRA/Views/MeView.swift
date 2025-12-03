@@ -42,12 +42,14 @@ struct MeView: View {
 
                 Section {
                     NavigationLink {
+                        MyNotificationsView()
                     } label: {
                         Label("通知", systemImage: "bell")
                             .badge(3)
                     }
 
                     NavigationLink {
+                        MyMessagesView()
                     } label: {
                         Label("消息", systemImage: "message")
                             .badge(10)
