@@ -29,6 +29,6 @@ struct FeedView: View {
     }
 }
 
-#Preview {
+#Preview(traits: .commonPreviewTrait) {
     MainView()
 }

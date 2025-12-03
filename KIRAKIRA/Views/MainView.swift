@@ -85,6 +85,6 @@ private struct MiniPlayer: View {
     }
 }
 
-#Preview {
+#Preview(traits: .commonPreviewTrait) {
     MainView()
 }

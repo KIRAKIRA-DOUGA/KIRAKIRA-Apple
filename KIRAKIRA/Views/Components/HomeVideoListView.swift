@@ -44,3 +44,7 @@ struct HomeTabPickerView: View {
         .scrollClipDisabled()
     }
 }
+
+#Preview(traits: .commonPreviewTrait) {
+    HomeTabPickerView()
+}

@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var viewModel = VideoViewModel()
+    @State private var viewModel = VideoViewModel()
     @State private var hasLoaded = false
     let animationNamespace: Namespace.ID
 
@@ -64,4 +64,10 @@ struct HomeView: View {
             HomeVideoListView(videos: viewModel.videos, animationNamespace: animationNamespace)
         }
     }
+}
+
+#Preview(traits: .commonPreviewTrait) {
+    @Previewable @Namespace var animationNamspace
+
+    HomeView(animationNamespace: animationNamspace)
 }
