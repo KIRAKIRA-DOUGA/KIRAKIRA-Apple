@@ -4,6 +4,7 @@ import SwiftUI
 public class AppSettings: ObservableObject {
     @AppStorage("videoDisplayStyle") var videoDisplayStyle: ViewStyle = .card
     @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
+    @AppStorage("globalColorScheme") var globalColorScheme: GlobalColorScheme = .auto
 
     public static let shared = AppSettings()
 }
@@ -51,6 +52,25 @@ enum ViewStyle: String, CaseIterable, Identifiable {
             return "Card"
         case .smallCard:
             return "Small Card"
+        }
+    }
+}
+
+enum GlobalColorScheme: String, CaseIterable, Identifiable {
+    case auto
+    case light
+    case dark
+
+    var id: String { rawValue }
+
+    var colorScheme: ColorScheme? {
+        switch self {
+        case .auto:
+            return .none
+        case .light:
+            return .light
+        case .dark:
+            return .dark
         }
     }
 }

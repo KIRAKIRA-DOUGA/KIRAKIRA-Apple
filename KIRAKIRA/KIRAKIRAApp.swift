@@ -13,11 +13,13 @@ struct KIRAKIRAApp: App {
     @State private var isSplashShowing = true
     @State private var isSplashVisible = true
     @State private var isSplashHitAllowed = true
+    @AppSetting(\.globalColorScheme) private var globalColorScheme
 
     var body: some Scene {
         WindowGroup {
             MainView()
                 .environment(globalStateManager)
+                .preferredColorScheme(globalColorScheme.colorScheme)
                 .onAppear(perform: {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                         isSplashShowing = false
