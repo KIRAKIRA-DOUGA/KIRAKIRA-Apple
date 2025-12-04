@@ -14,12 +14,12 @@ struct KIRAKIRAApp: App {
     @State private var isSplashVisible = true
     @State private var isSplashHitAllowed = true
     @AppSetting(\.globalColorScheme) private var globalColorScheme
+    private var appearenceManager = AppearanceManager()
 
     var body: some Scene {
         WindowGroup {
             MainView()
                 .environment(globalStateManager)
-                .preferredColorScheme(globalColorScheme.colorScheme)
                 .onAppear(perform: {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                         isSplashShowing = false
@@ -35,6 +35,9 @@ struct KIRAKIRAApp: App {
                     if isSplashVisible {
                         LaunchScreenView(isShowing: isSplashShowing, isHitAllowed: isSplashHitAllowed)
                     }
+                }
+                .onChange(of: globalColorScheme) {
+                    appearenceManager.updateWindowStyle()
                 }
         }
     }
