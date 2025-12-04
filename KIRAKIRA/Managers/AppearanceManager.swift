@@ -1,5 +1,3 @@
-import Observation
-import SwiftUI
 import UIKit
 
 final class AppearanceManager {
