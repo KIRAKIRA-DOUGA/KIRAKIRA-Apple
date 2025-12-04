@@ -2,11 +2,13 @@ import SwiftUI
 
 struct HomeVideoListView: View {
     let videos: [VideoListItemDTO]
+    @Binding var isPlayerExpanded: Bool
     let animationNamespace: Namespace.ID
 
     var body: some View {
         VideoListView(
             videos: videos,
+            isPlayerExpanded: $isPlayerExpanded,
             animationNamespace: animationNamespace
         ) {
             HomeTabPickerView()

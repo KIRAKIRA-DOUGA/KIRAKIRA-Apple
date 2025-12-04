@@ -37,7 +37,7 @@ struct VideoListItemView: View {
             CFImageView(imageId: video.image)
                 .aspectRatio(16 / 9, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
-            
+
             Text(video.title)
                 .lineLimit(2, reservesSpace: true)
                 .multilineTextAlignment(.leading)
@@ -83,11 +83,9 @@ struct VideoListItemView: View {
         .labelIconToTitleSpacing(4)
         .foregroundStyle(.secondary)
         .font(.caption)
-//        .imageScale(.small)
     }
 }
 
 #Preview(traits: .commonPreviewTrait) {
     MainView()
 }
-

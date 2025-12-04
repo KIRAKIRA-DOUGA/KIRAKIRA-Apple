@@ -9,8 +9,8 @@ import SwiftUI
 
 struct MainView: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
+    @State private var isPlayerExpanded = false
     @State var searchText: String = ""
-    @State private var isPlayerPlaying: Bool = false
     @Namespace private var animationNamespace
 
     var body: some View {
@@ -18,7 +18,7 @@ struct MainView: View {
 
         TabView(selection: $globalStateManager.mainTabSelection) {
             Tab("主页", systemImage: "house", value: MainTab.home) {
-                HomeView(animationNamespace: animationNamespace)
+                HomeView(isPlayerExpanded: $isPlayerExpanded, animationNamespace: animationNamespace)
             }
             Tab("关注", systemImage: "mail.stack", value: MainTab.feed) {
                 FeedView()
@@ -32,24 +32,27 @@ struct MainView: View {
             }
         }
         .tabViewBottomAccessory {
-            MiniPlayer(isPlayerPlaying: isPlayerPlaying)
-                .matchedTransitionSource(id: globalStateManager.playingVideo, in: animationNamespace)
+            MiniPlayer()
+                .matchedTransitionSource(id: AnimationTransitionSource.miniPlayer, in: animationNamespace)
                 .onTapGesture {
-                    globalStateManager.isPlayerExpanded = true
+                    globalStateManager.activeTransitionSource = .miniPlayer
+                    isPlayerExpanded = true
                 }
         }
 
         .tabBarMinimizeBehavior(.onScrollDown)
-        .fullScreenCover(isPresented: $globalStateManager.isPlayerExpanded) {
+        .fullScreenCover(isPresented: $isPlayerExpanded) {
             VideoPlayerView()
-                .navigationTransition(.zoom(sourceID: globalStateManager.playingVideo, in: animationNamespace))
+                .navigationTransition(
+                    .zoom(sourceID: globalStateManager.activeTransitionSource, in: animationNamespace)
+                )
         }
     }
 }
 
 private struct MiniPlayer: View {
     @Environment(\.tabViewBottomAccessoryPlacement) var tabViewBottomAccessoryPlacement
-    @State var isPlayerPlaying: Bool
+    @Environment(GlobalStateManager.self) private var globalStateManger
 
     var body: some View {
         HStack {
@@ -69,17 +72,23 @@ private struct MiniPlayer: View {
             Spacer()
 
             HStack {
-                Button(
-                    "播放 / 暂停", systemImage: isPlayerPlaying ? "pause.fill" : "play.fill",
-                    action: { isPlayerPlaying = !isPlayerPlaying })
+                Button {
+                    globalStateManger.isPlayerPlaying.toggle()
+                } label: {
+                    Label(
+                        "Toggle Play / Pause",
+                        systemImage: globalStateManger.isPlayerPlaying ? "play.fill" : "pause.fill"
+                    )
+                    .contentTransition(.symbolEffect(.replace))
+                }
+
                 if tabViewBottomAccessoryPlacement == .expanded {
                     Button("关闭", systemImage: "xmark", action: {})
                 }
             }
             .buttonStyle(.plain)
-            .buttonBorderShape(.circle)
-            .contentTransition(.symbolEffect)
             .labelStyle(.iconOnly)
+            .controlSize(.large)
         }
         .padding(.horizontal)
     }

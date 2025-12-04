@@ -4,18 +4,9 @@ struct VideoListView<Header: View>: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
     @AppSetting(\.videoDisplayStyle) private var videoDisplayStyle
     let videos: [VideoListItemDTO]
-    private let animationNamespace: Namespace.ID?
-    private let header: () -> Header?
-
-    init(
-        videos: [VideoListItemDTO],
-        animationNamespace: Namespace.ID? = nil,
-        @ViewBuilder header: @escaping () -> Header? = { nil }
-    ) {
-        self.videos = videos
-        self.animationNamespace = animationNamespace
-        self.header = header
-    }
+    @Binding var isPlayerExpanded: Bool
+    let animationNamespace: Namespace.ID
+    @ViewBuilder let header: Header?
 
     var body: some View {
         switch videoDisplayStyle {
@@ -28,8 +19,8 @@ struct VideoListView<Header: View>: View {
 
     private var rowList: some View {
         List {
-            if let headerView = header() {
-                headerView
+            if let header {
+                header
                     .listRowSeparator(.hidden)
             }
 
@@ -50,8 +41,8 @@ struct VideoListView<Header: View>: View {
 
     private var gridList: some View {
         ScrollView {
-            if let headerView = header() {
-                headerView
+            if let header {
+                header
                     .padding(.horizontal)
             }
 
@@ -88,24 +79,13 @@ struct VideoListView<Header: View>: View {
     @ViewBuilder
     private func videoContent(for video: VideoListItemDTO, style: ViewStyle) -> some View {
         let content = VideoListItemView(video: video, style: style)
-        if let animationNamespace {
-            content
-                .matchedTransitionSource(id: video.videoId, in: animationNamespace)
-        } else {
-            content
-        }
+        content
+            .matchedTransitionSource(id: AnimationTransitionSource.video(video.videoId), in: animationNamespace)
     }
 
     private func play(_ video: VideoListItemDTO) {
-        globalStateManager.playingVideo = video.videoId
-        globalStateManager.isPlayerExpanded = true
-    }
-}
-
-extension VideoListView where Header == EmptyView {
-    init(videos: [VideoListItemDTO], animationNamespace: Namespace.ID? = nil) {
-        self.init(videos: videos, animationNamespace: animationNamespace) {
-            EmptyView()
-        }
+        globalStateManager.selectedVideo = video.videoId
+        globalStateManager.activeTransitionSource = .video(video.videoId)
+        isPlayerExpanded = true
     }
 }

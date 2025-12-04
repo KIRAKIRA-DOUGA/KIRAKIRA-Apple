@@ -3,13 +3,13 @@ import SwiftUI
 struct HomeView: View {
     @State private var viewModel = VideoViewModel()
     @State private var hasLoaded = false
+    @Binding var isPlayerExpanded: Bool
     let animationNamespace: Namespace.ID
 
     var body: some View {
         NavigationStack {
             content
                 .navigationTitle("KIRAKIRA")
-//                .toolbarTitleDisplayMode(.inlineLarge)
                 .task {
                     if !hasLoaded {
                         await viewModel.fetchHomeVideos()
@@ -25,27 +25,17 @@ struct HomeView: View {
                             .frame(width: 40, height: 40)
                             .foregroundStyle(.accent)
                             .padding(.leading, -8)
-                    }.sharedBackgroundVisibility(.hidden)
-                    
+                    }
+                    .sharedBackgroundVisibility(.hidden)
+
                     ToolbarItem(placement: .largeTitle) {
                         HStack {
-//                            Text("KIRAKIRA")
-//                                .font(.largeTitle)
-//                                .fontWeight(.semibold)
-
-//                            Image("BrandingTextWithLogo")
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fit)
-//                                .frame(height: 38)
-//                                .padding(.top, -16)
-//                                .padding(.bottom, 6)
-                            
                             Image("BrandingText")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: 28)
                                 .padding(.vertical)
-                            
+
                             Spacer()
                         }
                         .foregroundStyle(.accent)
@@ -78,13 +68,18 @@ struct HomeView: View {
                 .buttonStyle(.borderedProminent)
             }
         } else {
-            HomeVideoListView(videos: viewModel.videos, animationNamespace: animationNamespace)
+            HomeVideoListView(
+                videos: viewModel.videos,
+                isPlayerExpanded: $isPlayerExpanded,
+                animationNamespace: animationNamespace
+            )
         }
     }
 }
 
 #Preview(traits: .commonPreviewTrait) {
+    @Previewable @State var isPlayerExpanded: Bool = true
     @Previewable @Namespace var animationNamspace
 
-    HomeView(animationNamespace: animationNamspace)
+    HomeView(isPlayerExpanded: $isPlayerExpanded, animationNamespace: animationNamspace)
 }

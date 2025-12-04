@@ -5,8 +5,9 @@ import SwiftUI
 class GlobalStateManager {
     var mainTabSelection: MainTab = .home
     var selectedCategory: Category = categories.first!
-    var isPlayerExpanded: Bool = false
-    var playingVideo: Int? // Video ID
+    var isPlayerPlaying: Bool = false
+    var selectedVideo: Int?
+    var activeTransitionSource: AnimationTransitionSource = .miniPlayer
 }
 
 enum MainTab: Hashable {
@@ -20,6 +21,11 @@ struct Category: Identifiable, Hashable {
     var id = UUID()
     var name: String
     var systemImage: String
+}
+
+enum AnimationTransitionSource: Hashable {
+    case video(Int)
+    case miniPlayer
 }
 
 let categories: [Category] = [
