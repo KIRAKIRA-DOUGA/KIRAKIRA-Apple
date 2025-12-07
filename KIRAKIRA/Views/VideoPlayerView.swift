@@ -159,11 +159,14 @@ struct VideoPlayerView: View {
                         }
                         .labelStyle(.iconOnly)
 
-                        Button(action: {}) {
-                            Label("更多", systemImage: "ellipsis")
+                        Menu {
+                            Button("投诉", systemImage: "flag", action: {})
+                            Button("查看封面", systemImage: "photo", action: {})
+                            Button("下载", systemImage: "square.and.arrow.down", action: {})
+                        } label: {
+                            Image(systemName: "ellipsis")
                                 .frame(height: 20)
                         }
-                        .labelStyle(.iconOnly)
                     }
                     .monospacedDigit()
                     .contentTransition(.symbolEffect(.replace))

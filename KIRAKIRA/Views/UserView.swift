@@ -85,7 +85,7 @@ struct UserView: View {
                         }.buttonStyle(.glassProminent)
 
                         Button(action: {}) {
-                            Image(systemName: "message.fill")
+                            Image(systemName: "message")
                                 .frame(height: 20)
                         }.buttonStyle(.glass)
 
