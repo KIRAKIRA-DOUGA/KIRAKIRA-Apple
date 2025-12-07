@@ -106,11 +106,15 @@
 				};
 			};
 			buildConfigurationList = 456EE3FE2ED24D6B0040A84A /* Build configuration list for PBXProject "KIRAKIRA" */;
-			developmentRegion = en;
+			developmentRegion = "zh-Hans";
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
+				"zh-Hant",
+				ja,
+				"zh-HK",
 			);
 			mainGroup = 456EE3FA2ED24D6B0040A84A;
 			minimizedProjectReferenceProxies = 1;
@@ -361,7 +365,7 @@
 				456EE40D2ED24D6C0040A84A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		456EE40E2ED24D6C0040A84A /* Build configuration list for PBXNativeTarget "KIRAKIRA" */ = {
 			isa = XCConfigurationList;
@@ -370,7 +374,7 @@
 				456EE4102ED24D6C0040A84A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 
