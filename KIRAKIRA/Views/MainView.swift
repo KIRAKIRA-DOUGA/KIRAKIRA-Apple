@@ -81,14 +81,16 @@ private struct MiniPlayer: View {
                     )
                     .contentTransition(.symbolEffect(.replace))
                 }
+                .frame(width: 36, height: 36)
 
                 if tabViewBottomAccessoryPlacement == .expanded {
-                    Button("关闭", systemImage: "xmark", action: {})
+                    Button("关闭", systemImage: "forward.fill", action: {})
+                        .frame(width: 36, height: 36)
                 }
             }
             .buttonStyle(.plain)
             .labelStyle(.iconOnly)
-            .controlSize(.large)
+            .font(.system(size: 20))
         }
         .padding(.horizontal)
     }

@@ -95,6 +95,6 @@ struct MeView: View {
     }
 }
 
-#Preview {
-    MainView()
+#Preview(traits: .commonPreviewTrait) {
+    MeView()
 }

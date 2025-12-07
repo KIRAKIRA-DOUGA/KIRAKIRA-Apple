@@ -27,7 +27,7 @@ struct SettingsAppearanceView: View {
             }
         }
         .formStyle(.grouped)
-        .navigationTitle("Appearance")
+        .navigationTitle("外观")
     }
 }
 
