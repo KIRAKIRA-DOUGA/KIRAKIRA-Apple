@@ -15,14 +15,15 @@ struct MyNotificationsView: View {
                     VStack(alignment: .leading) {
                         LabeledContent {
                             Text(verbatim: "2025/12/08")
-                                .monospacedDigit()
+                                .font(.subheadline)
                         } label: {
                             Text(verbatim: "昵称")
-                                .font(.title3)
+                                .font(.headline)
                                 .fontWeight(.semibold)
                         }
                         .padding(.trailing, 22)
                         Text(verbatim: "这是通知内容")
+                        .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -33,14 +34,15 @@ struct MyNotificationsView: View {
                     } label: {
                         LabeledContent {
                             Text(verbatim: "2025/12/08")
-                                .monospacedDigit()
+                                .font(.subheadline)
                         } label: {
                             Text(verbatim: "这是一条可以点击的通知")
-                                .font(.title3)
+                                .font(.headline)
                                 .fontWeight(.semibold)
                         }
                     }
                     Text(verbatim: "点击进入用户页")
+                        .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
             }

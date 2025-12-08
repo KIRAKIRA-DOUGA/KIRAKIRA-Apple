@@ -10,13 +10,16 @@ import VariableBlur
 
 struct UserView: View {
     @State private var isShowingEditProfile = false
+    @State private var isSelf = false
+    @State private var isBannerVisible = true
+    @State private var isSegmentedVisible = true
     @State private var showingView: ViewTab = .videos
     @State private var userName: String = "艾了个拉"
-    @State private var isSelf = false
+    @State private var userUsername = "Aira"
 
     var body: some View {
         ScrollView {
-            // Personal Banner
+            // Banner
             VStack {
                 Image("DefaultBanner")
                     .resizable()
@@ -44,12 +47,20 @@ struct UserView: View {
                             endPoint: .bottom
                         )
                     )
-            }.padding(.bottom, -74)
+            }
+            .padding(.bottom, -74)
+            .onScrollVisibilityChange { visible in
+                if visible {
+                    isBannerVisible = true
+                } else {
+                    isBannerVisible = false
+                }
+            }
 
             VStack(alignment: .leading, spacing: 8) {
                 HStack(alignment: .bottom) {
                     // Avatar
-                    Button(action: { isShowingEditProfile = true }) {
+                    Button(action: {}) {
                         Image("SamplePortrait")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
@@ -78,35 +89,42 @@ struct UserView: View {
 
                     Spacer()
 
-                    HStack {
-                        Button(action: {}) {
-                            Label("USER_FOLLOW", systemImage: "plus")
-                                .frame(height: 20)
-                        }.buttonStyle(.glassProminent)
-
-                        Button(action: {}) {
-                            Image(systemName: "message")
-                                .frame(height: 20)
+                    // Actions
+                    if isSelf {
+                        Button(action: { isShowingEditProfile = true }) {
+                            Text("编辑资料")
                         }.buttonStyle(.glass)
+                    } else {
+                        HStack {
+                            Button(action: {}) {
+                                Label("USER_FOLLOW", systemImage: "plus")
+                                    .frame(height: 20)
+                            }.buttonStyle(.glassProminent)
 
-                        Menu {
-                            Button("USER_REPORT", systemImage: "flag", action: {})
-                            Button("USER_BLOCK", systemImage: "nosign", action: {})
-                            Button("USER_HIDE", systemImage: "eye.slash", action: {})
-                        } label: {
-                            Image(systemName: "ellipsis")
-                                .frame(height: 20)
-                        }.buttonStyle(.glass)
+                            Button(action: {}) {
+                                Image(systemName: "message")
+                                    .frame(height: 20)
+                            }.buttonStyle(.glass)
+
+                            Menu {
+                                Button("USER_REPORT", systemImage: "flag", action: {})
+                                Button("USER_BLOCK", systemImage: "nosign", action: {})
+                                Button("USER_HIDE", systemImage: "eye.slash", action: {})
+                            } label: {
+                                Image(systemName: "ellipsis")
+                                    .frame(height: 20)
+                            }.buttonStyle(.glass)
+                        }
                     }
                 }
 
                 // Name
-                Text(verbatim: "艾了个拉")
+                Text(verbatim: "\(userName)")
                     .font(.title)
                     .bold()
 
                 // Username
-                Text(verbatim: "@Aira")
+                Text(verbatim: "@\(userUsername)")
                     .foregroundStyle(.secondary)
 
                 // Follower Info
@@ -126,27 +144,48 @@ struct UserView: View {
                 // Bio
                 Text(verbatim: "Kawaii Forever!~")
                     .padding(.top, 16)
-            }.padding()
-                .textSelection(.enabled)
-
-            Picker("USER_PAGE", selection: $showingView) {
-                Text("USER_VIDEO").tag(ViewTab.videos)
-                Text("USER_FAVORITE").tag(ViewTab.collections)
             }
+            .padding()
+            .textSelection(.enabled)
+
+            segmented
             .pickerStyle(.segmented)
             .padding(.horizontal)
-
-            LazyVStack(spacing: 0) {
-                // VideoListItemView()
+            .onScrollVisibilityChange { visible in
+                if visible {
+                    isSegmentedVisible = true
+                } else {
+                    isSegmentedVisible = false
+                }
             }
 
+            LazyVStack {
+                ForEach(1...100, id: \.self) { _ in
+                    Text("placeholder for scroll testing")
+                }
+            }
         }
-        //		.navigationTitle(userName)
+        .toolbar {
+            if !isSegmentedVisible {
+                ToolbarItem(placement: .principal) {
+                    segmented
+                }
+            }
+        }
+        .animation(.smooth, value: isSegmentedVisible)
         #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
         #endif
         .ignoresSafeArea(edges: .top)
-        .scrollEdgeEffectHidden(true, for: .top)
+        .scrollEdgeEffectHidden(isBannerVisible, for: .top)
+    }
+    
+    var segmented: some View {
+        Picker("USER_PAGE", selection: $showingView) {
+            Text("USER_VIDEO").tag(ViewTab.videos)
+            Text("USER_FAVORITE").tag(ViewTab.collections)
+        }
+        .pickerStyle(.segmented)
     }
 }
 

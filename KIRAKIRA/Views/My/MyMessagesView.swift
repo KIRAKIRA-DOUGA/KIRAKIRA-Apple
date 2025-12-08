@@ -29,17 +29,18 @@ struct MyMessagesView: View {
                             } label: {
                                 LabeledContent {
                                     Text(verbatim: "2025/12/08")
-                                        .monospacedDigit()
+                                        .font(.subheadline)
                                 } label: {
                                     Text(verbatim: "昵称")
-                                        .font(.title3)
+                                        .font(.headline)
                                         .fontWeight(.semibold)
                                 }
                             }
                             Text(
                                 verbatim:
-                                    "Hello world!~ Hello world!~ Hello world!~ Hello world!~ Hello world!~ Hello world!~ "
+                                    "Hello world!~ Hello world!~ Hello world!~ Hello world!~ Hello world!~ Hello world!~ Hello world!~"
                             )
+                            .font(.subheadline)
                             .foregroundStyle(.secondary)
                             .lineLimit(2, reservesSpace: true)
                         }

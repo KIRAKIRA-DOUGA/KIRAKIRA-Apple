@@ -13,7 +13,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section(header: Text("SETTINGS_ME")) {
+                Section {
                     NavigationLink {
                         SettingsProfileView()
                     } label: {
@@ -43,9 +43,11 @@ struct SettingsView: View {
                     } label: {
                         Label("SETTINGS_INVITATION_CODE", systemImage: "app.gift")
                     }
+                } header: {
+                    Text("SETTINGS_ME")
                 }
 
-                Section(header: Text("SETTINGS_GENERAL")) {
+                Section {
                     NavigationLink {
                         SettingsAppearanceView()
                     } label: {
@@ -69,6 +71,8 @@ struct SettingsView: View {
                     } label: {
                         Label("SETTINGS_ABOUT", systemImage: "info.circle")
                     }
+                } header: {
+                    Text("SETTINGS_GENERAL")
                 }
 
                 Section {
