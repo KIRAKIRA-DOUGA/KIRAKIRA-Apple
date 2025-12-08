@@ -36,6 +36,9 @@ struct KIRAKIRAApp: App {
                         LaunchScreenView(isShowing: isSplashShowing, isHitAllowed: isSplashHitAllowed)
                     }
                 }
+                .task {
+                    appearenceManager.updateWindowStyle()
+                }
                 .onChange(of: globalColorScheme) {
                     appearenceManager.updateWindowStyle()
                 }
