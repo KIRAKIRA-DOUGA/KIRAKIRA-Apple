@@ -20,7 +20,7 @@ struct FeedView: View {
                     }
                 }.padding()
             }
-            .navigationTitle("关注")
+            .navigationTitle("FEED")
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
                 ProfileToolbarItem()

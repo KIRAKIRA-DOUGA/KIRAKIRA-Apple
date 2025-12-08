@@ -16,16 +16,13 @@ struct SearchView: View {
         NavigationStack {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 10) {
-                    CategoryCard(name: "动画", icon: "forward.frame.fill")
-                    CategoryCard(name: "音乐", icon: "music.note")
-                    CategoryCard(name: "音MAD", icon: "megaphone.fill")
-                    CategoryCard(name: "科技", icon: "cpu.fill")
-                    CategoryCard(name: "设计", icon: "paintbrush.fill")
-                    CategoryCard(name: "游戏", icon: "gamecontroller.fill")
-                    CategoryCard(name: "综合", icon: "square.grid.2x2.fill")
-                }.padding()
+                    ForEach(categories, id: \.id) { category in
+                        CategoryCard(name: category.name, icon: category.systemImage)
+                    }
+                }
+                .padding()
             }
-            .navigationTitle("分区")
+            .navigationTitle("CATEGORY")
             .toolbarTitleDisplayMode(.inlineLarge)
         }
     }

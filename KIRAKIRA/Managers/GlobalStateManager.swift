@@ -29,13 +29,15 @@ enum AnimationTransitionSource: Hashable {
 }
 
 let categories: [Category] = [
-    Category(name: "Popular", systemImage: "flame.fill"),
-    Category(name: "Latest", systemImage: "plus.circle.fill"),
-    Category(name: "Animation", systemImage: "wand.and.rays"),
-    Category(name: "Music", systemImage: "music.note"),
-    Category(name: "MAD", systemImage: "scissors"),
-    Category(name: "Tech", systemImage: "cpu.fill"),
-    Category(name: "Design", systemImage: "pencil.and.ruler.fill"),
-    Category(name: "Game", systemImage: "gamecontroller.fill"),
-    Category(name: "Other", systemImage: "square.grid.3x3.fill"),
+    Category(name: "CATEGORY_POPULOAR", systemImage: "flame.fill"),
+    Category(name: "CATEGORY_LATEST", systemImage: "plus.circle.fill"),
+    Category(name: "CATEGORY_ANIMATION", systemImage: "wand.and.rays"),
+    Category(name: "CATEGORY_MUSIC", systemImage: "music.note"),
+    Category(name: "CATEGORY_MAD", systemImage: "scissors"),
+    Category(name: "GATEGOTY_TECH", systemImage: "cpu.fill"),
+    Category(name: "CATEGOTY_DESIGN", systemImage: "pencil.and.ruler.fill"),
+    Category(name: "CATEGOTY_GAME", systemImage: "gamecontroller.fill"),
+    Category(name: "CATEGORY_OTHER", systemImage: "square.grid.3x3.fill"),
 ]
+
+

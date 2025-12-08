@@ -13,75 +13,75 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section(header: Text("个人")) {
+                Section(header: Text("SETTINGS_ME")) {
                     NavigationLink {
                         SettingsProfileView()
                     } label: {
-                        Label("资料", systemImage: "person.crop.circle")
+                        Label("SETTINGS_PROFILE", systemImage: "person.crop.circle")
                     }
 
                     NavigationLink {
 
                     } label: {
-                        Label("隐私", systemImage: "hand.raised")
+                        Label("SETTINGS_PRIVACY", systemImage: "hand.raised")
                     }
 
                     NavigationLink {
 
                     } label: {
-                        Label("安全", systemImage: "lock")
+                        Label("SETTINGS_SAFETY", systemImage: "lock")
                     }
 
                     NavigationLink {
 
                     } label: {
-                        Label("屏蔽和隐藏", systemImage: "nosign")
+                        Label("SETTINGS_BLOCK_AND_HIDE", systemImage: "nosign")
                     }
 
                     NavigationLink {
 
                     } label: {
-                        Label("邀请码", systemImage: "app.gift")
+                        Label("SETTINGS_INVITATION_CODE", systemImage: "app.gift")
                     }
                 }
 
-                Section(header: Text("通用")) {
+                Section(header: Text("SETTINGS_GENERAL")) {
                     NavigationLink {
                         SettingsAppearanceView()
                     } label: {
-                        Label("外观", systemImage: "paintbrush")
+                        Label("SETTINGS_APPEARENCE", systemImage: "paintbrush")
                     }
 
                     NavigationLink {
                         SettingsPlayerView()
                     } label: {
-                        Label("播放", systemImage: "play")
+                        Label("SETTINGS_PLAYING", systemImage: "play")
                     }
 
                     NavigationLink {
                         SettingsDanmakuView()
                     } label: {
-                        Label("弹幕", systemImage: "list.bullet.indent")
+                        Label("SETTINGS_DANMAKU", systemImage: "list.bullet.indent")
                     }
 
                     NavigationLink {
                         SettingsAboutView()
                     } label: {
-                        Label("关于", systemImage: "info.circle")
+                        Label("SETTINGS_ABOUT", systemImage: "info.circle")
                     }
                 }
 
                 Section {
                     Button(action: {}) {
-                        Label("切换账号", systemImage: "person.2")
+                        Label("SWITCH_ACCOUNT", systemImage: "person.2")
                     }
 
                     Button(role: .destructive, action: {}) {
-                        Label("退出登入", systemImage: "door.right.hand.open")
+                        Label("LOGOOUT", systemImage: "door.right.hand.open")
                     }.foregroundStyle(.red)
                 }
             }
-            .navigationTitle("设置")
+            .navigationTitle("SETTINGS")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: { dismiss() }) {

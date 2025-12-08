@@ -15,7 +15,7 @@ struct MyHistoryView: View {
                 EmptyView()
             }
         }
-        .navigationTitle("历史")
+        .navigationTitle("HISTORY")
         #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
         #endif

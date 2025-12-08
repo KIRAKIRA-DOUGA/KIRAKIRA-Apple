@@ -14,27 +14,28 @@ struct MyNotificationsView: View {
                 ForEach(1...2, id: \.self) { _ in
                     VStack(alignment: .leading) {
                         LabeledContent {
-                            Text("2025/12/08")
+                            Text(verbatim: "2025/12/08")
                                 .monospacedDigit()
                         } label: {
-                            Text("昵称")
+                            Text(verbatim: "昵称")
                                 .font(.title3)
                                 .fontWeight(.semibold)
-                        }.padding(.trailing, 22)
-                        Text("这是通知内容")
+                        }
+                        .padding(.trailing, 22)
+                        Text(verbatim: "这是通知内容")
                             .foregroundStyle(.secondary)
                     }
                 }
-                
+
                 VStack(alignment: .leading) {
-                    NavigationLink() {
+                    NavigationLink {
                         UserView()
                     } label: {
                         LabeledContent {
-                            Text("2025/12/08")
+                            Text(verbatim: "2025/12/08")
                                 .monospacedDigit()
                         } label: {
-                            Text("这是一条可以点击的通知")
+                            Text(verbatim: "这是一条可以点击的通知")
                                 .font(.title3)
                                 .fontWeight(.semibold)
                         }
@@ -42,10 +43,11 @@ struct MyNotificationsView: View {
                     Text("点击进入用户页")
                         .foregroundStyle(.secondary)
                 }
-            }.listSectionSeparator(.hidden)
+            }
+            .listSectionSeparator(.hidden)
         }
         .listStyle(.plain)
-        .navigationTitle("通知")
+        .navigationTitle("NOTIFICATION")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

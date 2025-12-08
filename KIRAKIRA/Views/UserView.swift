@@ -11,7 +11,7 @@ import VariableBlur
 struct UserView: View {
     @State private var isShowingEditProfile = false
     @State private var showingView: ViewTab = .videos
-    @State private var userName = "艾了个拉"
+    @State private var userName: String = "艾了个拉"
     @State private var isSelf = false
 
     var body: some View {
@@ -80,7 +80,7 @@ struct UserView: View {
 
                     HStack {
                         Button(action: {}) {
-                            Label("关注", systemImage: "plus")
+                            Label("USER_SUBSCRIBE", systemImage: "plus")
                                 .frame(height: 20)
                         }.buttonStyle(.glassProminent)
 
@@ -90,9 +90,9 @@ struct UserView: View {
                         }.buttonStyle(.glass)
 
                         Menu {
-                            Button("投诉", systemImage: "flag", action: {})
-                            Button("屏蔽", systemImage: "nosign", action: {})
-                            Button("隐藏", systemImage: "eye.slash", action: {})
+                            Button("USER_REPORT", systemImage: "flag", action: {})
+                            Button("USER_BLOCK", systemImage: "nosign", action: {})
+                            Button("USER_HIDE", systemImage: "eye.slash", action: {})
                         } label: {
                             Image(systemName: "ellipsis")
                                 .frame(height: 20)
@@ -101,38 +101,37 @@ struct UserView: View {
                 }
 
                 // Name
-                Text("艾了个拉")
+                Text(verbatim: "艾了个拉")
                     .font(.title)
                     .bold()
 
                 // Username
-                Text("@Aira")
+                Text(verbatim: "@Aira")
                     .foregroundStyle(.secondary)
 
                 // Follower Info
                 HStack(spacing: 16) {
                     HStack {
-                        Text("233")
-                        Text("粉丝")
+                        Text(verbatim: "233")
+                        Text("USER_FANS")
                             .foregroundStyle(.secondary)
                     }
                     HStack {
-                        Text("233")
-                        Text("关注")
+                        Text(verbatim: "233")
+                        Text("USER_SUBSCRIBES")
                             .foregroundStyle(.secondary)
                     }
                 }
 
                 // Bio
-                Text("Kawaii Forever!~")
+                Text(verbatim: "Kawaii Forever!~")
                     .padding(.top, 16)
             }.padding()
-
                 .textSelection(.enabled)
 
-            Picker("页面", selection: $showingView) {
-                Text("视频").tag(ViewTab.videos)
-                Text("收藏").tag(ViewTab.collections)
+            Picker("USER_PAGE", selection: $showingView) {
+                Text("USER_VIDEO").tag(ViewTab.videos)
+                Text("USER_FAVORITE").tag(ViewTab.collections)
             }
             .pickerStyle(.segmented)
             .padding(.horizontal)

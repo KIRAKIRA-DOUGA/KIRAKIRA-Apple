@@ -55,28 +55,28 @@ struct SettingsProfileView: View {
 
             Section {
                 TextField(
-                    "用户名",
+                    "SETTINGS_PROFILE_USERNAME",
                     text: $username
                 )
                 TextField(
-                    "昵称",
+                    "SETTINGS_PROFILE_NICKNAME",
                     text: $name
                 )
                 TextField(
-                    "个性签名",
+                    "SETTINGS_PROFILE_BIO",
                     text: $bio
                 )
             }
 
             Section {
                 DatePicker(
-                    "生日",
+                    "SETTINGS_PROFILE_BIRTHDAY",
                     selection: $birthday,
                     displayedComponents: [.date]
                 )
             }
         }
-        .navigationTitle("资料")
+        .navigationTitle("SETTINGS_PROFILE")
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button(role: .confirm, action: {}) {
