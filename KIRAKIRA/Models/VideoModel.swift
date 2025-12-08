@@ -17,7 +17,7 @@ struct VideoItem: Codable, Identifiable {
     let watchedCount: Int?
     let uploader: String?
     let uploaderInfo: UploaderInfoDTO?
-    let duration: Int?
+    let duration: TimeInterval?
     let `description`: String
     let videoCategory: String
     let copyright: String
@@ -63,7 +63,7 @@ struct ThumbVideoItem: Codable, Identifiable {
     let uploadDate: Date?
     let watchedCount: Int?
     let uploaderNickname: String?
-    let duration: Int?
+    let duration: TimeInterval?
     let `description`: String?
 
     var id: Int { videoId }

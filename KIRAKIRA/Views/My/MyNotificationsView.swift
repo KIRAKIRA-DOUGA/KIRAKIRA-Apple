@@ -40,7 +40,7 @@ struct MyNotificationsView: View {
                                 .fontWeight(.semibold)
                         }
                     }
-                    Text("点击进入用户页")
+                    Text(verbatim: "点击进入用户页")
                         .foregroundStyle(.secondary)
                 }
             }

@@ -17,24 +17,20 @@ struct MeView: View {
                     NavigationLink {
                         UserView()
                     } label: {
-                        LabeledContent {
-                            Text("ABOUT_ME_PAGE")
-                        } label: {
-                            HStack(spacing: 12) {
-                                Image("SamplePortrait")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 72, height: 72)
-                                    .clipShape(Circle())
+                        HStack(spacing: 12) {
+                            Image("SamplePortrait")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 72, height: 72)
+                                .clipShape(Circle())
 
-                                VStack(alignment: .leading, spacing: 5) {
-                                    Text(verbatim: "艾了个拉")
-                                        .font(.title3)
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text(verbatim: "艾了个拉")
+                                    .font(.title3)
 
-                                    Text(verbatim: "@Aira")
-                                        .font(.callout)
-                                        .foregroundStyle(.secondary)
-                                }
+                                Text(verbatim: "@Aira")
+                                    .font(.callout)
+                                    .foregroundStyle(.secondary)
                             }
                         }
                     }

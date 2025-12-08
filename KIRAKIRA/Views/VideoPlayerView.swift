@@ -5,8 +5,8 @@
 //  Created by Aira Sakuranomiya on 2025/11/20.
 //
 
-import SwiftUI
 import AVKit
+import SwiftUI
 
 struct VideoPlayerView: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
@@ -94,15 +94,13 @@ struct VideoPlayerView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
-                    Image("SamplePortrait")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    CFImageView(imageId: video.uploaderInfo?.avatar)
                         .frame(width: 48, height: 48)
                         .clipShape(Circle())
                         .glassEffect(.regular.interactive())
 
                     VStack(alignment: .leading) {
-                        Text(verbatim: "残月的余响")
+                        Text(verbatim: video.uploaderInfo?.userNickname ?? "Unknown User")
                             .bold()
                         Text(verbatim: "1024粉丝")
                             .foregroundStyle(.secondary)
@@ -123,9 +121,24 @@ struct VideoPlayerView: View {
                         .bold()
 
                     HStack(spacing: 20) {
-                        Label("0", systemImage: "play")
-                        Label("7 days ago", systemImage: "calendar")
-                        Label("Game", systemImage: "square.grid.2x2")
+                        if let watchedCount = video.watchedCount {
+                            Label {
+                                Text(watchedCount, format: .number)
+                            } icon: {
+                                Image(systemName: "play")
+                            }
+                        }
+
+                        if let uploadDate = video.uploadDate {
+                            Label {
+                                Text(uploadDate, format: .dateTime)
+                            } icon: {
+                                Image(systemName: "calendar")
+                            }
+
+                        }
+
+                        Label(video.videoCategory, systemImage: "square.grid.2x2")
                     }
                     .font(.callout)
                     .foregroundStyle(.secondary)
@@ -144,7 +157,7 @@ struct VideoPlayerView: View {
                                     Image(systemName: "hand.thumbsup")
                                         .symbolVariant(liked ? .fill : .none)
 
-                                    Text("\(countLike)")
+                                    Text(countLike, format: .number)
                                         .contentTransition(.numericText(value: Double(countLike)))
                                 }
 
@@ -152,7 +165,7 @@ struct VideoPlayerView: View {
                                     Image(systemName: "hand.thumbsdown")
                                         .symbolVariant(disliked ? .fill : .none)
 
-                                    Text("\(countDislike)")
+                                    Text(countDislike, format: .number)
                                         .contentTransition(.numericText(value: Double(-countDislike)))
                                 }
                             }
@@ -163,7 +176,7 @@ struct VideoPlayerView: View {
                             Image(systemName: "star")
                                 .symbolVariant(collected ? .fill : .none)
 
-                            Text("\(countCollected)")
+                            Text(countCollected, format: .number)
                                 .contentTransition(.numericText(value: Double(countCollected)))
                         }
 
