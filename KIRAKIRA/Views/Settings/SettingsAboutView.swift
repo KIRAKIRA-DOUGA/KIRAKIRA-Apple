@@ -19,7 +19,7 @@ struct SettingsAboutView: View {
                     .frame(width: 200, height: 200)
                     .padding(.top, -48)
                 Image("BrandingText")
-                Text("for Apple Devices")
+                Text(verbatim: "for Apple Devices")
                     .fontWeight(.semibold)
             }
             .foregroundStyle(.accent)
@@ -33,7 +33,7 @@ struct SettingsAboutView: View {
                         forInfoDictionaryKey: "CFBundleVersion"
                     ) as? String
                 {
-                    Text("\(version) (\(build))")
+                    Text(verbatim: "\(version) (\(build))")
                         .textSelection(.enabled)
                 }
             }

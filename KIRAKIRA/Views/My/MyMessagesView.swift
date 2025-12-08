@@ -25,27 +25,32 @@ struct MyMessagesView: View {
                         }
                         VStack(alignment: .leading) {
                             NavigationLink {
-                                Text("私聊界面")
+                                Text(verbatim: "私聊界面")
                             } label: {
                                 LabeledContent {
-                                    Text("2025/12/08")
+                                    Text(verbatim: "2025/12/08")
                                         .monospacedDigit()
                                 } label: {
-                                    Text("昵称")
+                                    Text(verbatim: "昵称")
                                         .font(.title3)
                                         .fontWeight(.semibold)
                                 }
                             }
-                            Text("Hello world!~ Hello world!~ Hello world!~ Hello world!~ Hello world!~ Hello world!~ ")
-                                .foregroundStyle(.secondary)
-                                .lineLimit(2, reservesSpace: true)
+                            Text(
+                                verbatim:
+                                    "Hello world!~ Hello world!~ Hello world!~ Hello world!~ Hello world!~ Hello world!~ "
+                            )
+                            .foregroundStyle(.secondary)
+                            .lineLimit(2, reservesSpace: true)
                         }
                     }
-                }.onDelete(perform: { _ in print("hello") })
-            }.listSectionSeparator(.hidden)
+                }
+                .onDelete(perform: { _ in print("hello") })
+            }
+            .listSectionSeparator(.hidden)
         }
         .listStyle(.plain)
-        .navigationTitle("消息")
+        .navigationTitle("MESSAGES")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

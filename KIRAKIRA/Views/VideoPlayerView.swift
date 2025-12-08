@@ -5,8 +5,8 @@
 //  Created by Aira Sakuranomiya on 2025/11/20.
 //
 
-import SwiftUI
 import AVKit
+import SwiftUI
 
 struct VideoPlayerView: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
@@ -73,10 +73,10 @@ struct VideoPlayerView: View {
                         }
                     }
                     .safeAreaBar(edge: .top) {
-                        Picker("", selection: $showingView) {
-                            Text("详情").tag(VideoPlayerTab.info)
-                            Text("评论").tag(VideoPlayerTab.comments)
-                            Text("弹幕").tag(VideoPlayerTab.danmakus)
+                        Picker("VIDEO_TAB", selection: $showingView) {
+                            Text("VIDEO_INFO").tag(VideoPlayerTab.info)
+                            Text("COMMENT").tag(VideoPlayerTab.comments)
+                            Text("DANMAKU").tag(VideoPlayerTab.danmakus)
                         }
                         .pickerStyle(.segmented)
                         .padding()
@@ -94,17 +94,15 @@ struct VideoPlayerView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
-                    Image("SamplePortrait")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    CFImageView(imageId: video.uploaderInfo?.avatar)
                         .frame(width: 48, height: 48)
                         .clipShape(Circle())
                         .glassEffect(.regular.interactive())
 
                     VStack(alignment: .leading) {
-                        Text("残月的余响")
+                        Text(verbatim: video.uploaderInfo?.userNickname ?? "Unknown User")
                             .bold()
-                        Text("1024粉丝")
+                        Text(verbatim: "1024粉丝")
                             .foregroundStyle(.secondary)
                             .font(.caption)
                     }
@@ -112,7 +110,7 @@ struct VideoPlayerView: View {
                     Spacer()
 
                     Button(action: {}) {
-                        Label("关注", systemImage: "plus")
+                        Label("USER_FOLLOW", systemImage: "plus")
                     }
                     .buttonStyle(.glassProminent)
                 }
@@ -123,9 +121,24 @@ struct VideoPlayerView: View {
                         .bold()
 
                     HStack(spacing: 20) {
-                        Label("0", systemImage: "play")
-                        Label("7 days ago", systemImage: "calendar")
-                        Label("Game", systemImage: "square.grid.2x2")
+                        if let watchedCount = video.watchedCount {
+                            Label {
+                                Text(watchedCount, format: .number)
+                            } icon: {
+                                Image(systemName: "play")
+                            }
+                        }
+
+                        if let uploadDate = video.uploadDate {
+                            Label {
+                                Text(uploadDate, format: .dateTime)
+                            } icon: {
+                                Image(systemName: "calendar")
+                            }
+
+                        }
+
+                        Label(video.videoCategory, systemImage: "square.grid.2x2")
                     }
                     .font(.callout)
                     .foregroundStyle(.secondary)
@@ -144,7 +157,7 @@ struct VideoPlayerView: View {
                                     Image(systemName: "hand.thumbsup")
                                         .symbolVariant(liked ? .fill : .none)
 
-                                    Text("\(countLike)")
+                                    Text(countLike, format: .number)
                                         .contentTransition(.numericText(value: Double(countLike)))
                                 }
 
@@ -152,7 +165,7 @@ struct VideoPlayerView: View {
                                     Image(systemName: "hand.thumbsdown")
                                         .symbolVariant(disliked ? .fill : .none)
 
-                                    Text("\(countDislike)")
+                                    Text(countDislike, format: .number)
                                         .contentTransition(.numericText(value: Double(-countDislike)))
                                 }
                             }
@@ -163,19 +176,19 @@ struct VideoPlayerView: View {
                             Image(systemName: "star")
                                 .symbolVariant(collected ? .fill : .none)
 
-                            Text("\(countCollected)")
+                            Text(countCollected, format: .number)
                                 .contentTransition(.numericText(value: Double(countCollected)))
                         }
 
                         Button(action: {}) {
-                            Label("分享", systemImage: "square.and.arrow.up")
+                            Label("SHARE", systemImage: "square.and.arrow.up")
                         }
                         .labelStyle(.iconOnly)
 
                         Menu {
-                            Button("投诉", systemImage: "flag", action: {})
-                            Button("查看封面", systemImage: "photo", action: {})
-                            Button("下载", systemImage: "square.and.arrow.down", action: {})
+                            Button("REPORT", systemImage: "flag", action: {})
+                            Button("CHECK_THUMBNAIL", systemImage: "photo", action: {})
+                            Button("DOWNLOAD", systemImage: "square.and.arrow.down", action: {})
                         } label: {
                             Image(systemName: "ellipsis")
                                 .frame(height: 20)
@@ -193,35 +206,15 @@ struct VideoPlayerView: View {
     }
 
     var comments: some View {
-        List {
-            Text("你好")
-            Text("你好")
-            Text("你好")
-            Text("你好")
-            Text("你好")
-            Text("你好")
-            Text("你好")
-            Text("你好")
-            Text("你好")
-            Text("你好")
+        List(0..<10) { _ in
+            Text(verbatim: "你好")
         }
         .listStyle(.plain)
     }
 
     var danmaku: some View {
-        List {
-            Text("好！")
-            Text("好！")
-            Text("好！")
-            Text("好！")
-            Text("好！")
-            Text("好！")
-            Text("好！")
-            Text("好！")
-            Text("好！")
-            Text("好！")
-            Text("好！")
-            Text("好！")
+        List(0..<10) { _ in
+            Text(verbatim: "好！")
         }
         .listStyle(.plain)
     }

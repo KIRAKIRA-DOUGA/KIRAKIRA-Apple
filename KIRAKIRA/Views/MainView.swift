@@ -17,14 +17,14 @@ struct MainView: View {
         @Bindable var globalStateManager = globalStateManager
 
         TabView(selection: $globalStateManager.mainTabSelection) {
-            Tab("主页", systemImage: "house", value: MainTab.home) {
+            Tab("MAINTAB_HOME", systemImage: "house", value: MainTab.home) {
                 HomeView(isPlayerExpanded: $isPlayerExpanded, animationNamespace: animationNamespace)
             }
-            Tab("关注", systemImage: "mail.stack", value: MainTab.feed) {
-                FeedView()
+            Tab("MAINTAB_FOLLOWING", systemImage: "mail.stack", value: MainTab.feed) {
+                FollowingFeedView()
             }
-            Tab("个人", systemImage: "person", value: MainTab.me) {
-                MeView()
+            Tab("MAINTAB_MY", systemImage: "person", value: MainTab.me) {
+                MyView()
             }
             Tab(value: MainTab.search, role: .search) {
                 SearchView()
@@ -61,10 +61,10 @@ private struct MiniPlayer: View {
                 .foregroundStyle(.green)
 
             VStack(alignment: .leading) {
-                Text("Apple Event - September 9")
+                Text(verbatim: "Apple Event - September 9")
                     .font(.footnote)
                     .bold()
-                Text("6月10日")
+                Text(verbatim: "6月10日")
                     .font(.caption)
             }
             .lineLimit(1)
@@ -76,7 +76,7 @@ private struct MiniPlayer: View {
                     globalStateManger.isPlayerPlaying.toggle()
                 } label: {
                     Label(
-                        "Toggle Play / Pause",
+                        "MINIPLAYER_TOGGLE_PLAY_PAUSE",
                         systemImage: globalStateManger.isPlayerPlaying ? "play.fill" : "pause.fill"
                     )
                     .contentTransition(.symbolEffect(.replace))
@@ -84,7 +84,7 @@ private struct MiniPlayer: View {
                 .frame(width: 36, height: 36)
 
                 if tabViewBottomAccessoryPlacement == .expanded {
-                    Button("关闭", systemImage: "forward.fill", action: {})
+                    Button("CLOSE", systemImage: "forward.fill", action: {})
                         .frame(width: 36, height: 36)
                 }
             }

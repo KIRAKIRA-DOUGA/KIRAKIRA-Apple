@@ -59,19 +59,23 @@ struct VideoListItemView: View {
 
             LineBreak()
 
-            Label {
-                Text("0")  // Views placeholder
-            } icon: {
-                Image(systemName: "play")
+            if let watchedCount = video.watchedCount {
+                Label {
+                    Text(watchedCount, format: .number)
+                } icon: {
+                    Image(systemName: "play")
+                }
+                .lineLimit(1)
             }
-            .lineLimit(1)
 
-            Label {
-                Text("5:00")  // Duration placeholder
-            } icon: {
-                Image(systemName: "clock")
+            if let duration = video.duration {
+                Label {
+                    Text(duration, format: .timeInterval)
+                } icon: {
+                    Image(systemName: "clock")
+                }
+                .lineLimit(1)
             }
-            .lineLimit(1)
 
             if let uploadDate = video.uploadDate {
                 Label {

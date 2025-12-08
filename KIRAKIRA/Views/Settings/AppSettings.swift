@@ -47,11 +47,11 @@ enum ViewStyle: String, CaseIterable, Identifiable {
     var displayName: LocalizedStringKey {
         switch self {
         case .row:
-            return "Row"
+            return "SETTINGS_VIDEO_DISPLAY_STYLE_ROW"
         case .card:
-            return "Card"
+            return "SETTINGS_VIDEO_DISPLAY_STYLE_CARD"
         case .smallCard:
-            return "Small Card"
+            return "SETTINGS_VIDEO_DISPLAY_STYLE_SMALL_CARD"
         }
     }
 }

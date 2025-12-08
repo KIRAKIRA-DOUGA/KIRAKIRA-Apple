@@ -18,7 +18,7 @@ struct SettingsDanmakuView: View {
                 Image("SampleLandscape")
                     .resizable()
                     .aspectRatio(16 / 9, contentMode: .fill)
-                Text("这是一条弹幕")
+                Text(verbatim: "这是一条弹幕")
                     .font(.system(size: danmakuSize))
                     .opacity(danmakuOpacity)
                     .shadow(color: .black, radius: 1)
@@ -27,33 +27,33 @@ struct SettingsDanmakuView: View {
             .clipShape(RoundedRectangle(cornerRadius: 24))
             .listRowBackground(Color.clear)
 
-            Section(header: Text("大小")) {
+            Section(header: Text("SETTINGS_DANMAKU_SIZE")) {
                 HStack {
                     Image(systemName: "textformat.size")
                         .frame(width: 36)
                         .foregroundStyle(.secondary)
                     Slider(value: $danmakuSize, in: 9...25, step: 1)
-                    Text("\(Int(danmakuSize))")
+                    Text(Int(danmakuSize), format: .number)
                         .frame(width: 36)
                         .monospacedDigit()
                         .contentTransition(.numericText(value: danmakuSize))
                 }
             }
 
-            Section(header: Text("不透明度")) {
+            Section(header: Text("SETTINGS_DANMAKU_OPACITY")) {
                 HStack {
                     Image(systemName: "circle.lefthalf.filled")
                         .frame(width: 36)
                         .foregroundStyle(.secondary)
                     Slider(value: $danmakuOpacity, in: 0.1...1)
-                    Text("\(Int(danmakuOpacity * 100))")
+                    Text(danmakuOpacity, format: .percent)
                         .frame(width: 36)
                         .monospacedDigit()
                         .contentTransition(.numericText(value: danmakuOpacity))
                 }
             }
             
-            Section(header: Text("速度")) {
+            Section(header: Text("SETTINGS_DANMAKU_SPEED")) {
                 Slider(value: $danmakuSpeed, in: 1...5, step: 1) {
                     
                 } minimumValueLabel: {
@@ -66,7 +66,7 @@ struct SettingsDanmakuView: View {
                         .frame(width: 36)
                 }
             }
-        }.navigationTitle("弹幕")
+        }.navigationTitle("SETTINGS_DANMAKU")
     }
 }
 

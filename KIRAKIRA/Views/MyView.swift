@@ -1,5 +1,5 @@
 //
-//  MeView.swift
+//  MyView.swift
 //  KIRAKIRA
 //
 //  Created by Aira Sakuranomiya on 2025/11/8.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MeView: View {
+struct MyView: View {
     @State private var isShowingSettings = false
 
     var body: some View {
@@ -18,7 +18,7 @@ struct MeView: View {
                         UserView()
                     } label: {
                         LabeledContent {
-                            Text("个人主页")
+                            Text("USER_PAGE")
                         } label: {
                             HStack(spacing: 12) {
                                 Image("SamplePortrait")
@@ -26,12 +26,12 @@ struct MeView: View {
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 72, height: 72)
                                     .clipShape(Circle())
-
+                                
                                 VStack(alignment: .leading, spacing: 5) {
-                                    Text("艾了个拉")
+                                    Text(verbatim: "艾了个拉")
                                         .font(.title3)
-
-                                    Text("@Aira")
+                                    
+                                    Text(verbatim: "@Aira")
                                         .font(.callout)
                                         .foregroundStyle(.secondary)
                                 }
@@ -44,14 +44,14 @@ struct MeView: View {
                     NavigationLink {
                         MyNotificationsView()
                     } label: {
-                        Label("通知", systemImage: "bell")
+                        Label("NOTIFICATION", systemImage: "bell")
                             .badge(3)
                     }
 
                     NavigationLink {
                         MyMessagesView()
                     } label: {
-                        Label("消息", systemImage: "message")
+                        Label("MESSAGES", systemImage: "message")
                             .badge(10)
                     }
                 }
@@ -60,14 +60,14 @@ struct MeView: View {
                     NavigationLink {
                         MyCollectionsView()
                     } label: {
-                        Label("收藏", systemImage: "star")
+                        Label("FAVORITE", systemImage: "star")
                     }
 
                     NavigationLink {
                         MyHistoryView()
                     } label: {
                         Label(
-                            "历史",
+                            "HISTORY",
                             systemImage:
                                 "clock.arrow.trianglehead.counterclockwise.rotate.90"
                         )
@@ -76,11 +76,8 @@ struct MeView: View {
 
             }
             .contentMargins(.top, 16)
-            .navigationTitle("个人")
-            #if !os(macOS)
-                //				.navigationBarTitleDisplayMode(.inline)
-                .toolbarTitleDisplayMode(.inlineLarge)
-            #endif
+            .navigationTitle("MAINTAB_MY")
+            .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
                 ToolbarItem {
                     Button(action: { isShowingSettings = true }) {
@@ -96,5 +93,5 @@ struct MeView: View {
 }
 
 #Preview(traits: .commonPreviewTrait) {
-    MeView()
+    MyView()
 }
