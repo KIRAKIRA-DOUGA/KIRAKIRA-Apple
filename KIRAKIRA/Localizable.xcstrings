@@ -54,16 +54,6 @@
         }
       }
     },
-    "CATEGORY_MAD" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "音MAD"
-          }
-        }
-      }
-    },
     "CATEGORY_MUSIC" : {
       "localizations" : {
         "zh-Hans" : {
@@ -80,6 +70,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "其他"
+          }
+        }
+      }
+    },
+    "CATEGORY_OTOMAD" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "音MAD"
           }
         }
       }
@@ -207,7 +207,7 @@
     "KIRAKIRA" : {
       "shouldTranslate" : false
     },
-    "LOGOOUT" : {
+    "LOG_OUT" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -442,7 +442,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "安全"
+            "value" : "资料"
           }
         }
       }
@@ -537,16 +537,6 @@
         }
       }
     },
-    "SUBSCRIBE" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "关注"
-          }
-        }
-      }
-    },
     "SWITCH_ACCOUNT" : {
       "localizations" : {
         "zh-Hans" : {
@@ -567,7 +557,28 @@
         }
       }
     },
-    "USER_FANS" : {
+    "USER_FAVORITE" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "收藏"
+          }
+        }
+      }
+    },
+    "USER_FOLLOW" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关注"
+          }
+        }
+      }
+    },
+    "USER_FOLLOWERS" : {
+      "comment" : "The number of people following this user.",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -577,12 +588,13 @@
         }
       }
     },
-    "USER_FAVORITE" : {
+    "USER_FOLLOWING" : {
+      "comment" : "The number of accounts this user is following.",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "收藏"
+            "value" : "关注"
           }
         }
       }
@@ -606,26 +618,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "举报"
-          }
-        }
-      }
-    },
-    "USER_SUBSCRIBE" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "关注"
-          }
-        }
-      }
-    },
-    "USER_SUBSCRIBES" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "关注"
           }
         }
       }

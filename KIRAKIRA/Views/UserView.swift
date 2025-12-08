@@ -80,7 +80,7 @@ struct UserView: View {
 
                     HStack {
                         Button(action: {}) {
-                            Label("USER_SUBSCRIBE", systemImage: "plus")
+                            Label("USER_FOLLOW", systemImage: "plus")
                                 .frame(height: 20)
                         }.buttonStyle(.glassProminent)
 
@@ -113,12 +113,12 @@ struct UserView: View {
                 HStack(spacing: 16) {
                     HStack {
                         Text(verbatim: "233")
-                        Text("USER_FANS")
+                        Text("USER_FOLLOWERS", comment: "The number of people following this user.")
                             .foregroundStyle(.secondary)
                     }
                     HStack {
                         Text(verbatim: "233")
-                        Text("USER_SUBSCRIBES")
+                        Text("USER_FOLLOWING", comment: "The number of accounts this user is following.")
                             .foregroundStyle(.secondary)
                     }
                 }

@@ -34,7 +34,7 @@ let categories: [Category] = [
     Category(name: String(localized: "CATEGORY_LATEST"), systemImage: "plus.circle.fill"),
     Category(name: String(localized: "CATEGORY_ANIMATION"), systemImage: "wand.and.rays"),
     Category(name: String(localized: "CATEGORY_MUSIC"), systemImage: "music.note"),
-    Category(name: String(localized: "CATEGORY_MAD"), systemImage: "scissors"),
+    Category(name: String(localized: "CATEGORY_OTOMAD"), systemImage: "scissors"),
     Category(name: String(localized: "CATEGORY_TECH"), systemImage: "cpu.fill"),
     Category(name: String(localized: "CATEGORY_DESIGN"), systemImage: "pencil.and.ruler.fill"),
     Category(name: String(localized: "CATEGORY_GAME"), systemImage: "gamecontroller.fill"),

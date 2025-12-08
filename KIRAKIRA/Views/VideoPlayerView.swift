@@ -110,7 +110,7 @@ struct VideoPlayerView: View {
                     Spacer()
 
                     Button(action: {}) {
-                        Label("SUBSCRIBE", systemImage: "plus")
+                        Label("USER_FOLLOW", systemImage: "plus")
                     }
                     .buttonStyle(.glassProminent)
                 }

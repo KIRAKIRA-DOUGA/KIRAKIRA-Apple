@@ -77,7 +77,7 @@ struct SettingsView: View {
                     }
 
                     Button(role: .destructive, action: {}) {
-                        Label("LOGOOUT", systemImage: "door.right.hand.open")
+                        Label("LOG_OUT", systemImage: "door.right.hand.open")
                     }.foregroundStyle(.red)
                 }
             }
