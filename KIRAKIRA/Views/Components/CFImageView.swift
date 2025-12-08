@@ -3,13 +3,13 @@ import SwiftUI
 import os
 
 struct CFImageView: View {
-    let imageId: String
+    let imageId: String?
 
     @Environment(\.displayScale) var displayScale
 
     var body: some View {
         GeometryReader { geometry in
-            KFImage(buildURL(for: geometry.size))
+            KFImage(buildURL(for: geometry.size, lowResulotion: false))
                 .placeholder {
                     Rectangle()
                         .fill(Color.gray.opacity(0.3))
@@ -21,9 +21,12 @@ struct CFImageView: View {
     }
 
     /// Constructs the final Cloudflare URL with size and format variants.
-    private func buildURL(for size: CGSize) -> URL? {
+    private func buildURL(for size: CGSize, lowResulotion: Bool?) -> URL? {
+        guard let imageId else { return .none }
+
         let baseURL = URL(string: "https://kirafile.com/cdn-cgi/imagedelivery/Gyz90amG54C4b_dtJiRpYg/")!
             .appendingPathComponent(imageId)
+
         let pixelWidth: Int? =
             switch ceil(size.width * displayScale) {
             case 0..<240: 240

@@ -3,7 +3,7 @@ import SwiftUI
 struct VideoListView<Header: View>: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
     @AppSetting(\.videoDisplayStyle) private var videoDisplayStyle
-    let videos: [VideoListItemDTO]
+    let videos: [ThumbVideoItem]
     @Binding var isPlayerExpanded: Bool
     let animationNamespace: Namespace.ID
     @ViewBuilder let header: Header?
@@ -77,13 +77,13 @@ struct VideoListView<Header: View>: View {
     }
 
     @ViewBuilder
-    private func videoContent(for video: VideoListItemDTO, style: ViewStyle) -> some View {
+    private func videoContent(for video: ThumbVideoItem, style: ViewStyle) -> some View {
         let content = VideoListItemView(video: video, style: style)
         content
             .matchedTransitionSource(id: AnimationTransitionSource.video(video.videoId), in: animationNamespace)
     }
 
-    private func play(_ video: VideoListItemDTO) {
+    private func play(_ video: ThumbVideoItem) {
         globalStateManager.selectedVideo = video.videoId
         globalStateManager.activeTransitionSource = .video(video.videoId)
         isPlayerExpanded = true

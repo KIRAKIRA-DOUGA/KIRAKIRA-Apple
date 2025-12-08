@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var viewModel = VideoViewModel()
+    @State private var viewModel = ThumbVideoViewModel()
     @State private var hasLoaded = false
     @Binding var isPlayerExpanded: Bool
     let animationNamespace: Namespace.ID
@@ -55,17 +55,10 @@ struct HomeView: View {
                 Spacer()
             }
         } else if let errorMessage = viewModel.errorMessage {
-            VStack(spacing: 16) {
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .font(.largeTitle)
-                    .foregroundStyle(.red)
-                Text(errorMessage)
-                Button("Try Again") {
-                    Task {
-                        await viewModel.fetchHomeVideos()
-                    }
+            ErrorView(errorMessage: errorMessage) {
+                Task {
+                    await viewModel.fetchHomeVideos()
                 }
-                .buttonStyle(.borderedProminent)
             }
         } else {
             HomeVideoListView(

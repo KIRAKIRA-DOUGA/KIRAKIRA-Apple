@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct HomeVideoListView: View {
-    let videos: [VideoListItemDTO]
+    let videos: [ThumbVideoItem]
     @Binding var isPlayerExpanded: Bool
     let animationNamespace: Namespace.ID
 

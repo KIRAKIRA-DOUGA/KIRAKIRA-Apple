@@ -2,7 +2,7 @@ import Flow
 import SwiftUI
 
 struct VideoListItemView: View {
-    let video: VideoListItemDTO
+    let video: ThumbVideoItem
     let style: ViewStyle
 
     var body: some View {
@@ -51,7 +51,7 @@ struct VideoListItemView: View {
     private var metadata: some View {
         HFlow(rowSpacing: 4) {
             Label {
-                Text(video.uploaderNickname)
+                Text(video.uploaderNickname ?? "Anonymous User")
             } icon: {
                 Image(systemName: "person")
             }
@@ -73,12 +73,14 @@ struct VideoListItemView: View {
             }
             .lineLimit(1)
 
-            Label {
-                Text(video.uploadDate, style: .date)
-            } icon: {
-                Image(systemName: "calendar")
+            if let uploadDate = video.uploadDate {
+                Label {
+                    Text(uploadDate, style: .date)
+                } icon: {
+                    Image(systemName: "calendar")
+                }
+                .lineLimit(1)
             }
-            .lineLimit(1)
         }
         .labelIconToTitleSpacing(4)
         .foregroundStyle(.secondary)

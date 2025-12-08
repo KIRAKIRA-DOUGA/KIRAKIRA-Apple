@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct VideoPlayerView: View {
+    @Environment(GlobalStateManager.self) private var globalStateManager
+    @State private var viewModel = VideoViewModel()
     @State private var showingView: VideoPlayerTab = .info
     @Namespace private var namespace
     @State private var countLike = 0
@@ -45,40 +48,49 @@ struct VideoPlayerView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            // Drag Indicator
-            Capsule()
-                .frame(width: 64, height: 5)
-                .padding(.bottom)
-                .foregroundStyle(.tertiary)
+        Group {
+            if let video = viewModel.video, let videoPart = video.video.videoPart.first {
+                let player = AVPlayer(url: videoPart.m3u8URL)
 
-            Rectangle()
-                .foregroundStyle(.green)
-                .aspectRatio(16 / 9, contentMode: .fit)
+                VStack(spacing: 0) {
+                    // Drag Indicator
+                    Capsule()
+                        .frame(width: 64, height: 5)
+                        .padding(.bottom)
+                        .foregroundStyle(.tertiary)
 
-            Group {
-                switch showingView {
-                case .info:
-                    info
-                case .comments:
-                    comments
-                case .danmakus:
-                    danmaku
+                    VideoPlayer(player: player)
+                        .aspectRatio(16 / 9, contentMode: .fit)
+
+                    Group {
+                        switch showingView {
+                        case .info:
+                            info(video: video.video)
+                        case .comments:
+                            comments
+                        case .danmakus:
+                            danmaku
+                        }
+                    }
+                    .safeAreaBar(edge: .top) {
+                        Picker("", selection: $showingView) {
+                            Text("详情").tag(VideoPlayerTab.info)
+                            Text("评论").tag(VideoPlayerTab.comments)
+                            Text("弹幕").tag(VideoPlayerTab.danmakus)
+                        }
+                        .pickerStyle(.segmented)
+                        .padding()
+                    }
                 }
             }
-            .safeAreaBar(edge: .top) {
-                Picker("", selection: $showingView) {
-                    Text("详情").tag(VideoPlayerTab.info)
-                    Text("评论").tag(VideoPlayerTab.comments)
-                    Text("弹幕").tag(VideoPlayerTab.danmakus)
-                }
-                .pickerStyle(.segmented)
-                .padding()
-            }
+        }
+        .task {
+            await viewModel.fetchVideo(of: globalStateManager.selectedVideo)
         }
     }
 
-    var info: some View {
+    @ViewBuilder
+    func info(video: VideoItem) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
@@ -101,11 +113,12 @@ struct VideoPlayerView: View {
 
                     Button(action: {}) {
                         Label("关注", systemImage: "plus")
-                    }.buttonStyle(.glassProminent)
+                    }
+                    .buttonStyle(.glassProminent)
                 }
 
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("我的天呐丰川祥子大人")
+                    Text(video.title)
                         .font(.title2)
                         .bold()
 
@@ -119,7 +132,7 @@ struct VideoPlayerView: View {
                     .monospacedDigit()
                     .contentTransition(.numericText())
 
-                    Text("我的天呐这简介太厉害了")
+                    Text(video.description)
                 }
 
                 // 操作
