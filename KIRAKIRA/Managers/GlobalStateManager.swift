@@ -30,8 +30,8 @@ struct Category: Identifiable, Hashable {
 
 let categories: [Category] = [
     // Wrap the keys in String(localized: ...)
-    Category(name: String(localized: "CATEGORY_POPULOAR"), systemImage: "flame.fill"),
-    Category(name: String(localized: "CATEGORY_LATEST"), systemImage: "plus.circle.fill"),
+    Category(name: String(localized: "HOT"), systemImage: "flame.fill"),
+    Category(name: String(localized: "LATEST"), systemImage: "plus.circle.fill"),
     Category(name: String(localized: "CATEGORY_ANIMATION"), systemImage: "wand.and.rays"),
     Category(name: String(localized: "CATEGORY_MUSIC"), systemImage: "music.note"),
     Category(name: String(localized: "CATEGORY_OTOMAD"), systemImage: "scissors"),

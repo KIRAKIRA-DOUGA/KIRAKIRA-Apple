@@ -17,14 +17,14 @@ struct MainView: View {
         @Bindable var globalStateManager = globalStateManager
 
         TabView(selection: $globalStateManager.mainTabSelection) {
-            Tab("HOME", systemImage: "house", value: MainTab.home) {
+            Tab("MAINTAB_HOME", systemImage: "house", value: MainTab.home) {
                 HomeView(isPlayerExpanded: $isPlayerExpanded, animationNamespace: animationNamespace)
             }
-            Tab("FEED", systemImage: "mail.stack", value: MainTab.feed) {
-                FeedView()
+            Tab("MAINTAB_FOLLOWING", systemImage: "mail.stack", value: MainTab.feed) {
+                FollowingFeedView()
             }
-            Tab("ME", systemImage: "person", value: MainTab.me) {
-                MeView()
+            Tab("MAINTAB_MY", systemImage: "person", value: MainTab.me) {
+                MyView()
             }
             Tab(value: MainTab.search, role: .search) {
                 SearchView()

@@ -44,16 +44,6 @@
         }
       }
     },
-    "CATEGORY_LATEST" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "最新"
-          }
-        }
-      }
-    },
     "CATEGORY_MUSIC" : {
       "localizations" : {
         "zh-Hans" : {
@@ -80,16 +70,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "音MAD"
-          }
-        }
-      }
-    },
-    "CATEGORY_POPULOAR" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "热门"
           }
         }
       }
@@ -174,16 +154,6 @@
         }
       }
     },
-    "FEED" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "关注"
-          }
-        }
-      }
-    },
     "HISTORY" : {
       "localizations" : {
         "zh-Hans" : {
@@ -194,18 +164,28 @@
         }
       }
     },
-    "HOME" : {
+    "HOT" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "主页"
+            "value" : "最热"
           }
         }
       }
     },
     "KIRAKIRA" : {
       "shouldTranslate" : false
+    },
+    "LATEST" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最新"
+          }
+        }
+      }
     },
     "LOG_OUT" : {
       "localizations" : {
@@ -217,12 +197,32 @@
         }
       }
     },
-    "ME" : {
+    "MAINTAB_FOLLOWING" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "我"
+            "value" : "关注"
+          }
+        }
+      }
+    },
+    "MAINTAB_HOME" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主页"
+          }
+        }
+      }
+    },
+    "MAINTAB_MY" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我的"
           }
         }
       }
@@ -610,7 +610,14 @@
       }
     },
     "USER_PAGE" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "个人主页"
+          }
+        }
+      }
     },
     "USER_REPORT" : {
       "localizations" : {

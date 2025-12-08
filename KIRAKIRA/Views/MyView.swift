@@ -1,5 +1,5 @@
 //
-//  MeView.swift
+//  MyView.swift
 //  KIRAKIRA
 //
 //  Created by Aira Sakuranomiya on 2025/11/8.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MeView: View {
+struct MyView: View {
     @State private var isShowingSettings = false
 
     var body: some View {
@@ -17,20 +17,24 @@ struct MeView: View {
                     NavigationLink {
                         UserView()
                     } label: {
-                        HStack(spacing: 12) {
-                            Image("SamplePortrait")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 72, height: 72)
-                                .clipShape(Circle())
-
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text(verbatim: "艾了个拉")
-                                    .font(.title3)
-
-                                Text(verbatim: "@Aira")
-                                    .font(.callout)
-                                    .foregroundStyle(.secondary)
+                        LabeledContent {
+                            Text("USER_PAGE")
+                        } label: {
+                            HStack(spacing: 12) {
+                                Image("SamplePortrait")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 72, height: 72)
+                                    .clipShape(Circle())
+                                
+                                VStack(alignment: .leading, spacing: 5) {
+                                    Text(verbatim: "艾了个拉")
+                                        .font(.title3)
+                                    
+                                    Text(verbatim: "@Aira")
+                                        .font(.callout)
+                                        .foregroundStyle(.secondary)
+                                }
                             }
                         }
                     }
@@ -72,7 +76,7 @@ struct MeView: View {
 
             }
             .contentMargins(.top, 16)
-            .navigationTitle("ME")
+            .navigationTitle("MAINTAB_MY")
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
                 ToolbarItem {
@@ -89,5 +93,5 @@ struct MeView: View {
 }
 
 #Preview(traits: .commonPreviewTrait) {
-    MeView()
+    MyView()
 }

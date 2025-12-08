@@ -1,5 +1,5 @@
 //
-//  FeedView.swift
+//  FollowingFeedView.swift
 //  KIRAKIRA
 //
 //  Created by Aira Sakuranomiya on 2025/11/8.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FeedView: View {
+struct FollowingFeedView: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
 
     var body: some View {
@@ -20,7 +20,7 @@ struct FeedView: View {
                     }
                 }.padding()
             }
-            .navigationTitle("FEED")
+            .navigationTitle("MAINTAB_FOLLOWING")
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
                 ProfileToolbarItem()
