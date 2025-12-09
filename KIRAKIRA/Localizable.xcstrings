@@ -299,7 +299,7 @@
       }
     },
     "MESSAGES" : {
-      "comment" : "The user’s private messages.",
+      "comment" : "The user’s private direct messages.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -351,14 +351,14 @@
         }
       }
     },
-    "NOTIFICATION" : {
+    "NOTIFICATIONS" : {
       "comment" : "Notifications that the user has received.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Notification"
+            "value" : "Notifications"
           }
         },
         "zh-Hans" : {

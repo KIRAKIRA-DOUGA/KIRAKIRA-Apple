@@ -49,7 +49,7 @@ struct MyNotificationsView: View {
             .listSectionSeparator(.hidden)
         }
         .listStyle(.plain)
-        .navigationTitle(.notification)
+        .navigationTitle(.notifications)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

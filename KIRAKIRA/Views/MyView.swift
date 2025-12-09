@@ -44,7 +44,7 @@ struct MyView: View {
                     NavigationLink {
                         MyNotificationsView()
                     } label: {
-                        Label(.notification, systemImage: "bell")
+                        Label(.notifications, systemImage: "bell")
                             .badge(3)
                     }
 
