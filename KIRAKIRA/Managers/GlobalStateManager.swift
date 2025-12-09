@@ -8,6 +8,7 @@ class GlobalStateManager {
     var isPlayerPlaying: Bool = false
     var selectedVideo: Int?
     var activeTransitionSource: AnimationTransitionSource = .miniPlayer
+    var authManager = AuthManager()
 }
 
 enum MainTab: Hashable {
@@ -15,6 +16,8 @@ enum MainTab: Hashable {
     case feed
     case me
     case search
+
+    case login
 }
 
 enum AnimationTransitionSource: Hashable {

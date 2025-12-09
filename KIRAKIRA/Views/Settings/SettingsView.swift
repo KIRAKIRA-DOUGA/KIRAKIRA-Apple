@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(GlobalStateManager.self) private var globalStateManager
 
     var body: some View {
         NavigationStack {
@@ -80,9 +81,14 @@ struct SettingsView: View {
                         Label(.switchAccount, systemImage: "person.2")
                     }
 
-                    Button(role: .destructive, action: {}) {
+                    Button(role: .destructive) {
+                        Task {
+                            await globalStateManager.authManager.logout()
+                        }
+                    } label: {
                         Label(.logOut, systemImage: "door.right.hand.open")
-                    }.foregroundStyle(.red)
+                    }
+                    .foregroundStyle(.red)
                 }
             }
             .navigationTitle(.settings)

@@ -20,11 +20,17 @@ struct MainView: View {
             Tab(.maintabHome, systemImage: "house", value: MainTab.home) {
                 HomeView(isPlayerExpanded: $isPlayerExpanded, animationNamespace: animationNamespace)
             }
-            Tab(.maintabFollowing, systemImage: "mail.stack", value: MainTab.feed) {
-                FollowingFeedView()
-            }
-            Tab(.maintabMy, systemImage: "person", value: MainTab.me) {
-                MyView()
+            if globalStateManager.authManager.authState == .authenticated {
+                Tab(.maintabFollowing, systemImage: "mail.stack", value: MainTab.feed) {
+                    FollowingFeedView()
+                }
+                Tab(.maintabMy, systemImage: "person", value: MainTab.me) {
+                    MyView()
+                }
+            } else {
+                Tab(.logIn, systemImage: "gear", value: MainTab.login) {
+                    LoginView()
+                }
             }
             Tab(value: MainTab.search, role: .search) {
                 SearchView()

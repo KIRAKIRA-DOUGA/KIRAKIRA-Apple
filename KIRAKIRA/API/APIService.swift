@@ -1,31 +1,31 @@
 import Foundation
 import OSLog
 
-protocol APIServiceProtocol {
-    func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T
-    func request<T: Decodable, U: Encodable>(_ endpoint: Endpoint, body: U?) async throws -> T
-}
-
-actor APIService: APIServiceProtocol {
+actor APIService {
     static let shared = APIService()
 
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder
-
     private let logger = Logger(subsystem: "moe.kirakira", category: "API")
+    private var cookie: String?
 
     private init() {
         self.decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .millisecondsSince1970
         self.encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .millisecondsSince1970
     }
 
     func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T {
         return try await performRequest(endpoint, body: nil as String?)
     }
 
-    func request<T: Decodable, U: Encodable>(_ endpoint: Endpoint, body: U?) async throws -> T {
+    func request<T: Decodable, U: Encodable>(_ endpoint: Endpoint, body: U) async throws -> T {
         return try await performRequest(endpoint, body: body)
+    }
+
+    func setCookie(_ cookie: String?) {
+        self.cookie = cookie
     }
 
     private func performRequest<T: Decodable, U: Encodable>(_ endpoint: Endpoint, body: U?) async throws -> T {
@@ -41,8 +41,7 @@ actor APIService: APIServiceProtocol {
         request.httpMethod = await endpoint.method.rawValue.uppercased()
 
         // Get credentials from AuthManager
-        if let credentials = await AuthManager.shared.credentials {
-            let cookie = await credentials.cookieString
+        if let cookie {
             request.setValue(cookie, forHTTPHeaderField: "Cookie")
         }
 

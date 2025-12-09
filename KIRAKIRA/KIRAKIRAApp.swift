@@ -38,6 +38,7 @@ struct KIRAKIRAApp: App {
                 }
                 .task {
                     appearanceManager.updateWindowStyle()
+                    await globalStateManager.authManager.check()
                 }
                 .onChange(of: globalColorScheme) {
                     appearanceManager.updateWindowStyle()
