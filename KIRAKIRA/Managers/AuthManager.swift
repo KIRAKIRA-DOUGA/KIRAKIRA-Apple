@@ -6,8 +6,6 @@ import Security
 
 @Observable
 class AuthManager {
-    static let shared = AuthManager()
-
     var isAuthenticated: Bool = false
     var credentials: Credentials? = nil
     var isLoading: Bool = false
@@ -20,7 +18,7 @@ class AuthManager {
 
     private let apiService = APIService.shared
 
-    private init() {
+    init() {
         if let credentials = KeychainService.shared.read(
             service: serviceName,
             account: accountName,
@@ -37,6 +35,8 @@ class AuthManager {
         isLoading = true
         errorMessage = nil
 
+        defer { isLoading = false }
+
         do {
             logger.info("Attempting to login")
             let passwordHash = sha256(password)
@@ -50,17 +50,14 @@ class AuthManager {
 
             self.credentials = credentials
             self.isAuthenticated = true
-
             return true
         } catch {
             logger.error("Login failed: \(error)")
             self.errorMessage = "Login failed. Please check your credentials."
             self.isAuthenticated = false
             self.credentials = nil
+            return false
         }
-
-        isLoading = false
-        return false
     }
 
     func logout() async throws {
@@ -72,7 +69,7 @@ class AuthManager {
         self.isAuthenticated = false
     }
 
-    func sha256(_ input: String) -> String {
+    private func sha256(_ input: String) -> String {
         let inputData = Data(input.utf8)
         let hashed = SHA256.hash(data: inputData)
         let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
