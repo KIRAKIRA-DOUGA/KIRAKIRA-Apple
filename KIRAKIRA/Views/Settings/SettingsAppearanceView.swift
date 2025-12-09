@@ -15,7 +15,7 @@ struct SettingsAppearanceView: View {
                 .pickerStyle(.segmented)
                 .controlSize(.large)
             }
-            
+
             Section(header: Text(.settingsAppearanceVideoDisplayStyle)) {
                 Picker(.settingsAppearanceVideoDisplayStyle, selection: $videoDisplayStyle) {
                     Image(systemName: "rectangle.fill").tag(ViewStyle.card)

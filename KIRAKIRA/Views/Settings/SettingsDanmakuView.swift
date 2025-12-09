@@ -52,7 +52,7 @@ struct SettingsDanmakuView: View {
                         .contentTransition(.numericText(value: danmakuOpacity))
                 }
             }
-            
+
             Section(header: Text(.settingsDanmakuSpeed)) {
                 Slider(value: $danmakuSpeed, in: 1...5, step: 1) {
 
