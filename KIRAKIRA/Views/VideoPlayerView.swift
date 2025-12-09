@@ -73,10 +73,10 @@ struct VideoPlayerView: View {
                         }
                     }
                     .safeAreaBar(edge: .top) {
-                        Picker("VIDEO_TAB", selection: $showingView) {
-                            Text("VIDEO_INFO").tag(VideoPlayerTab.info)
-                            Text("COMMENT").tag(VideoPlayerTab.comments)
-                            Text("DANMAKU").tag(VideoPlayerTab.danmakus)
+                        Picker(.videoTabPicker, selection: $showingView) {
+                            Text(.videoTabInfo).tag(VideoPlayerTab.info)
+                            Text(.videoTabComment).tag(VideoPlayerTab.comments)
+                            Text(.videoTabDanmaku).tag(VideoPlayerTab.danmakus)
                         }
                         .pickerStyle(.segmented)
                         .padding()
@@ -110,7 +110,7 @@ struct VideoPlayerView: View {
                     Spacer()
 
                     Button(action: {}) {
-                        Label("USER_FOLLOW", systemImage: "plus")
+                        Label(.userFollow, systemImage: "plus")
                     }
                     .buttonStyle(.glassProminent)
                 }
@@ -181,14 +181,14 @@ struct VideoPlayerView: View {
                         }
 
                         Button(action: {}) {
-                            Label("SHARE", systemImage: "square.and.arrow.up")
+                            Label(.share, systemImage: "square.and.arrow.up")
                         }
                         .labelStyle(.iconOnly)
 
                         Menu {
-                            Button("REPORT", systemImage: "flag", action: {})
-                            Button("CHECK_THUMBNAIL", systemImage: "photo", action: {})
-                            Button("DOWNLOAD", systemImage: "square.and.arrow.down", action: {})
+                            Button(.report, systemImage: "flag", action: {})
+                            Button(.checkThumbnail, systemImage: "photo", action: {})
+                            Button(.download, systemImage: "square.and.arrow.down", action: {})
                         } label: {
                             Image(systemName: "ellipsis")
                                 .frame(height: 20)

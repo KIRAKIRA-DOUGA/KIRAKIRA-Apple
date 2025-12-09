@@ -20,7 +20,7 @@ struct FollowingFeedView: View {
                     }
                 }.padding()
             }
-            .navigationTitle("MAINTAB_FOLLOWING")
+            .navigationTitle(.maintabFollowing)
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
                 ProfileToolbarItem()

@@ -10,7 +10,7 @@ struct ErrorView: View {
                 .font(.largeTitle)
                 .foregroundStyle(.red)
             Text(errorMessage)
-            Button("ERROR_TRY_AGAIN") {
+            Button(.errorTryAgain) {
                 retry()
             }
             .buttonStyle(.borderedProminent)

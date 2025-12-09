@@ -6,8 +6,8 @@ struct SettingsAppearanceView: View {
 
     var body: some View {
         Form {
-            Section(header: Text("SETTINGS_APPEARANCE_COLOR_SCHEME")) {
-                Picker("SETTINGS_APPEARANCE_COLOR_SCHEME", selection: $globalColorScheme) {
+            Section(header: Text(.settingsAppearanceColorScheme)) {
+                Picker(.settingsAppearanceColorScheme, selection: $globalColorScheme) {
                     Text(verbatim: "AUTO").tag(GlobalColorScheme.auto)
                     Image(systemName: "sun.max.fill").tag(GlobalColorScheme.light)
                     Image(systemName: "moon.fill").tag(GlobalColorScheme.dark)
@@ -15,9 +15,9 @@ struct SettingsAppearanceView: View {
                 .pickerStyle(.segmented)
                 .controlSize(.large)
             }
-
-            Section(header: Text("SETTINGS_APPEARANCE_VIDEO_DISPLAY_STYLE")) {
-                Picker("SETTINGS_APPEARANCE_VIDEO_DISPLAY_STYLE", selection: $videoDisplayStyle) {
+            
+            Section(header: Text(.settingsAppearanceVideoDisplayStyle)) {
+                Picker(.settingsAppearanceVideoDisplayStyle, selection: $videoDisplayStyle) {
                     Image(systemName: "rectangle.fill").tag(ViewStyle.card)
                     Image(systemName: "rectangle.grid.1x3.fill").tag(ViewStyle.row)
                     Image(systemName: "square.grid.2x2.fill").tag(ViewStyle.smallCard)
@@ -27,7 +27,7 @@ struct SettingsAppearanceView: View {
             }
         }
         .formStyle(.grouped)
-        .navigationTitle("SETTINGS_APPEARANCE")
+        .navigationTitle(.settingsAppearance)
     }
 }
 

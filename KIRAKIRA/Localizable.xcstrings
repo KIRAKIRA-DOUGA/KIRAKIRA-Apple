@@ -5,6 +5,7 @@
       "shouldTranslate" : false
     },
     "CATEGORY" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -15,6 +16,7 @@
       }
     },
     "CATEGORY_ANIMATION" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -25,6 +27,7 @@
       }
     },
     "CATEGORY_DESIGN" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -35,6 +38,7 @@
       }
     },
     "CATEGORY_GAME" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -45,6 +49,7 @@
       }
     },
     "CATEGORY_MUSIC" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -55,6 +60,7 @@
       }
     },
     "CATEGORY_OTHER" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -65,6 +71,7 @@
       }
     },
     "CATEGORY_OTOMAD" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -75,6 +82,7 @@
       }
     },
     "CATEGORY_TECH" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -85,6 +93,7 @@
       }
     },
     "CHECK_THUMBNAIL" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -94,37 +103,9 @@
         }
       }
     },
-    "CLOSE" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "关闭"
-          }
-        }
-      }
-    },
-    "COMMENT" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "评论"
-          }
-        }
-      }
-    },
-    "DANMAKU" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "弹幕"
-          }
-        }
-      }
-    },
     "DOWNLOAD" : {
+      "comment" : "The action of downloading the video.",
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -135,6 +116,8 @@
       }
     },
     "ERROR_TRY_AGAIN" : {
+      "comment" : "The try again button if an error occurred when loading things from the API.",
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -144,27 +127,8 @@
         }
       }
     },
-    "FAVORITE" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "收藏"
-          }
-        }
-      }
-    },
-    "HISTORY" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "历史"
-          }
-        }
-      }
-    },
     "HOT" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -178,6 +142,7 @@
       "shouldTranslate" : false
     },
     "LATEST" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -188,6 +153,7 @@
       }
     },
     "LOG_OUT" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -198,6 +164,7 @@
       }
     },
     "MAINTAB_FOLLOWING" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -208,6 +175,7 @@
       }
     },
     "MAINTAB_HOME" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -218,6 +186,7 @@
       }
     },
     "MAINTAB_MY" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -228,6 +197,8 @@
       }
     },
     "MESSAGES" : {
+      "comment" : "The user’s private messages.",
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -237,7 +208,20 @@
         }
       }
     },
+    "MINIPLAYER_CLOSE" : {
+      "comment" : "The action of closing the mini player.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
+        }
+      }
+    },
     "MINIPLAYER_TOGGLE_PLAY_PAUSE" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -248,6 +232,8 @@
       }
     },
     "NOTIFICATION" : {
+      "comment" : "Notifications that the user has received.",
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -257,10 +243,9 @@
         }
       }
     },
-    "placeholder for scroll testing" : {
-
-    },
     "REPORT" : {
+      "comment" : "The action of reporting, to a user or to a video.",
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -271,6 +256,7 @@
       }
     },
     "SETTINGS" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -281,6 +267,7 @@
       }
     },
     "SETTINGS_ABOUT" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -291,6 +278,7 @@
       }
     },
     "SETTINGS_APPEARANCE" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -301,6 +289,7 @@
       }
     },
     "SETTINGS_APPEARANCE_COLOR_SCHEME" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -311,6 +300,7 @@
       }
     },
     "SETTINGS_APPEARANCE_VIDEO_DISPLAY_STYLE" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -321,6 +311,7 @@
       }
     },
     "SETTINGS_BLOCK_AND_HIDE" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -331,6 +322,7 @@
       }
     },
     "SETTINGS_DANMAKU" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -341,6 +333,7 @@
       }
     },
     "SETTINGS_DANMAKU_OPACITY" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -351,6 +344,7 @@
       }
     },
     "SETTINGS_DANMAKU_SIZE" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -361,6 +355,7 @@
       }
     },
     "SETTINGS_DANMAKU_SPEED" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -371,6 +366,7 @@
       }
     },
     "SETTINGS_GENERAL" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -381,6 +377,7 @@
       }
     },
     "SETTINGS_INVITATION_CODE" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -391,6 +388,7 @@
       }
     },
     "SETTINGS_ME" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -401,6 +399,7 @@
       }
     },
     "SETTINGS_PLAYING" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -411,6 +410,7 @@
       }
     },
     "SETTINGS_PLAYING_AUTO_PIP" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -421,6 +421,7 @@
       }
     },
     "SETTINGS_PLAYING_AUTO_PLAY" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -431,6 +432,7 @@
       }
     },
     "SETTINGS_PRIVACY" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -441,6 +443,7 @@
       }
     },
     "SETTINGS_PROFILE" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -451,6 +454,7 @@
       }
     },
     "SETTINGS_PROFILE_BIO" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -461,6 +465,7 @@
       }
     },
     "SETTINGS_PROFILE_BIRTHDAY" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -471,6 +476,7 @@
       }
     },
     "SETTINGS_PROFILE_NICKNAME" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -481,6 +487,7 @@
       }
     },
     "SETTINGS_PROFILE_USERNAME" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -491,6 +498,7 @@
       }
     },
     "SETTINGS_SAFETY" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -501,6 +509,7 @@
       }
     },
     "SETTINGS_VIDEO_DISPLAY_STYLE_CARD" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -511,6 +520,7 @@
       }
     },
     "SETTINGS_VIDEO_DISPLAY_STYLE_ROW" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -521,6 +531,7 @@
       }
     },
     "SETTINGS_VIDEO_DISPLAY_STYLE_SMALL_CARD" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -531,6 +542,8 @@
       }
     },
     "SHARE" : {
+      "comment" : "The action of sharing.",
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -541,6 +554,8 @@
       }
     },
     "SWITCH_ACCOUNT" : {
+      "comment" : "The action of switching the account.",
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -551,6 +566,8 @@
       }
     },
     "USER_BLOCK" : {
+      "comment" : "The action of blocking the user.",
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -560,7 +577,21 @@
         }
       }
     },
-    "USER_FAVORITE" : {
+    "USER_EDIT_PROFILE" : {
+      "comment" : "The action of the user editing one’s own profile.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑资料"
+          }
+        }
+      }
+    },
+    "USER_FAVORITED" : {
+      "comment" : "The videos that the user have favorited.",
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -571,6 +602,8 @@
       }
     },
     "USER_FOLLOW" : {
+      "comment" : "The action of following the user.",
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -582,27 +615,31 @@
     },
     "USER_FOLLOWERS" : {
       "comment" : "The number of people following this user.",
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "粉丝"
+            "value" : "%1$(count)lld粉丝"
           }
         }
       }
     },
     "USER_FOLLOWING" : {
       "comment" : "The number of accounts this user is following.",
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "关注"
+            "value" : "%1$(count)lld关注"
           }
         }
       }
     },
     "USER_HIDE" : {
+      "comment" : "The action of hiding the user.",
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -612,7 +649,20 @@
         }
       }
     },
+    "USER_HISTORY" : {
+      "comment" : "The videos that the user have watched.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "历史"
+          }
+        }
+      }
+    },
     "USER_PAGE" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -622,17 +672,20 @@
         }
       }
     },
-    "USER_REPORT" : {
+    "USER_TAB_PICKER" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "举报"
+            "value" : "用户主页"
           }
         }
       }
     },
-    "USER_VIDEO" : {
+    "USER_UPLOADED" : {
+      "comment" : "The videos that the user have uploaded.",
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -642,7 +695,33 @@
         }
       }
     },
-    "VIDEO_INFO" : {
+    "VIDEO_TAB_COMMENT" : {
+      "comment" : "The comments of the current video.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "评论"
+          }
+        }
+      }
+    },
+    "VIDEO_TAB_DANMAKU" : {
+      "comment" : "The danmaku of the current video.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "弹幕"
+          }
+        }
+      }
+    },
+    "VIDEO_TAB_INFO" : {
+      "comment" : "The info of the current video.",
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -652,11 +731,17 @@
         }
       }
     },
-    "VIDEO_TAB" : {
-
-    },
-    "编辑资料" : {
-
+    "VIDEO_TAB_PICKER" : {
+      "comment" : "The info picker of the video player, switching between info, comment and danmaku.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "视频详情页面"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

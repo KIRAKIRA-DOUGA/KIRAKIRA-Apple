@@ -92,12 +92,13 @@ struct UserView: View {
                     // Actions
                     if isSelf {
                         Button(action: { isShowingEditProfile = true }) {
-                            Text("编辑资料")
-                        }.buttonStyle(.glass)
+                            Text(.userEditProfile)
+                        }
+                        .buttonStyle(.glass)
                     } else {
                         HStack {
                             Button(action: {}) {
-                                Label("USER_FOLLOW", systemImage: "plus")
+                                Label(.userFollow, systemImage: "plus")
                                     .frame(height: 20)
                             }.buttonStyle(.glassProminent)
 
@@ -107,9 +108,9 @@ struct UserView: View {
                             }.buttonStyle(.glass)
 
                             Menu {
-                                Button("USER_REPORT", systemImage: "flag", action: {})
-                                Button("USER_BLOCK", systemImage: "nosign", action: {})
-                                Button("USER_HIDE", systemImage: "eye.slash", action: {})
+                                Button(.report, systemImage: "flag", action: {})
+                                Button(.userBlock, systemImage: "nosign", action: {})
+                                Button(.userHide, systemImage: "eye.slash", action: {})
                             } label: {
                                 Image(systemName: "ellipsis")
                                     .frame(height: 20)
@@ -129,16 +130,8 @@ struct UserView: View {
 
                 // Follower Info
                 HStack(spacing: 16) {
-                    HStack {
-                        Text(verbatim: "233")
-                        Text("USER_FOLLOWERS", comment: "The number of people following this user.")
-                            .foregroundStyle(.secondary)
-                    }
-                    HStack {
-                        Text(verbatim: "233")
-                        Text("USER_FOLLOWING", comment: "The number of accounts this user is following.")
-                            .foregroundStyle(.secondary)
-                    }
+                    Text(.userFollowers(count: 233))
+                    Text(.userFollowing(count: 233))
                 }
 
                 // Bio
@@ -161,7 +154,7 @@ struct UserView: View {
 
             LazyVStack {
                 ForEach(1...100, id: \.self) { _ in
-                    Text("placeholder for scroll testing")
+                    Text(verbatim: "placeholder for scroll testing")
                 }
             }
         }
@@ -181,9 +174,9 @@ struct UserView: View {
     }
 
     var segmented: some View {
-        Picker("USER_PAGE", selection: $showingView) {
-            Text("USER_VIDEO").tag(ViewTab.videos)
-            Text("USER_FAVORITE").tag(ViewTab.collections)
+        Picker(.userTabPicker, selection: $showingView) {
+            Text(.userFavorited).tag(ViewTab.videos)
+            Text(.userUploaded).tag(ViewTab.collections)
         }
         .pickerStyle(.segmented)
     }

@@ -51,7 +51,7 @@ struct MyMessagesView: View {
             .listSectionSeparator(.hidden)
         }
         .listStyle(.plain)
-        .navigationTitle("MESSAGES")
+        .navigationTitle(.messages)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

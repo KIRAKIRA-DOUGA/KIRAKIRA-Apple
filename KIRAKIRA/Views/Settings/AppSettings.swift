@@ -43,14 +43,14 @@ enum ViewStyle: String, CaseIterable, Identifiable {
 
     var id: String { rawValue }
 
-    var displayName: LocalizedStringKey {
+    var displayName: LocalizedStringResource {
         switch self {
         case .row:
-            return "SETTINGS_VIDEO_DISPLAY_STYLE_ROW"
+            return LocalizedStringResource.settingsVideoDisplayStyleRow
         case .card:
-            return "SETTINGS_VIDEO_DISPLAY_STYLE_CARD"
+            return LocalizedStringResource.settingsVideoDisplayStyleCard
         case .smallCard:
-            return "SETTINGS_VIDEO_DISPLAY_STYLE_SMALL_CARD"
+            return LocalizedStringResource.settingsVideoDisplayStyleSmallCard
         }
     }
 }

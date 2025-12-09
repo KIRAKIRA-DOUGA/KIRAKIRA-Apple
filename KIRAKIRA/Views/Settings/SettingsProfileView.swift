@@ -55,28 +55,28 @@ struct SettingsProfileView: View {
 
             Section {
                 TextField(
-                    "SETTINGS_PROFILE_USERNAME",
+                    .settingsProfileUsername,
                     text: $username
                 )
                 TextField(
-                    "SETTINGS_PROFILE_NICKNAME",
+                    .settingsProfileNickname,
                     text: $name
                 )
                 TextField(
-                    "SETTINGS_PROFILE_BIO",
+                    .settingsProfileBio,
                     text: $bio
                 )
             }
 
             Section {
                 DatePicker(
-                    "SETTINGS_PROFILE_BIRTHDAY",
+                    .settingsProfileBirthday,
                     selection: $birthday,
                     displayedComponents: [.date]
                 )
             }
         }
-        .navigationTitle("SETTINGS_PROFILE")
+        .navigationTitle(.settingsProfile)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button(role: .confirm, action: {}) {

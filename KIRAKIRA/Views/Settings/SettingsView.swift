@@ -17,75 +17,75 @@ struct SettingsView: View {
                     NavigationLink {
                         SettingsProfileView()
                     } label: {
-                        Label("SETTINGS_PROFILE", systemImage: "person.crop.circle")
+                        Label(.settingsProfile, systemImage: "person.crop.circle")
                     }
 
                     NavigationLink {
 
                     } label: {
-                        Label("SETTINGS_PRIVACY", systemImage: "hand.raised")
+                        Label(.settingsPrivacy, systemImage: "hand.raised")
                     }
 
                     NavigationLink {
 
                     } label: {
-                        Label("SETTINGS_SAFETY", systemImage: "lock")
+                        Label(.settingsSafety, systemImage: "lock")
                     }
 
                     NavigationLink {
 
                     } label: {
-                        Label("SETTINGS_BLOCK_AND_HIDE", systemImage: "nosign")
+                        Label(.settingsBlockAndHide, systemImage: "nosign")
                     }
 
                     NavigationLink {
 
                     } label: {
-                        Label("SETTINGS_INVITATION_CODE", systemImage: "app.gift")
+                        Label(.settingsInvitationCode, systemImage: "app.gift")
                     }
                 } header: {
-                    Text("SETTINGS_ME")
+                    Text(.settingsMe)
                 }
 
                 Section {
                     NavigationLink {
                         SettingsAppearanceView()
                     } label: {
-                        Label("SETTINGS_APPEARANCE", systemImage: "paintbrush")
+                        Label(.settingsAppearance, systemImage: "paintbrush")
                     }
 
                     NavigationLink {
                         SettingsPlayerView()
                     } label: {
-                        Label("SETTINGS_PLAYING", systemImage: "play")
+                        Label(.settingsPlaying, systemImage: "play")
                     }
 
                     NavigationLink {
                         SettingsDanmakuView()
                     } label: {
-                        Label("SETTINGS_DANMAKU", systemImage: "list.bullet.indent")
+                        Label(.settingsDanmaku, systemImage: "list.bullet.indent")
                     }
 
                     NavigationLink {
                         SettingsAboutView()
                     } label: {
-                        Label("SETTINGS_ABOUT", systemImage: "info.circle")
+                        Label(.settingsAbout, systemImage: "info.circle")
                     }
                 } header: {
-                    Text("SETTINGS_GENERAL")
+                    Text(.settingsGeneral)
                 }
 
                 Section {
                     Button(action: {}) {
-                        Label("SWITCH_ACCOUNT", systemImage: "person.2")
+                        Label(.switchAccount, systemImage: "person.2")
                     }
 
                     Button(role: .destructive, action: {}) {
-                        Label("LOG_OUT", systemImage: "door.right.hand.open")
+                        Label(.logOut, systemImage: "door.right.hand.open")
                     }.foregroundStyle(.red)
                 }
             }
-            .navigationTitle("SETTINGS")
+            .navigationTitle(.settings)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: { dismiss() }) {
