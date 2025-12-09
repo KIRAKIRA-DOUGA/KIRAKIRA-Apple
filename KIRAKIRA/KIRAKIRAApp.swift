@@ -14,7 +14,7 @@ struct KIRAKIRAApp: App {
     @State private var isSplashVisible = true
     @State private var isSplashHitAllowed = true
     @AppSetting(\.globalColorScheme) private var globalColorScheme
-    private var appearenceManager = AppearanceManager()
+    private var appearanceManager = AppearanceManager()
 
     var body: some Scene {
         WindowGroup {
@@ -37,10 +37,10 @@ struct KIRAKIRAApp: App {
                     }
                 }
                 .task {
-                    appearenceManager.updateWindowStyle()
+                    appearanceManager.updateWindowStyle()
                 }
                 .onChange(of: globalColorScheme) {
-                    appearenceManager.updateWindowStyle()
+                    appearanceManager.updateWindowStyle()
                 }
         }
     }

@@ -9,7 +9,7 @@ struct CFImageView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            KFImage(buildURL(for: geometry.size, lowResulotion: false))
+            KFImage(buildURL(for: geometry.size, lowResolution: false))
                 .placeholder {
                     Rectangle()
                         .fill(Color.gray.opacity(0.3))
@@ -21,7 +21,7 @@ struct CFImageView: View {
     }
 
     /// Constructs the final Cloudflare URL with size and format variants.
-    private func buildURL(for size: CGSize, lowResulotion: Bool?) -> URL? {
+    private func buildURL(for size: CGSize, lowResolution: Bool?) -> URL? {
         guard let imageId else { return .none }
 
         let baseURL = URL(string: "https://kirafile.com/cdn-cgi/imagedelivery/Gyz90amG54C4b_dtJiRpYg/")!

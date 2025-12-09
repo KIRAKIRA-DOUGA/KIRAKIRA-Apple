@@ -51,7 +51,7 @@ struct SettingsView: View {
                     NavigationLink {
                         SettingsAppearanceView()
                     } label: {
-                        Label("SETTINGS_APPEARENCE", systemImage: "paintbrush")
+                        Label("SETTINGS_APPEARANCE", systemImage: "paintbrush")
                     }
 
                     NavigationLink {

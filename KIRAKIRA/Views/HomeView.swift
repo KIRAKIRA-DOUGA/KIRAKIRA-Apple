@@ -72,7 +72,7 @@ struct HomeView: View {
 
 #Preview(traits: .commonPreviewTrait) {
     @Previewable @State var isPlayerExpanded: Bool = true
-    @Previewable @Namespace var animationNamspace
+    @Previewable @Namespace var animationNamespace
 
-    HomeView(isPlayerExpanded: $isPlayerExpanded, animationNamespace: animationNamspace)
+    HomeView(isPlayerExpanded: $isPlayerExpanded, animationNamespace: animationNamespace)
 }

@@ -257,6 +257,9 @@
         }
       }
     },
+    "placeholder for scroll testing" : {
+
+    },
     "REPORT" : {
       "localizations" : {
         "zh-Hans" : {
@@ -287,7 +290,7 @@
         }
       }
     },
-    "SETTINGS_APPEARENCE" : {
+    "SETTINGS_APPEARANCE" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -297,7 +300,7 @@
         }
       }
     },
-    "SETTINGS_APPEARENCE_COLOR_SCHEME" : {
+    "SETTINGS_APPEARANCE_COLOR_SCHEME" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -307,7 +310,7 @@
         }
       }
     },
-    "SETTINGS_APPEARENCE_VIDEO_DISPLAY_STYLE" : {
+    "SETTINGS_APPEARANCE_VIDEO_DISPLAY_STYLE" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -650,6 +653,9 @@
       }
     },
     "VIDEO_TAB" : {
+
+    },
+    "编辑资料" : {
 
     }
   },
