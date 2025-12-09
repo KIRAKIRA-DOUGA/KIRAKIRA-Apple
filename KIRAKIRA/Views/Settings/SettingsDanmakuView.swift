@@ -52,10 +52,10 @@ struct SettingsDanmakuView: View {
                         .contentTransition(.numericText(value: danmakuOpacity))
                 }
             }
-            
+
             Section(header: Text("SETTINGS_DANMAKU_SPEED")) {
                 Slider(value: $danmakuSpeed, in: 1...5, step: 1) {
-                    
+
                 } minimumValueLabel: {
                     Image(systemName: "tortoise.fill")
                         .foregroundStyle(.secondary)

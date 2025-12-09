@@ -9,7 +9,6 @@ public class AppSettings: ObservableObject {
     public static let shared = AppSettings()
 }
 
-
 /// A property wrapper that provides a binding to a value stored in `AppSettings`,
 /// allowing views to read and write shared app configuration using a key path.
 @propertyWrapper

@@ -26,11 +26,11 @@ struct MyView: View {
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 72, height: 72)
                                     .clipShape(Circle())
-                                
+
                                 VStack(alignment: .leading, spacing: 5) {
                                     Text(verbatim: "艾了个拉")
                                         .font(.title3)
-                                    
+
                                     Text(verbatim: "@Aira")
                                         .font(.callout)
                                         .foregroundStyle(.secondary)

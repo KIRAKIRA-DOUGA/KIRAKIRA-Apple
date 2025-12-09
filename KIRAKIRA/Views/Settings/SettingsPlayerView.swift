@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsPlayerView: View {
     @State var isPipOnExit = false
     @State var isAutoPlay = false
-    
+
     var body: some View {
         List {
             Toggle(isOn: $isAutoPlay) {

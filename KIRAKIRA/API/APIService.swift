@@ -58,7 +58,8 @@ actor APIService: APIServiceProtocol {
         // TODO: Handle 401 unauthorized globally
 
         guard let httpResponse = response as? HTTPURLResponse,
-                (200...299).contains(httpResponse.statusCode) else {
+            (200...299).contains(httpResponse.statusCode)
+        else {
             let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
             logger.error("HTTP Error: \(statusCode) for URL \(url.absoluteString)")
             throw APIError.httpError(statusCode: statusCode)
@@ -69,7 +70,7 @@ actor APIService: APIServiceProtocol {
             logger.debug("Decoded response successfully for \(url.absoluteString)")
             return decodedResponse
         } catch {
-           logger.error("Decoding error for URL \(url.absoluteString): \(error)")
+            logger.error("Decoding error for URL \(url.absoluteString): \(error)")
             throw APIError.decodingError(error)
         }
     }

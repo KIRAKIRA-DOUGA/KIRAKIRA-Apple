@@ -149,15 +149,15 @@ struct UserView: View {
             .textSelection(.enabled)
 
             segmented
-            .pickerStyle(.segmented)
-            .padding(.horizontal)
-            .onScrollVisibilityChange { visible in
-                if visible {
-                    isSegmentedVisible = true
-                } else {
-                    isSegmentedVisible = false
+                .pickerStyle(.segmented)
+                .padding(.horizontal)
+                .onScrollVisibilityChange { visible in
+                    if visible {
+                        isSegmentedVisible = true
+                    } else {
+                        isSegmentedVisible = false
+                    }
                 }
-            }
 
             LazyVStack {
                 ForEach(1...100, id: \.self) { _ in
@@ -179,7 +179,7 @@ struct UserView: View {
         .ignoresSafeArea(edges: .top)
         .scrollEdgeEffectHidden(isBannerVisible, for: .top)
     }
-    
+
     var segmented: some View {
         Picker("USER_PAGE", selection: $showingView) {
             Text("USER_VIDEO").tag(ViewTab.videos)

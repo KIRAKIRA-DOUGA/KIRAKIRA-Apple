@@ -44,7 +44,7 @@ class AuthManager {
             let response: UserLoginResponseDTO = try await apiService.request(.login, body: requestDTO)
             logger.info("Login successful, saving credentials to Keychain")
 
-            let credentials = Credentials(email: email, token: response.token, uid: response.uid, UUID: response.UUID)
+            let credentials = Credentials(email: email, token: response.token, uid: response.uid, uuid: response.uuid)
 
             KeychainService.shared.save(credentials, service: serviceName, account: accountName)
 
@@ -85,10 +85,10 @@ struct Credentials: Codable {
     let email: String
     let token: String
     let uid: Int
-    let UUID: String
+    let uuid: String
 
     var cookieString: String {
-        "email=\(email); token=\(token); uid=\(uid); uuid=\(UUID)"
+        "email=\(email); token=\(token); uid=\(uid); uuid=\(uuid)"
     }
 }
 

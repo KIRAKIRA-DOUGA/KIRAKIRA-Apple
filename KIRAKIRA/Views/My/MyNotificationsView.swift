@@ -23,7 +23,7 @@ struct MyNotificationsView: View {
                         }
                         .padding(.trailing, 22)
                         Text(verbatim: "这是通知内容")
-                        .font(.subheadline)
+                            .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
                 }
