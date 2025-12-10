@@ -18,7 +18,7 @@ struct MyView: View {
                         UserView()
                     } label: {
                         LabeledContent {
-                            Text("USER_PAGE")
+                            Text(.userPage)
                         } label: {
                             HStack(spacing: 12) {
                                 Image("SamplePortrait")
@@ -44,14 +44,14 @@ struct MyView: View {
                     NavigationLink {
                         MyNotificationsView()
                     } label: {
-                        Label("NOTIFICATION", systemImage: "bell")
+                        Label(.notifications, systemImage: "bell")
                             .badge(3)
                     }
 
                     NavigationLink {
                         MyMessagesView()
                     } label: {
-                        Label("MESSAGES", systemImage: "message")
+                        Label(.messages, systemImage: "message")
                             .badge(10)
                     }
                 }
@@ -60,28 +60,24 @@ struct MyView: View {
                     NavigationLink {
                         MyCollectionsView()
                     } label: {
-                        Label("FAVORITE", systemImage: "star")
+                        Label(.userFavorited, systemImage: "star")
                     }
 
                     NavigationLink {
                         MyHistoryView()
                     } label: {
-                        Label(
-                            "HISTORY",
-                            systemImage:
-                                "clock.arrow.trianglehead.counterclockwise.rotate.90"
-                        )
+                        Label(.userHistory, systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90")
                     }
                 }
 
             }
             .contentMargins(.top, 16)
-            .navigationTitle("MAINTAB_MY")
+            .navigationTitle(.maintabMy)
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
                 ToolbarItem {
                     Button(action: { isShowingSettings = true }) {
-                        Image(systemName: "gear")
+                        Label(.settings, systemImage: "gear")
                     }
                 }
             }

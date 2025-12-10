@@ -17,13 +17,13 @@ struct MainView: View {
         @Bindable var globalStateManager = globalStateManager
 
         TabView(selection: $globalStateManager.mainTabSelection) {
-            Tab("MAINTAB_HOME", systemImage: "house", value: MainTab.home) {
+            Tab(.maintabHome, systemImage: "house", value: MainTab.home) {
                 HomeView(isPlayerExpanded: $isPlayerExpanded, animationNamespace: animationNamespace)
             }
-            Tab("MAINTAB_FOLLOWING", systemImage: "mail.stack", value: MainTab.feed) {
+            Tab(.maintabFollowing, systemImage: "mail.stack", value: MainTab.feed) {
                 FollowingFeedView()
             }
-            Tab("MAINTAB_MY", systemImage: "person", value: MainTab.me) {
+            Tab(.maintabMy, systemImage: "person", value: MainTab.me) {
                 MyView()
             }
             Tab(value: MainTab.search, role: .search) {
@@ -76,7 +76,7 @@ private struct MiniPlayer: View {
                     globalStateManger.isPlayerPlaying.toggle()
                 } label: {
                     Label(
-                        "MINIPLAYER_TOGGLE_PLAY_PAUSE",
+                        .miniplayerTogglePlayPause,
                         systemImage: globalStateManger.isPlayerPlaying ? "play.fill" : "pause.fill"
                     )
                     .contentTransition(.symbolEffect(.replace))
@@ -84,7 +84,7 @@ private struct MiniPlayer: View {
                 .frame(width: 36, height: 36)
 
                 if tabViewBottomAccessoryPlacement == .expanded {
-                    Button("CLOSE", systemImage: "forward.fill", action: {})
+                    Button(.miniplayerClose, systemImage: "forward.fill", action: {})
                         .frame(width: 36, height: 36)
                 }
             }

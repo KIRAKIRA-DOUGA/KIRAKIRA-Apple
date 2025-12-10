@@ -22,7 +22,7 @@ struct SearchView: View {
                 }
                 .padding()
             }
-            .navigationTitle("CATEGORY")
+            .navigationTitle(.category)
             .toolbarTitleDisplayMode(.inlineLarge)
         }
     }

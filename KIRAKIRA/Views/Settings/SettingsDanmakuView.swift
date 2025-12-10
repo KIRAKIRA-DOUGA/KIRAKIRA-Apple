@@ -27,7 +27,7 @@ struct SettingsDanmakuView: View {
             .clipShape(RoundedRectangle(cornerRadius: 24))
             .listRowBackground(Color.clear)
 
-            Section(header: Text("SETTINGS_DANMAKU_SIZE")) {
+            Section(header: Text(.settingsDanmakuSize)) {
                 HStack {
                     Image(systemName: "textformat.size")
                         .frame(width: 36)
@@ -40,7 +40,7 @@ struct SettingsDanmakuView: View {
                 }
             }
 
-            Section(header: Text("SETTINGS_DANMAKU_OPACITY")) {
+            Section(header: Text(.settingsDanmakuOpacity)) {
                 HStack {
                     Image(systemName: "circle.lefthalf.filled")
                         .frame(width: 36)
@@ -53,7 +53,7 @@ struct SettingsDanmakuView: View {
                 }
             }
 
-            Section(header: Text("SETTINGS_DANMAKU_SPEED")) {
+            Section(header: Text(.settingsDanmakuSpeed)) {
                 Slider(value: $danmakuSpeed, in: 1...5, step: 1) {
 
                 } minimumValueLabel: {
@@ -66,7 +66,7 @@ struct SettingsDanmakuView: View {
                         .frame(width: 36)
                 }
             }
-        }.navigationTitle("SETTINGS_DANMAKU")
+        }.navigationTitle(.settingsDanmaku)
     }
 }
 

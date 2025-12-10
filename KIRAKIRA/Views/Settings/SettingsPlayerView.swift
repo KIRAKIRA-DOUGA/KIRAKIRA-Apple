@@ -14,13 +14,13 @@ struct SettingsPlayerView: View {
     var body: some View {
         List {
             Toggle(isOn: $isAutoPlay) {
-                Label("SETTINGS_PLAYING_AUTO_PLAY", systemImage: "play")
+                Label(.settingsPlayingAutoPlay, systemImage: "play")
             }
             Toggle(isOn: $isPipOnExit) {
-                Label("SETTINGS_PLAYING_AUTO_PIP", systemImage: "pip")
+                Label(.settingsPlayingAutoPip, systemImage: "pip")
             }
         }
-        .navigationTitle("SETTINGS_PLAYING")
+        .navigationTitle(.settingsPlaying)
     }
 }
 

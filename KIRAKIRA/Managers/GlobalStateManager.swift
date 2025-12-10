@@ -30,13 +30,13 @@ struct Category: Identifiable, Hashable {
 
 let categories: [Category] = [
     // Wrap the keys in String(localized: ...)
-    Category(name: String(localized: "HOT"), systemImage: "flame.fill"),
-    Category(name: String(localized: "LATEST"), systemImage: "plus.circle.fill"),
-    Category(name: String(localized: "CATEGORY_ANIMATION"), systemImage: "wand.and.rays"),
-    Category(name: String(localized: "CATEGORY_MUSIC"), systemImage: "music.note"),
-    Category(name: String(localized: "CATEGORY_OTOMAD"), systemImage: "scissors"),
-    Category(name: String(localized: "CATEGORY_TECH"), systemImage: "cpu.fill"),
-    Category(name: String(localized: "CATEGORY_DESIGN"), systemImage: "pencil.and.ruler.fill"),
-    Category(name: String(localized: "CATEGORY_GAME"), systemImage: "gamecontroller.fill"),
-    Category(name: String(localized: "CATEGORY_OTHER"), systemImage: "square.grid.3x3.fill"),
+    Category(name: String(localized: .hot), systemImage: "flame.fill"),
+    Category(name: String(localized: .latest), systemImage: "plus.circle.fill"),
+    Category(name: String(localized: .categoryAnimation), systemImage: "wand.and.rays"),
+    Category(name: String(localized: .categoryMusic), systemImage: "music.note"),
+    Category(name: String(localized: .categoryOtomad), systemImage: "scissors"),
+    Category(name: String(localized: .categoryTech), systemImage: "cpu.fill"),
+    Category(name: String(localized: .categoryDesign), systemImage: "pencil.and.ruler.fill"),
+    Category(name: String(localized: .categoryGame), systemImage: "gamecontroller.fill"),
+    Category(name: String(localized: .categoryOther), systemImage: "square.grid.3x3.fill"),
 ]
