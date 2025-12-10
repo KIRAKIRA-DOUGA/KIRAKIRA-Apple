@@ -25,7 +25,8 @@ struct MyMessagesView: View {
                         }
                         VStack(alignment: .leading) {
                             NavigationLink {
-                                Text(verbatim: "私聊界面")
+                                Text(verbatim: "私聊界面").font(.title)
+                                Text(verbatim: "不急着做，先做网页端已经有的东西")
                             } label: {
                                 LabeledContent {
                                     Text(verbatim: "2025/12/08")
