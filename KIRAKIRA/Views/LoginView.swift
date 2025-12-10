@@ -11,6 +11,7 @@ struct LoginView: View {
                 .textContentType(.emailAddress)
                 .keyboardType(.emailAddress)
                 .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
                 .padding()
                 .background(.quinary)
                 .clipShape(.capsule)
@@ -32,12 +33,16 @@ struct LoginView: View {
                     let _ = await globalStateManager.authManager.login(email: email, password: password)
                 }
             } label: {
-                Text(.logIn)
+                if globalStateManager.authManager.isLoading {
+                    ProgressView()
+                } else {
+                    Text(.logIn)
+                }
             }
             .buttonStyle(.glassProminent)
             .buttonSizing(.flexible)
             .controlSize(.large)
-            .disabled(email.isEmpty || password.isEmpty)
+            .disabled(globalStateManager.authManager.isLoading || email.isEmpty || password.isEmpty)
         }
         .padding()
         .navigationTitle(.logIn)
