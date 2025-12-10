@@ -21,7 +21,7 @@ struct KIRAKIRAApp: App {
             MainView()
                 .environment(globalStateManager)
                 .onAppear(perform: {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                         isSplashShowing = false
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                             isSplashHitAllowed = false
