@@ -12,9 +12,8 @@ struct SettingsAppearanceView: View {
                     Image(systemName: "sun.max.fill").tag(GlobalColorScheme.light)
                     Image(systemName: "moon.fill").tag(GlobalColorScheme.dark)
                 }
-                .pickerStyle(.segmented)
-                .controlSize(.large)
-            }
+                .modifier(RawListPickerViewModifier())
+            }.listRowBackground(Color.clear)
 
             Section(header: Text(.settingsAppearanceVideoDisplayStyle)) {
                 Picker(.settingsAppearanceVideoDisplayStyle, selection: $videoDisplayStyle) {
@@ -22,12 +21,20 @@ struct SettingsAppearanceView: View {
                     Image(systemName: "rectangle.grid.1x3.fill").tag(ViewStyle.row)
                     Image(systemName: "square.grid.2x2.fill").tag(ViewStyle.smallCard)
                 }
-                .pickerStyle(.segmented)
-                .controlSize(.large)
-            }
+                .modifier(RawListPickerViewModifier())
+            }.listRowBackground(Color.clear)
         }
         .formStyle(.grouped)
         .navigationTitle(.settingsAppearance)
+    }
+}
+
+private struct RawListPickerViewModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .pickerStyle(.segmented)
+            .controlSize(.large)
+            .listRowInsets(.all, 0)
     }
 }
 
