@@ -79,9 +79,7 @@ struct SettingsProfileView: View {
         .navigationTitle(.settingsProfile)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button(role: .confirm, action: {}) {
-                    Image(systemName: "checkmark")
-                }
+                Button(.actionOk, systemImage: "checkmark", role: .confirm, action: {})
             }
         }
     }

@@ -76,21 +76,21 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    Button(action: {}) {
+                    NavigationLink {
+                        
+                    } label: {
                         Label(.switchAccount, systemImage: "person.2")
                     }
 
                     Button(role: .destructive, action: {}) {
-                        Label(.logOut, systemImage: "door.right.hand.open")
+                        Label(.logOut, systemImage: "rectangle.portrait.and.arrow.forward")
                     }.foregroundStyle(.red)
                 }
             }
             .navigationTitle(.settings)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(action: { dismiss() }) {
-                        Image(systemName: "xmark")
-                    }
+                    Button(.close, systemImage: "xmark", role: .close, action: { dismiss() })
                 }
             }
             #if !os(macOS)

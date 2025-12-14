@@ -91,16 +91,12 @@ struct UserView: View {
 
                     // Actions
                     if isSelf {
-                        Button(action: { isShowingEditProfile = true }) {
-                            Text(.userEditProfile)
-                        }
-                        .buttonStyle(.glass)
+                        Button(.userEditProfile, action: { isShowingEditProfile = true })
+                            .buttonStyle(.glass)
                     } else {
                         HStack {
-                            Button(action: {}) {
-                                Label(.userFollow, systemImage: "plus")
-                                    .frame(height: 20)
-                            }.buttonStyle(.glassProminent)
+                            Button(.userFollow, systemImage: "plus", action: {})
+                                .buttonStyle(.glassProminent)
 
                             Button(action: {}) {
                                 Image(systemName: "message")

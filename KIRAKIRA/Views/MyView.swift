@@ -76,9 +76,7 @@ struct MyView: View {
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
                 ToolbarItem {
-                    Button(action: { isShowingSettings = true }) {
-                        Label(.settings, systemImage: "gear")
-                    }
+                    Button(.settings, systemImage: "gear", action: { isShowingSettings = true })
                 }
             }
             .sheet(isPresented: $isShowingSettings) {
