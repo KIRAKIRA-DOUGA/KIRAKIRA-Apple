@@ -33,6 +33,7 @@ struct MyView: View {
 
                                     Text(verbatim: "@Aira")
                                         .font(.callout)
+                                        .fontDesign(.monospaced)
                                         .foregroundStyle(.secondary)
                                 }
                             }

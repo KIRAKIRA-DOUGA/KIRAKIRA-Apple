@@ -123,6 +123,7 @@ struct UserView: View {
                 // Username
                 Text(verbatim: "@\(userUsername)")
                     .foregroundStyle(.secondary)
+                    .fontDesign(.monospaced)
 
                 // Follower Info
                 HStack(spacing: 16) {
