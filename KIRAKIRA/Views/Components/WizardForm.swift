@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct WizardForm<Content: View, Footer: View>: View {
-    let systemImage: String
+    let systemImage: String?
+    let image: String?
     let iconStyle: AnyShapeStyle?
     let title: LocalizedStringResource
     let subtitle: LocalizedStringResource?
     let content: Content
     let footer: Footer
     init(
-        systemImage: String,
+        systemImage: String? = nil,
+        image: String? = nil,
         iconStyle: AnyShapeStyle? = nil,
         title: LocalizedStringResource,
         subtitle: LocalizedStringResource? = nil,
@@ -23,6 +25,7 @@ struct WizardForm<Content: View, Footer: View>: View {
         @ViewBuilder footer: () -> Footer
     ) {
         self.systemImage = systemImage
+        self.image = image
         self.iconStyle = iconStyle
         self.title = title
         self.subtitle = subtitle
@@ -40,17 +43,32 @@ struct WizardForm<Content: View, Footer: View>: View {
                 VStack(alignment: .leading, spacing: verticalPadding) {
                     HStack {
                         Spacer()
-                        Image(systemName: systemImage)
-                            .font(.system(size: 64))
-                            .imageScale(.large)
-                            .frame(height: 72)
-                            .foregroundStyle(iconStyle ?? AnyShapeStyle(.accent.gradient))
-                            .symbolEffect(.drawOn, isActive: !isAnimationPlayed)
-                            .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                                    isAnimationPlayed = true
+                        if let image {
+                            Image(image)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 72)
+                                .foregroundStyle(iconStyle ?? AnyShapeStyle(.accent.gradient))
+                                .symbolEffect(.drawOn, isActive: !isAnimationPlayed)
+                                .onAppear {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                                        isAnimationPlayed = true
+                                    }
                                 }
-                            }
+                        }
+                        if let systemImage {
+                            Image(systemName: systemImage)
+                                .font(.system(size: 64))
+                                .imageScale(.large)
+                                .frame(height: 72)
+                                .foregroundStyle(iconStyle ?? AnyShapeStyle(.accent.gradient))
+                                .symbolEffect(.drawOn, isActive: !isAnimationPlayed)
+                                .onAppear {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                                        isAnimationPlayed = true
+                                    }
+                                }
+                        }
                         Spacer()
                     }
                     VStack(alignment: .leading, spacing: 8) {

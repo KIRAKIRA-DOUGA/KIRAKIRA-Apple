@@ -434,6 +434,18 @@
         }
       }
     },
+    "LINK_START" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LINK START"
+          }
+        }
+      },
+      "shouldTranslate" : false
+    },
     "LOG_IN" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1519,6 +1531,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "视频详情标签页面"
+          }
+        }
+      }
+    },
+    "WELCOME_BACK" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome back~"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "欢迎回来～"
           }
         }
       }

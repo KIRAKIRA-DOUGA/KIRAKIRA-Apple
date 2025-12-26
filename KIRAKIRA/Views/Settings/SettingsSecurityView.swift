@@ -111,7 +111,7 @@ struct ChangeEmailPasswordVerification: View {
 
 struct ChangeEmailViewNewAddress: View {
     @Binding var path: NavigationPath
-    @State private var newEmail: String = ""
+    @State private var newEmailAddress: String = ""
 
     var body: some View {
         WizardForm(
@@ -120,7 +120,7 @@ struct ChangeEmailViewNewAddress: View {
             subtitle: .newEmailAddressDescription,
         ) {
             WizardSection {
-                TextField(.emailAddress, text: $newEmail)
+                TextField(.emailAddress, text: $newEmailAddress)
                     .textContentType(.emailAddress)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
@@ -129,7 +129,7 @@ struct ChangeEmailViewNewAddress: View {
         } footer: {
             NavigationLink(value: SettingsPath.changeEmailNewAddressVerification) {
                 Text(.actionContinue)
-            }.disabled(newEmail.isEmpty)
+            }.disabled(newEmailAddress.isEmpty)
         }
     }
 }
