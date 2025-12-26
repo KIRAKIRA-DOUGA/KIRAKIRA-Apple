@@ -58,7 +58,7 @@ struct WizardForm<Content: View, Footer: View>: View {
                         }
                         if let systemImage {
                             Image(systemName: systemImage)
-                                .font(.system(size: 60))
+                                .font(.system(size: 60, weight: .light))
                                 .imageScale(.large)
                                 .frame(height: 72)
                                 .foregroundStyle(iconStyle ?? AnyShapeStyle(.accent.gradient))
@@ -71,7 +71,7 @@ struct WizardForm<Content: View, Footer: View>: View {
                         }
                         Spacer()
                     }
-                    .frame(height: 100)
+                    .frame(height: 86)
                     VStack(alignment: .leading, spacing: 8) {
                         Text(title)
                             .font(.title)
@@ -89,8 +89,8 @@ struct WizardForm<Content: View, Footer: View>: View {
 
             content
         }
-        .contentMargins(.top, 16)
-        .listSectionSpacing(16)
+        .contentMargins(.top, 0)
+        .listSectionSpacing(15)
         .scrollContentBackground(.hidden)
         .safeAreaBar(edge: .bottom) {
             footer
