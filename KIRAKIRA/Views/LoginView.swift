@@ -24,7 +24,7 @@ struct LoginView: View {
                     .textContentType(.password)
             }
             
-            Button("注册", systemImage: "plus.circle") {
+            Button(.createAccount, systemImage: "plus.circle") {
                 
             }.buttonStyle(.borderless)
         } footer: {
