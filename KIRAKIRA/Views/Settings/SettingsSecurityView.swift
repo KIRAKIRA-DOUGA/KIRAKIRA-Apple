@@ -99,11 +99,12 @@ struct ChangeEmailPasswordVerification: View {
         ) {
             WizardSection {
                 SecureField(.password, text: $currentPassword)
+                    .textContentType(.password)
             }
         } footer: {
             NavigationLink(value: SettingsPath.changeEmailNewAddress) {
                 Text(.actionContinue)
-            }
+            }.disabled(currentPassword.isEmpty)
         }
     }
 }
@@ -120,11 +121,15 @@ struct ChangeEmailViewNewAddress: View {
         ) {
             WizardSection {
                 TextField(.emailAddress, text: $newEmail)
+                    .textContentType(.emailAddress)
+                    .disableAutocorrection(true)
+                    .textInputAutocapitalization(.never)
+                    .keyboardType(.emailAddress)
             }
         } footer: {
             NavigationLink(value: SettingsPath.changeEmailNewAddressVerification) {
                 Text(.actionContinue)
-            }
+            }.disabled(newEmail.isEmpty)
         }
     }
 }
@@ -141,11 +146,13 @@ struct ChangeEmailViewNewAddressVerification: View {
         ) {
             WizardSection {
                 TextField(.verificationCode, text: $newEmailVerificationCode)
+                    .textContentType(.oneTimeCode)
+                    .keyboardType(.numberPad)
             }
         } footer: {
             NavigationLink(value: SettingsPath.changeEmailSuccess) {
                 Text(.actionContinue)
-            }
+            }.disabled(newEmailVerificationCode.isEmpty)
         }
     }
 }

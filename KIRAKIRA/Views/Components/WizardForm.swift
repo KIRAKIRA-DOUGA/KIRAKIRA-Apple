@@ -32,7 +32,7 @@ struct WizardForm<Content: View, Footer: View>: View {
 
     private let horizontalPadding: CGFloat = 34
     private let verticalPadding: CGFloat = 36
-    @State private var isVisible = false
+    @State private var isAnimationPlayed = false
     
     var body: some View {
         Form {
@@ -45,10 +45,10 @@ struct WizardForm<Content: View, Footer: View>: View {
                             .imageScale(.large)
                             .frame(height: 72)
                             .foregroundStyle(iconStyle ?? AnyShapeStyle(.accent.gradient))
-                            .symbolEffect(.drawOn, isActive: !isVisible)
+                            .symbolEffect(.drawOn, isActive: !isAnimationPlayed)
                             .onAppear {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                                    isVisible = true
+                                    isAnimationPlayed = true
                                 }
                             }
                         Spacer()
@@ -57,8 +57,8 @@ struct WizardForm<Content: View, Footer: View>: View {
                         Text(title)
                             .font(.title)
                             .fontWeight(.bold)
-                        if subtitle != nil {
-                            Text(subtitle!)
+                        if let subtitle {
+                            Text(subtitle)
                                 .font(.title2)
                                 .foregroundStyle(.secondary)
                         }
