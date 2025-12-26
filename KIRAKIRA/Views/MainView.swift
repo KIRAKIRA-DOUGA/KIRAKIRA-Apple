@@ -84,7 +84,7 @@ private struct MiniPlayer: View {
                 .frame(width: 36, height: 36)
 
                 if tabViewBottomAccessoryPlacement == .expanded {
-                    Button(.miniplayerClose, systemImage: "forward.fill", action: {})
+                    Button(.close, systemImage: "forward.fill", action: {})
                         .frame(width: 36, height: 36)
                 }
             }
