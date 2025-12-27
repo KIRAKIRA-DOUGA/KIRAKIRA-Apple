@@ -9,9 +9,10 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
+    @State var path = NavigationPath()
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             List {
                 Section {
                     NavigationLink {
@@ -26,10 +27,8 @@ struct SettingsView: View {
                         Label(.settingsPrivacy, systemImage: "hand.raised")
                     }
 
-                    NavigationLink {
-
-                    } label: {
-                        Label(.settingsSafety, systemImage: "lock")
+                    NavigationLink(value: SettingsPath.security) {
+                        Label(.security, systemImage: "lock")
                     }
 
                     NavigationLink {
@@ -77,7 +76,7 @@ struct SettingsView: View {
 
                 Section {
                     NavigationLink {
-                        
+
                     } label: {
                         Label(.switchAccount, systemImage: "person.2")
                     }
@@ -88,6 +87,20 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle(.settings)
+            .navigationDestination(for: SettingsPath.self) { route in
+                switch route {
+                case .security:
+                    SettingsSecurityView(path: $path)
+                case .changeEmailPasswordVerification:
+                    ChangeEmailPasswordVerification(path: $path)
+                case .changeEmailNewAddress:
+                    ChangeEmailViewNewAddress(path: $path)
+                case .changeEmailNewAddressVerification:
+                    ChangeEmailViewNewAddressVerification(path: $path)
+                case .changeEmailSuccess:
+                    ChangeEmailViewSuccess(path: $path)
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(.close, systemImage: "xmark", role: .close, action: { dismiss() })
@@ -98,6 +111,14 @@ struct SettingsView: View {
             #endif
         }
     }
+}
+
+enum SettingsPath: Hashable {
+    case security
+    case changeEmailPasswordVerification
+    case changeEmailNewAddress
+    case changeEmailNewAddressVerification
+    case changeEmailSuccess
 }
 
 #Preview {
