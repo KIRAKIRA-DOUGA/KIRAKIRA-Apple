@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FollowingFeedView: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
+    @Environment(\.horizontalSizeClass) private var horizontalSize
 
     var body: some View {
         NavigationStack {
@@ -23,7 +24,9 @@ struct FollowingFeedView: View {
             .navigationTitle(.maintabFollowing)
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
-                ProfileToolbarItem()
+                if horizontalSize == .compact {
+                    ProfileToolbarItem()
+                }
             }
         }
     }

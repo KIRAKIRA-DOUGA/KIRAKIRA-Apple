@@ -72,7 +72,9 @@ struct MyView: View {
                 }
 
             }
-            .contentMargins(.top, 16)
+            #if os(iOS)
+                .contentMargins(.top, 16)
+            #endif
             .navigationTitle(.maintabMy)
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {

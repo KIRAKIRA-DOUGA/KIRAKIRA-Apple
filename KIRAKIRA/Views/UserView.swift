@@ -47,6 +47,7 @@ struct UserView: View {
                             endPoint: .bottom
                         )
                     )
+                    .backgroundExtensionEffect()
             }
             .padding(.bottom, -74)
             .onScrollVisibilityChange { visible in
@@ -172,8 +173,8 @@ struct UserView: View {
 
     var segmented: some View {
         Picker(.userTabPicker, selection: $showingView) {
-            Text(.userFavorited).tag(ViewTab.videos)
-            Text(.userUploaded).tag(ViewTab.collections)
+            Text(.userUploaded).tag(ViewTab.videos)
+            Text(.userFavorited).tag(ViewTab.collections)
         }
         .pickerStyle(.segmented)
     }

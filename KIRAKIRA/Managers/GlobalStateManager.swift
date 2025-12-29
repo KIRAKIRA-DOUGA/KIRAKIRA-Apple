@@ -13,8 +13,17 @@ class GlobalStateManager {
 enum MainTab: Hashable {
     case home
     case feed
-    case me
     case search
+
+    // compact horizontal size only
+    case me
+    
+    // regular horizontal size only
+    case myNotifications
+    case myMessages
+    case myFavorites
+    case myHistory
+    case myUserPage
 }
 
 enum AnimationTransitionSource: Hashable {
