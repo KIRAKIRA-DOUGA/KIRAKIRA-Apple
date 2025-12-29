@@ -1,5 +1,5 @@
 //
-//  LoginView.swift
+//  CreateAccountView.swift
 //  KIRAKIRA
 //
 //  Created by Aira Sakuranomiya on 2025/12/26.
@@ -7,34 +7,34 @@
 
 import SwiftUI
 
-struct LoginView: View {
+struct CreateAccountView: View {
     @State private var emailAddress = ""
     @State private var password = ""
+    @State private var password2 = ""
     
     var body: some View {
-        WizardForm(image: "Logo", title: .logIn, subtitle: .logInDescription) {
+        WizardForm(systemImage: "person.badge.plus", title: .createAccount) {
             WizardSection {
                 TextField(.emailAddress, text: $emailAddress)
                     .textContentType(.emailAddress)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .keyboardType(.emailAddress)
-                
+
                 SecureField(.password, text: $password)
-                    .textContentType(.password)
+                    .textContentType(.newPassword)
+
+                SecureField(.reenterPassword, text: $password2)
+                    .textContentType(.newPassword)
             }
-            
-            Button(.createAccount, systemImage: "plus.circle") {
-                
-            }.buttonStyle(.borderless)
         } footer: {
-            Button(.linkStart) {
+            Button(.actionContinue) {
                 
-            }
+            }.disabled(emailAddress.isEmpty || password.isEmpty || password2.isEmpty || password != password2)
         }
     }
 }
 
 #Preview {
-    LoginView()
+    CreateAccountView()
 }

@@ -480,6 +480,23 @@
         }
       }
     },
+    "LOG_IN_DESCRIPTION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log in to send comments, danmakus, messages and more."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录来发送评论、弹幕、信息和更多。"
+          }
+        }
+      }
+    },
     "LOG_OUT" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -716,6 +733,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "密码"
+          }
+        }
+      }
+    },
+    "REENTER_PASSWORD" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reenter Password"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新输入密码"
           }
         }
       }
