@@ -47,7 +47,7 @@ struct MainView: View {
                         }
                     }
 
-                    Tab(.userFavorited, systemImage: "star", value: MainTab.myFavorites) {
+                    Tab(.userCollections, systemImage: "star", value: MainTab.myCollections) {
                         NavigationStack {
                             MyCollectionsView()
                         }

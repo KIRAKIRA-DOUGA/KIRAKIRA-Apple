@@ -61,7 +61,7 @@ struct MyView: View {
                     NavigationLink {
                         MyCollectionsView()
                     } label: {
-                        Label(.userFavorited, systemImage: "star")
+                        Label(.userCollections, systemImage: "star")
                     }
 
                     NavigationLink {

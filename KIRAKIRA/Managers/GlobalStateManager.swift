@@ -21,7 +21,7 @@ enum MainTab: Hashable {
     // regular horizontal size only
     case myNotifications
     case myMessages
-    case myFavorites
+    case myCollections
     case myHistory
     case myUserPage
 }

@@ -173,8 +173,8 @@ struct UserView: View {
 
     var segmented: some View {
         Picker(.userTabPicker, selection: $showingView) {
-            Text(.userUploaded).tag(ViewTab.videos)
-            Text(.userFavorited).tag(ViewTab.collections)
+            Text(.videos).tag(ViewTab.videos)
+            Text(.userCollections).tag(ViewTab.collections)
         }
         .pickerStyle(.segmented)
     }
