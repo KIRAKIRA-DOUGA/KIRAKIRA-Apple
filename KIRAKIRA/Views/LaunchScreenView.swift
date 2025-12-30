@@ -32,13 +32,13 @@ struct LaunchScreenView: View {
                     .frame(width: 128)
                     .opacity(isShowing ? 1.0 : 0.0)
             }
-            .scaleEffect(isShowing ? 1.0 : 26.0)
+            .scaleEffect(isShowing ? 1.0 : 27.0)
             .offset(x: isShowing ? 0.0 : 650, y: isShowing ? 0.0 : -400)
             .animation(
                 .timingCurve(
                     .bezier(
-                        startControlPoint: .init(x: 1.0, y: -0.2),
-                        endControlPoint: .init(x: 0.3, y: 1.0)
+                        startControlPoint: .init(x: 0.9, y: -0.05),
+                        endControlPoint: .init(x: 1.0, y: 0.0)
                     ),
                     duration: 0.5
                 ),
