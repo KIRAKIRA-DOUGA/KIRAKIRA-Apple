@@ -8,6 +8,7 @@ class GlobalStateManager {
     var isPlayerPlaying: Bool = false
     var selectedVideo: Int?
     var activeTransitionSource: AnimationTransitionSource = .miniPlayer
+    var isShowingSettings: Bool = false
 }
 
 enum MainTab: Hashable {

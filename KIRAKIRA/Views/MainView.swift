@@ -11,7 +11,6 @@ struct MainView: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
     @Environment(\.horizontalSizeClass) private var horizontalSize
     @State private var isPlayerExpanded = false
-    @State private var isShowingSettings = false  // regular horizontal size only
     @State var searchText: String = ""
     @Namespace private var animationNamespace
 
@@ -75,7 +74,9 @@ struct MainView: View {
             }
         }
         .tabViewSidebarBottomBar {
-            Button(action: { isShowingSettings = true }) {
+            Button {
+                globalStateManager.isShowingSettings = true
+            } label: {
                 Label {
                     Text(verbatim: "艾了个拉").fontWeight(.medium)
                     Spacer()
@@ -108,7 +109,7 @@ struct MainView: View {
                     .zoom(sourceID: globalStateManager.activeTransitionSource, in: animationNamespace)
                 )
         }
-        .sheet(isPresented: $isShowingSettings) {
+        .sheet(isPresented: $globalStateManager.isShowingSettings) {
             SettingsView()
         }
     }

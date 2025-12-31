@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MyView: View {
-    @State private var isShowingSettings = false
+    @Environment(GlobalStateManager.self) private var globalStateManager
 
     var body: some View {
         NavigationStack {
@@ -79,11 +79,10 @@ struct MyView: View {
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
                 ToolbarItem {
-                    Button(.settings, systemImage: "gear", action: { isShowingSettings = true })
+                    Button(.settings, systemImage: "gear") {
+                        globalStateManager.isShowingSettings = true
+                    }
                 }
-            }
-            .sheet(isPresented: $isShowingSettings) {
-                SettingsView()
             }
         }
     }
