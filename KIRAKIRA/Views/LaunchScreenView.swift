@@ -14,7 +14,7 @@ struct LaunchScreenView: View {
     var body: some View {
         GeometryReader { proxy in
             let baseLogoWidth: CGFloat = 128
-            let coverScale = (hypot(proxy.size.width, proxy.size.height) / baseLogoWidth) * 3.8
+            let coverScale = (hypot(proxy.size.width, proxy.size.height) / baseLogoWidth) * 4
 
             ZStack {
                 Rectangle()
@@ -41,7 +41,7 @@ struct LaunchScreenView: View {
                     .timingCurve(
                         .bezier(
                             startControlPoint: .init(x: 0.9, y: -0.05),
-                            endControlPoint: .init(x: 1.0, y: 0.0)
+                            endControlPoint: .init(x: 0.9, y: 0.0)
                         ),
                         duration: 0.5
                     ),
