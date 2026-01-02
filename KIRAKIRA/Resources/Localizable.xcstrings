@@ -1285,6 +1285,24 @@
         }
       }
     },
+    "USER_COLLECTIONS" : {
+      "comment" : "The videos that the user have added to collections.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collections"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "收藏"
+          }
+        }
+      }
+    },
     "USER_EDIT_PROFILE" : {
       "comment" : "The action of the user editing one’s own profile.",
       "extractionState" : "manual",
@@ -1299,24 +1317,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "编辑资料"
-          }
-        }
-      }
-    },
-    "USER_FAVORITED" : {
-      "comment" : "The videos that the user have favorited.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Favorited"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "收藏"
           }
         }
       }
@@ -1445,24 +1445,6 @@
         }
       }
     },
-    "USER_UPLOADED" : {
-      "comment" : "The videos that the user have uploaded.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Video"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "视频"
-          }
-        }
-      }
-    },
     "VERIFICATION_CODE" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1582,6 +1564,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "视频详情标签页面"
+          }
+        }
+      }
+    },
+    "VIDEOS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Videos"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "视频"
           }
         }
       }

@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSize
     @State private var viewModel = ThumbVideoViewModel()
     @State private var hasLoaded = false
     @Binding var isPlayerExpanded: Bool
@@ -41,7 +42,9 @@ struct HomeView: View {
                         .foregroundStyle(.accent)
                     }
 
-                    ProfileToolbarItem()
+                    if horizontalSize == .compact {
+                        ProfileToolbarItem()
+                    }
                 }
         }
     }

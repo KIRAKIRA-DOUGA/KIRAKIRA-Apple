@@ -15,7 +15,7 @@ struct MyCollectionsView: View {
                 EmptyView()
             }
         }
-        .navigationTitle(.userFavorited)
+        .navigationTitle(.userCollections)
         #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
         #endif

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MyView: View {
-    @State private var isShowingSettings = false
+    @Environment(GlobalStateManager.self) private var globalStateManager
 
     var body: some View {
         NavigationStack {
@@ -61,7 +61,7 @@ struct MyView: View {
                     NavigationLink {
                         MyCollectionsView()
                     } label: {
-                        Label(.userFavorited, systemImage: "star")
+                        Label(.userCollections, systemImage: "star")
                     }
 
                     NavigationLink {
@@ -72,16 +72,17 @@ struct MyView: View {
                 }
 
             }
-            .contentMargins(.top, 16)
+            #if os(iOS)
+                .contentMargins(.top, 16)
+            #endif
             .navigationTitle(.maintabMy)
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
                 ToolbarItem {
-                    Button(.settings, systemImage: "gear", action: { isShowingSettings = true })
+                    Button(.settings, systemImage: "gear") {
+                        globalStateManager.isShowingSettings = true
+                    }
                 }
-            }
-            .sheet(isPresented: $isShowingSettings) {
-                SettingsView()
             }
         }
     }
