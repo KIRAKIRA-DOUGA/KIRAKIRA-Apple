@@ -34,9 +34,10 @@ struct SettingsDanmakuView: View {
                         .foregroundStyle(.secondary)
                     Slider(value: $danmakuSize, in: 9...25, step: 1)
                     Text(Int(danmakuSize), format: .number)
-                        .frame(width: 36)
+                        .frame(minWidth: 36)
                         .monospacedDigit()
                         .contentTransition(.numericText(value: danmakuSize))
+                        .foregroundStyle(.secondary)
                 }
             }
 
@@ -45,11 +46,12 @@ struct SettingsDanmakuView: View {
                     Image(systemName: "circle.lefthalf.filled")
                         .frame(width: 36)
                         .foregroundStyle(.secondary)
-                    Slider(value: $danmakuOpacity, in: 0.1...1)
+                    Slider(value: $danmakuOpacity, in: 0.1...1, step: 0.01)
                     Text(danmakuOpacity, format: .percent)
-                        .frame(width: 36)
+                        .frame(minWidth: 36)
                         .monospacedDigit()
                         .contentTransition(.numericText(value: danmakuOpacity))
+                        .foregroundStyle(.secondary)
                 }
             }
 
