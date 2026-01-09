@@ -5,7 +5,6 @@ struct HomeView: View {
     @State private var viewModel = ThumbVideoViewModel()
     @State private var hasLoaded = false
     @Binding var isPlayerExpanded: Bool
-    let animationNamespace: Namespace.ID
 
     var body: some View {
         NavigationStack {
@@ -67,7 +66,6 @@ struct HomeView: View {
             HomeVideoListView(
                 videos: viewModel.videos,
                 isPlayerExpanded: $isPlayerExpanded,
-                animationNamespace: animationNamespace
             )
         }
     }
@@ -75,7 +73,6 @@ struct HomeView: View {
 
 #Preview(traits: .commonPreviewTrait) {
     @Previewable @State var isPlayerExpanded: Bool = true
-    @Previewable @Namespace var animationNamespace
 
-    HomeView(isPlayerExpanded: $isPlayerExpanded, animationNamespace: animationNamespace)
+    HomeView(isPlayerExpanded: $isPlayerExpanded)
 }

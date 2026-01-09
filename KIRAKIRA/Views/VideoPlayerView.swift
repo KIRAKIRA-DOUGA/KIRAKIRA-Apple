@@ -6,10 +6,11 @@
 //
 
 import AVKit
+import RichText
 import SwiftUI
 
 struct VideoPlayerView: View {
-    @Environment(GlobalStateManager.self) private var globalStateManager
+    let videoId: Int
     @State private var viewModel = VideoViewModel()
     @State private var showingView: VideoPlayerTab = .info
     @Namespace private var namespace
@@ -19,6 +20,7 @@ struct VideoPlayerView: View {
     @State private var liked = false
     @State private var disliked = false
     @State private var collected = false
+    @State private var player: AVPlayer?
 
     func like() {
         liked = !liked
@@ -49,43 +51,51 @@ struct VideoPlayerView: View {
 
     var body: some View {
         Group {
-            if let video = viewModel.video, let videoPart = video.video.videoPart.first {
-                let player = AVPlayer(url: videoPart.m3u8URL)
-
-                VStack(spacing: 0) {
-                    // Drag Indicator
-                    Capsule()
-                        .frame(width: 64, height: 5)
-                        .padding(.bottom)
-                        .foregroundStyle(.tertiary)
-
-                    VideoPlayer(player: player)
-                        .aspectRatio(16 / 9, contentMode: .fit)
-
-                    Group {
-                        switch showingView {
-                        case .info:
-                            info(video: video.video)
-                        case .comments:
-                            comments
-                        case .danmakus:
-                            danmaku
-                        }
-                    }
-                    .safeAreaBar(edge: .top) {
-                        Picker(.videoTabPicker, selection: $showingView) {
-                            Text(.videoTabInfo).tag(VideoPlayerTab.info)
-                            Text(.videoTabComment).tag(VideoPlayerTab.comments)
-                            Text(.videoTabDanmaku).tag(VideoPlayerTab.danmakus)
-                        }
-                        .pickerStyle(.segmented)
-                        .padding()
-                    }
-                }
+            if let video = viewModel.video {
+                content(video: video.video)
+            } else {
+                ProgressView()
             }
         }
         .task {
-            await viewModel.fetchVideo(of: globalStateManager.selectedVideo)
+            await viewModel.fetchVideo(of: videoId)
+        }
+    }
+
+    @ViewBuilder
+    func content(video: VideoItem) -> some View {
+        VStack(spacing: 0) {
+            if player != nil {
+                VideoPlayer(player: player)
+                    .aspectRatio(16 / 9, contentMode: .fit)
+            } else {
+                Color.black
+                    .aspectRatio(16 / 9, contentMode: .fit)
+                    .task {
+                        if let url = video.videoPart.first?.m3u8URL {
+                            player = AVPlayer(url: url)
+                        }
+                    }
+            }
+
+            Picker(.videoTabPicker, selection: $showingView) {
+                Text(.videoTabInfo).tag(VideoPlayerTab.info)
+                Text(.videoTabComment).tag(VideoPlayerTab.comments)
+                Text(.videoTabDanmaku).tag(VideoPlayerTab.danmakus)
+            }
+            .pickerStyle(.segmented)
+            .padding()
+
+            Group {
+                switch showingView {
+                case .info:
+                    info(video: video)
+                case .comments:
+                    comments
+                case .danmakus:
+                    danmaku
+                }
+            }
         }
     }
 
@@ -227,5 +237,5 @@ private enum VideoPlayerTab: Hashable, CaseIterable {
 }
 
 #Preview {
-    VideoPlayerView()
+    VideoPlayerView(videoId: 1)
 }
