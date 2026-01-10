@@ -6,7 +6,6 @@
 //
 
 import AVKit
-import RichText
 import SwiftUI
 
 struct VideoPlayerView: View {
