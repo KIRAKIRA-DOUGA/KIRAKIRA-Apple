@@ -5,8 +5,8 @@ struct VideoListView<Header: View>: View {
     @AppSetting(\.videoDisplayStyle) private var videoDisplayStyle
     let videos: [ThumbVideoItem]
     @Binding var isPlayerExpanded: Bool
-    let animationNamespace: Namespace.ID
     @ViewBuilder let header: Header?
+    @Namespace private var namespace
 
     var body: some View {
         switch videoDisplayStyle {
@@ -25,14 +25,16 @@ struct VideoListView<Header: View>: View {
             }
 
             ForEach(videos) { video in
-                Button {
-                    play(video)
+                NavigationLink {
+                    VideoPlayerView(videoId: video.videoId)
+                        .navigationTransition(.zoom(sourceID: "video\(video.videoId)", in: namespace))
                 } label: {
                     videoContent(for: video, style: .row)
                         .alignmentGuide(.listRowSeparatorLeading) { _ in
                             128 + 8  // Image width + spacing
                         }
                         .navigationLinkIndicatorVisibility(.hidden)
+                        .matchedTransitionSource(id: "video\(video.videoId)", in: namespace)
                 }
             }
         }
@@ -52,11 +54,13 @@ struct VideoListView<Header: View>: View {
                 spacing: 16
             ) {
                 ForEach(videos) { video in
-                    Button {
-                        play(video)
+                    NavigationLink {
+                        VideoPlayerView(videoId: video.videoId)
+                            .navigationTransition(.zoom(sourceID: "video\(video.videoId)", in: namespace))
                     } label: {
                         videoContent(for: video, style: videoDisplayStyle)
                             .frame(alignment: .top)
+                            .matchedTransitionSource(id: "video\(video.videoId)", in: namespace)
                     }
                     .buttonStyle(.plain)
                 }
@@ -80,12 +84,5 @@ struct VideoListView<Header: View>: View {
     private func videoContent(for video: ThumbVideoItem, style: ViewStyle) -> some View {
         let content = VideoListItemView(video: video, style: style)
         content
-            .matchedTransitionSource(id: AnimationTransitionSource.video(video.videoId), in: animationNamespace)
-    }
-
-    private func play(_ video: ThumbVideoItem) {
-        globalStateManager.selectedVideo = video.videoId
-        globalStateManager.activeTransitionSource = .video(video.videoId)
-        isPlayerExpanded = true
     }
 }
