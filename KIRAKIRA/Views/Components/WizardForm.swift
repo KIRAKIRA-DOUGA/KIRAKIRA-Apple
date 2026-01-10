@@ -58,7 +58,7 @@ struct WizardForm<Content: View, Footer: View>: View {
                         }
                         if let systemImage {
                             Image(systemName: systemImage)
-                                .font(.system(size: 60, weight: .light))
+                                .font(.system(size: 60))
                                 .imageScale(.large)
                                 .frame(height: 72)
                                 .foregroundStyle(iconStyle ?? AnyShapeStyle(.accent.gradient))
@@ -92,6 +92,7 @@ struct WizardForm<Content: View, Footer: View>: View {
         .contentMargins(.top, 0)
         .listSectionSpacing(15)
         .scrollContentBackground(.hidden)
+        .scrollDismissesKeyboard(.interactively)
         .safeAreaBar(edge: .bottom) {
             footer
                 .controlSize(.large)
