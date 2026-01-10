@@ -13,15 +13,16 @@ struct SettingsProfileView: View {
     @State private var isEdited = false
     @State private var isShowingConfirmationDialog = false
 
-    @State private var username: String = ""
-    @State private var name: String = ""
+    @State private var username: String = "Aira"
+    @State private var name: String = "艾了个拉"
     @State private var bio: String = "Kawaii Forever!~\nwow"
-    let bioMaxLength = 200
     @State private var birthday: Date = Date()
     @State private var avatarURL = URL(
         string:
             "https://kirafile.com/cdn-cgi/imagedelivery/Gyz90amG54C4b_dtJiRpYg/avatar-1-xiQgrY2SDDx68HbIH8LSSBZqDpbSOFBf-1722666535442/f=avif"
     )
+    
+    private let bioMaxLength = 200
 
     var body: some View {
         List {
@@ -60,10 +61,16 @@ struct SettingsProfileView: View {
             .listRowBackground(Color.clear)
 
             Section {
-                TextField(
-                    .settingsProfileUsername,
-                    text: $username
-                )
+                LabeledContent {
+                    TextField(
+                        .settingsProfileUsername,
+                        text: $username
+                    )
+                } label: {
+                    Text(verbatim: "@")
+                }
+                .fontDesign(.monospaced)
+
                 TextField(
                     .settingsProfileNickname,
                     text: $name
