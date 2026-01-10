@@ -8,9 +8,15 @@
 import SwiftUI
 
 struct SettingsProfileView: View {
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var isEdited = false
+    @State private var isShowingConfirmationDialog = false
+
     @State private var username: String = ""
     @State private var name: String = ""
-    @State private var bio: String = ""
+    @State private var bio: String = "Kawaii Forever!~\nwow"
+    let bioMaxLength = 200
     @State private var birthday: Date = Date()
     @State private var avatarURL = URL(
         string:
@@ -62,10 +68,21 @@ struct SettingsProfileView: View {
                     .settingsProfileNickname,
                     text: $name
                 )
+            }
+
+            Section {
                 TextField(
                     .settingsProfileBio,
-                    text: $bio
+                    text: $bio,
+                    axis: .vertical
                 )
+            } footer: {
+                HStack {
+                    Spacer()
+                    Text(verbatim: "\(bio.count) / \(bioMaxLength)")
+                        .foregroundStyle(bio.count > bioMaxLength ? .red : .secondary)
+                        .monospacedDigit()
+                }
             }
 
             Section {
@@ -77,10 +94,39 @@ struct SettingsProfileView: View {
             }
         }
         .navigationTitle(.settingsProfile)
+        .navigationBarBackButtonHidden(isEdited)
+        .interactiveDismissDisabled(isEdited)
         .toolbar {
+            if isEdited {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(
+                        role: .cancel,
+                        action: { isShowingConfirmationDialog = true }
+                    ) {
+                        Image(systemName: "chevron.backward")
+                            .fontWeight(.semibold)
+                    }
+                    .confirmationDialog(
+                        .discardChangesDescription, isPresented: $isShowingConfirmationDialog, titleVisibility: .visible
+                    ) {
+                        Button(.discardChanges, role: .destructive, action: { dismiss() })
+                    }
+                }
+            }
             ToolbarItem(placement: .confirmationAction) {
                 Button(.actionOk, systemImage: "checkmark", role: .confirm, action: {})
+                    .disabled(!isEdited)
             }
+        }
+        .scrollDismissesKeyboard(.interactively)
+        .onChange(of: [username, name, bio]) {
+            isEdited = true
+        }
+        .onChange(of: birthday) {
+            isEdited = true
+        }
+        .onChange(of: avatarURL) {
+            isEdited = true
         }
     }
 }
