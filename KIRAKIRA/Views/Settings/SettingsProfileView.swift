@@ -17,44 +17,17 @@ struct SettingsProfileView: View {
     @State private var name: String = "艾了个拉"
     @State private var bio: String = "Kawaii Forever!~\nwow"
     @State private var birthday: Date = Date()
-    @State private var avatarURL = URL(
-        string:
-            "https://kirafile.com/cdn-cgi/imagedelivery/Gyz90amG54C4b_dtJiRpYg/avatar-1-xiQgrY2SDDx68HbIH8LSSBZqDpbSOFBf-1722666535442/f=avif"
-    )
-    
+    @State private var avatarId = "avatar-1-xiQgrY2SDDx68HbIH8LSSBZqDpbSOFBf-1722666535442"
+
     private let bioMaxLength = 200
 
     var body: some View {
-        List {
-            VStack {
-                AsyncImage(
-                    url: avatarURL,
-                    transaction: .init(animation: .default)
-                ) { phase in
-                    switch phase {
-                    case .empty:
-                        ZStack {
-                            Circle().fill(Color.gray.opacity(0.15))
-                            ProgressView()
-                        }
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFill()
-                    case .failure:
-                        Image(systemName: "person.crop.circle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundStyle(.secondary)
-                    @unknown default:
-                        Color.clear
-                    }
-                }
-                .frame(width: 128, height: 128)
-                .clipShape(Circle())
-                //				.overlay(Circle().stroke(.secondary.opacity(0.3), lineWidth: 1))
-                //				.padding(.vertical, 8)
-                .glassEffect(.regular.interactive())
+        Form {
+            Section {
+                CFImageView(imageId: avatarId)
+                    .frame(width: 128, height: 128)
+                    .clipShape(.circle)
+                    .glassEffect(.regular.interactive())
             }
             .padding(.vertical, 24)
             .frame(maxWidth: .infinity)
@@ -110,7 +83,7 @@ struct SettingsProfileView: View {
                         role: .cancel,
                         action: { isShowingConfirmationDialog = true }
                     ) {
-                        Image(systemName: "chevron.backward")
+                        Image(systemName: "xmark")
                             .fontWeight(.semibold)
                     }
                     .confirmationDialog(
@@ -132,7 +105,7 @@ struct SettingsProfileView: View {
         .onChange(of: birthday) {
             isEdited = true
         }
-        .onChange(of: avatarURL) {
+        .onChange(of: avatarId) {
             isEdited = true
         }
     }
