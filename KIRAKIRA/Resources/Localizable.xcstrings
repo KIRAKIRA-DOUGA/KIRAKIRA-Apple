@@ -327,6 +327,40 @@
         }
       }
     },
+    "DISCARD_CHANGES" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discard Changes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "放弃更改"
+          }
+        }
+      }
+    },
+    "DISCARD_CHANGES_DESCRIPTION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to discard your changes?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定要放弃更改吗？"
+          }
+        }
+      }
+    },
     "DOWNLOAD" : {
       "comment" : "The action of downloading the video.",
       "extractionState" : "manual",
@@ -579,23 +613,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "私信"
-          }
-        }
-      }
-    },
-    "MINIPLAYER_TOGGLE_PLAY_PAUSE" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Play / Pause"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "播放 / 暂停"
           }
         }
       }
