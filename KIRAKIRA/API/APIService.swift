@@ -16,8 +16,10 @@ actor APIService: APIServiceProtocol {
 
     private init() {
         self.decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .millisecondsSince1970
+        self.decoder.dateDecodingStrategy = .millisecondsSince1970
+
         self.encoder = JSONEncoder()
+        self.encoder.dateEncodingStrategy = .millisecondsSince1970
     }
 
     func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T {
