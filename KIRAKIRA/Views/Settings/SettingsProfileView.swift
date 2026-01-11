@@ -24,14 +24,30 @@ struct SettingsProfileView: View {
     var body: some View {
         Form {
             Section {
-                CFImageView(imageId: avatarId)
-                    .frame(width: 128, height: 128)
-                    .clipShape(.circle)
-                    .glassEffect(.regular.interactive())
+                Button(action: {}) {
+                    BannerView()
+                }
+                .buttonStyle(.plain)
             }
-            .padding(.vertical, 24)
+            .listRowBackground(Color.clear)
+            .listRowInsets(.all, 0)
+            .listRowSeparator(.hidden)
+            .listSectionMargins(.all, 0)
+            .listSectionSpacing(0)
+
+            Section {
+                Button(action: {}) {
+                    CFImageView(imageId: avatarId)
+                        .frame(width: 128, height: 128)
+                        .clipShape(.circle)
+                }.buttonStyle(.plain)
+            }
+            .padding(.bottom, 24)
             .frame(maxWidth: .infinity)
             .listRowBackground(Color.clear)
+            .listRowInsets(.vertical, 0)
+            .listRowSeparator(.hidden)
+            .listSectionMargins(.all, 0)
 
             Section {
                 LabeledContent {
@@ -75,6 +91,7 @@ struct SettingsProfileView: View {
         }
         .navigationTitle(.settingsProfile)
         .navigationBarBackButtonHidden(isEdited)
+        .scrollEdgeEffectHidden(true, for: .top)
         .interactiveDismissDisabled(isEdited)
         .toolbar {
             if isEdited {
@@ -98,6 +115,8 @@ struct SettingsProfileView: View {
                     .disabled(!isEdited)
             }
         }
+        .contentMargins(.top, 0)
+        .ignoresSafeArea(edges: .top)
         .scrollDismissesKeyboard(.interactively)
         .onChange(of: [username, name, bio]) {
             isEdited = true
