@@ -77,16 +77,7 @@ struct VideoPlayerView: View {
                     }
             }
 
-            Picker(.videoTabPicker, selection: $showingView) {
-                Text(.videoTabInfo).tag(VideoPlayerTab.info)
-                Text(.videoTabComment).tag(VideoPlayerTab.comments)
-                Text(.videoTabDanmaku).tag(VideoPlayerTab.danmakus)
-            }
-            .pickerStyle(.segmented)
-            .padding(.horizontal)
-            .padding(.top)
-
-            Group {
+            VStack {
                 switch showingView {
                 case .info:
                     info(video: video)
@@ -94,6 +85,18 @@ struct VideoPlayerView: View {
                     comments
                 case .danmakus:
                     danmaku
+                }
+            }
+            .safeAreaBar(edge: .top) {
+                VStack {
+                    Picker(.videoTabPicker, selection: $showingView) {
+                        Text(.videoTabInfo).tag(VideoPlayerTab.info)
+                        Text(.videoTabComment).tag(VideoPlayerTab.comments)
+                        Text(.videoTabDanmaku).tag(VideoPlayerTab.danmakus)
+                    }
+                    .pickerStyle(.segmented)
+                    .padding(.top)
+                    .padding(.horizontal)
                 }
             }
         }
@@ -216,14 +219,14 @@ struct VideoPlayerView: View {
     }
 
     var comments: some View {
-        List(0..<10) { _ in
+        List(0..<30) { _ in
             Text(verbatim: "你好")
         }
         .listStyle(.plain)
     }
 
     var danmaku: some View {
-        List(0..<10) { _ in
+        List(0..<30) { _ in
             Text(verbatim: "好！")
         }
         .listStyle(.plain)
