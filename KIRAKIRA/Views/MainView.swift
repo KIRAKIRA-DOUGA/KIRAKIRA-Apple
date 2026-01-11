@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
-    @Environment(\.horizontalSizeClass) private var horizontalSize
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var isPlayerExpanded = false
     @State var searchText: String = ""
 
@@ -25,47 +25,47 @@ struct MainView: View {
                 FollowingFeedView()
             }
 
-            if horizontalSize == .regular {
-                TabSection(.maintabMy) {
-                    Tab(.userPage, systemImage: "person", value: MainTab.myUserPage) {
-                        NavigationStack {
-                            UserView()
-                        }
-                    }
-
-                    Tab(.notifications, systemImage: "bell", value: MainTab.myNotifications) {
-                        NavigationStack {
-                            MyNotificationsView()
-                        }
-                    }
-
-                    Tab(.messages, systemImage: "message", value: MainTab.myMessages) {
-                        NavigationStack {
-                            MyMessagesView()
-                        }
-                    }
-
-                    Tab(.userCollections, systemImage: "star", value: MainTab.myCollections) {
-                        NavigationStack {
-                            MyCollectionsView()
-                        }
-                    }
-
-                    Tab(
-                        .userHistory,
-                        systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90",
-                        value: MainTab.myHistory
-                    ) {
-                        NavigationStack {
-                            MyHistoryView()
-                        }
+            TabSection(.maintabMy) {
+                Tab(.userPage, systemImage: "person", value: MainTab.myUserPage) {
+                    NavigationStack {
+                        UserView()
                     }
                 }
-            } else {
-                Tab(.maintabMy, systemImage: "person", value: MainTab.me) {
-                    MyView()
+
+                Tab(.notifications, systemImage: "bell", value: MainTab.myNotifications) {
+                    NavigationStack {
+                        MyNotificationsView()
+                    }
+                }
+
+                Tab(.messages, systemImage: "message", value: MainTab.myMessages) {
+                    NavigationStack {
+                        MyMessagesView()
+                    }
+                }
+
+                Tab(.userCollections, systemImage: "star", value: MainTab.myCollections) {
+                    NavigationStack {
+                        MyCollectionsView()
+                    }
+                }
+
+                Tab(
+                    .userHistory,
+                    systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90",
+                    value: MainTab.myHistory
+                ) {
+                    NavigationStack {
+                        MyHistoryView()
+                    }
                 }
             }
+            .hidden(horizontalSizeClass == .compact)
+
+            Tab(.maintabMy, systemImage: "person", value: MainTab.me) {
+                MyView()
+            }
+            .hidden(horizontalSizeClass != .compact)
 
             Tab(value: MainTab.search, role: .search) {
                 SearchView()
@@ -99,7 +99,6 @@ struct MainView: View {
         }
     }
 }
-
 
 #Preview(traits: .commonPreviewTrait) {
     MainView()
