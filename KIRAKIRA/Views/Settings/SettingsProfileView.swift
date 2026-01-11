@@ -40,6 +40,7 @@ struct SettingsProfileView: View {
                     CFImageView(imageId: avatarId)
                         .frame(width: 128, height: 128)
                         .clipShape(.circle)
+                        .glassEffect(.regular.interactive())
                 }.buttonStyle(.plain)
             }
             .padding(.bottom, 24)
