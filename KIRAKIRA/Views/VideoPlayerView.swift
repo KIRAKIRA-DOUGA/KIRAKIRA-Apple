@@ -83,7 +83,8 @@ struct VideoPlayerView: View {
                 Text(.videoTabDanmaku).tag(VideoPlayerTab.danmakus)
             }
             .pickerStyle(.segmented)
-            .padding()
+            .padding(.horizontal)
+            .padding(.top)
 
             Group {
                 switch showingView {
