@@ -11,13 +11,15 @@ struct SettingsAboutView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 8) {
-                //				Image("BrandingTextWithLogo")
-                //					.foregroundStyle(.accent)
-                //					.padding(EdgeInsets(top: -12, leading: 1, bottom: 0, trailing: -10))
-                Image("Logo")
+//                Image("Logo")
+//                    .resizable()
+//                    .frame(width: 200, height: 200)
+//                    .padding(.top, -48)
+                Image("AppIconStatic")
                     .resizable()
-                    .frame(width: 200, height: 200)
-                    .padding(.top, -48)
+                    .scaledToFit()
+                    .frame(width: 150, height: 150)
+                    .padding(.bottom)
                 Image("BrandingText")
                 Text(verbatim: "for Apple Devices")
                     .fontWeight(.semibold)
