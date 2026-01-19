@@ -1,10 +1,3 @@
-//
-//  MyMessagesView.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2025/12/2.
-//
-
 import SwiftUI
 
 struct MyMessagesView: View {

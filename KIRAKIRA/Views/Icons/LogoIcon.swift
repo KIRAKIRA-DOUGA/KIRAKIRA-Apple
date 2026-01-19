@@ -1,10 +1,3 @@
-//
-//  Logo.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2025/11/22.
-//
-
 import SwiftUI
 
 struct LogoIcon: Shape {

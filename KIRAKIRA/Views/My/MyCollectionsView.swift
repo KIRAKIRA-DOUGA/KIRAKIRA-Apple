@@ -1,10 +1,3 @@
-//
-//  MyCollectionsView.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2025/11/14.
-//
-
 import SwiftUI
 
 struct MyCollectionsView: View {

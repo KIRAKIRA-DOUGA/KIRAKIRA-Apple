@@ -1,10 +1,3 @@
-//
-//  SettingsSecurityView.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2025/12/11.
-//
-
 import SwiftUI
 
 struct SettingsSecurityView: View {

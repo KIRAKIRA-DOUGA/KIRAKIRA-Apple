@@ -1,10 +1,3 @@
-//
-//  UserModel.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2025/11/11.
-//
-
 import Foundation
 
 struct UserProfile: Codable {

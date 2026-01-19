@@ -1,10 +1,3 @@
-//
-//  SettingsDanmakuView.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2025/11/30.
-//
-
 import SwiftUI
 
 struct SettingsDanmakuView: View {

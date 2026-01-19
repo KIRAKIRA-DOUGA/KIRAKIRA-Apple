@@ -1,10 +1,3 @@
-//
-//  UserView.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2025/11/11.
-//
-
 import SwiftUI
 
 struct UserView: View {

@@ -1,10 +1,3 @@
-//
-//  LaunchScreenView.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2025/11/21.
-//
-
 import SwiftUI
 
 struct LaunchScreenView: View {

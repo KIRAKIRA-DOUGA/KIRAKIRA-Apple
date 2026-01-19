@@ -1,10 +1,3 @@
-//
-//  WizardForm.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2025/12/15.
-//
-
 import SwiftUI
 
 struct WizardForm<Content: View, Footer: View>: View {

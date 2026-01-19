@@ -1,10 +1,3 @@
-//
-//  LoginView.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2025/12/26.
-//
-
 import SwiftUI
 
 struct LoginView: View {

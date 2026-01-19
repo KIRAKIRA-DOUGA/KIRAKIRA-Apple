@@ -1,10 +1,3 @@
-//
-//  VideoPlayerView.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2025/11/20.
-//
-
 import AVKit
 import SwiftUI
 

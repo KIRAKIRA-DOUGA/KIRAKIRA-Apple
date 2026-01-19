@@ -1,10 +1,3 @@
-//
-//  BannerView.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2026/01/11.
-//
-
 import SwiftUI
 import VariableBlur
 

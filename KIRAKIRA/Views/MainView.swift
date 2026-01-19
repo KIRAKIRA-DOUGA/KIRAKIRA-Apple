@@ -1,10 +1,3 @@
-//
-//  MainView.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2025/11/8.
-//
-
 import SwiftUI
 
 struct MainView: View {

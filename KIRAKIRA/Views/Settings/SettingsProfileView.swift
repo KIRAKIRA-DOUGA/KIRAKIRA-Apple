@@ -1,10 +1,3 @@
-//
-//  SettingsProfileView.swift
-//  KIRAKIRA
-//
-//  Created by Aira Sakuranomiya on 2025/11/12.
-//
-
 import SwiftUI
 
 struct SettingsProfileView: View {
