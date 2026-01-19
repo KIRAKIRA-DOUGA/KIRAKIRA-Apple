@@ -5,15 +5,18 @@ struct ErrorView: View {
     let retry: () -> Void
 
     var body: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "exclamationmark.triangle.fill")
-                .font(.largeTitle)
-                .foregroundStyle(.red)
-            Text(errorMessage)
+        ContentUnavailableView {
+            Label(errorMessage, systemImage: "exclamationmark.triangle.fill")
+        } description: {
             Button(.errorTryAgain) {
                 retry()
             }
-            .buttonStyle(.borderedProminent)
+            .buttonStyle(.bordered)
+            .padding(.top)
         }
     }
+}
+
+#Preview {
+    ErrorView(errorMessage: "测试错误", retry: {})
 }
