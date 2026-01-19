@@ -34,6 +34,7 @@ struct HomeTabPickerView: View {
                         } icon: {
                             Image(systemName: category.systemImage)
                         }
+                        .labelIconToTitleSpacing(4)
                         .frame(minWidth: 24)
                     }
                     .tint(globalStateManager.selectedCategory == category ? .accent : .secondary)
