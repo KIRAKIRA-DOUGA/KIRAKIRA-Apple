@@ -10,6 +10,7 @@ class AuthManager {
 
     var isAuthenticated: Bool = false
     var credentials: Credentials? = nil
+    var authenticator: Authenticator? = nil
     var isLoading: Bool = false
     var errorMessage: String? = nil
 
@@ -32,35 +33,57 @@ class AuthManager {
             self.isAuthenticated = true
         }
     }
+    
+    func checkUserHave2FA(email: String) async -> Bool{
+        isLoading = true
+        errorMessage = nil
+        
+        do {
+            logger.info("Attempting to check 2FA.")
+            let response: UserVerificationResponseDTO = try await apiService.request(.checkUserHave2FAByEmail(email: email))
+            logger.info("Check successful")
+            
+            self.authenticator = Authenticator(type: response.type ?? "none", have2FA: response.have2FA)
+            
+            return true
+        } catch {
+            logger.error("Check failed: \(error)")
+            self.errorMessage = "Check failed."
+            self.authenticator = nil
+            
+            return false
+        }
+        isLoading = false
+        return false
+    }
 
-    func login(email: String, password: String) async -> Bool {
+    func login(email: String, password: String, verificationCode: Int?) async -> Bool {
         isLoading = true
         errorMessage = nil
 
         do {
             logger.info("Attempting to login")
             let passwordHash = sha256(password)
-            let requestDTO = UserLoginRequestDTO(email: email, passwordHash: passwordHash)
+
+            let codeToUse = (self.authenticator?.have2FA == true) ? verificationCode : nil
+            let requestDTO = UserLoginRequestDTO(email: email, passwordHash: passwordHash, verificationCode: codeToUse)
+
             let response: UserLoginResponseDTO = try await apiService.request(.login, body: requestDTO)
             logger.info("Login successful, saving credentials to Keychain")
 
             let credentials = Credentials(email: email, token: response.token, uid: response.uid, uuid: response.uuid)
-
             KeychainService.shared.save(credentials, service: serviceName, account: accountName)
 
             self.credentials = credentials
             self.isAuthenticated = true
-
             return true
         } catch {
             logger.error("Login failed: \(error)")
             self.errorMessage = "Login failed. Please check your credentials."
             self.isAuthenticated = false
             self.credentials = nil
+            return false
         }
-
-        isLoading = false
-        return false
     }
 
     func logout() async throws {
@@ -73,12 +96,17 @@ class AuthManager {
     }
 
     func sha256(_ input: String) -> String {
-        let inputData = Data(input.utf8)
+        let inputData = Data(input.utf8)		
         let hashed = SHA256.hash(data: inputData)
         let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
 
         return hashString
     }
+}
+
+struct Authenticator: Codable {
+    let type: String
+    let have2FA: Bool
 }
 
 struct Credentials: Codable {

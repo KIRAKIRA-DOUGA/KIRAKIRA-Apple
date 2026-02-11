@@ -5,6 +5,7 @@ enum Endpoint {
     case getHomeVideos
     case getVideoComments(id: Int)
     case getVideoDanmaku(id: Int)
+    case checkUserHave2FAByEmail(email: String)
     case login
     case logout
     case getSelfInfo
@@ -21,6 +22,8 @@ enum Endpoint {
             return "/video/comment?videoId=\(id)"
         case .getVideoDanmaku(let id):
             return "/video/danmaku?videoId=\(id)"
+        case .checkUserHave2FAByEmail(let email):
+            return "/user/checkUserHave2FAByEmail"
         case .login:
             return "/user/login"
         case .logout:
@@ -32,7 +35,7 @@ enum Endpoint {
 
     var method: HTTPMethod {
         switch self {
-        case .getVideo, .getHomeVideos, .getVideoComments, .getVideoDanmaku, .logout:
+        case .getVideo, .getHomeVideos, .getVideoComments, .getVideoDanmaku, .logout, .checkUserHave2FAByEmail:
             return .get
         case .login, .getSelfInfo:
             return .post

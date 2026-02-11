@@ -3,6 +3,13 @@ import Foundation
 struct UserLoginRequestDTO: Codable {
     let email: String
     let passwordHash: String  // SHA256
+    let verificationCode: Int?
+}
+
+struct UserVerificationResponseDTO: Codable {
+    let success: Bool
+    let have2FA: Bool
+    let type: String?
 }
 
 struct UserLoginResponseDTO: Codable {
