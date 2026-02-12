@@ -34,10 +34,10 @@ class AuthManager {
         }
     }
     
-    func checkUserHave2FA(email: String) async -> Bool{
+    func checkUserHave2FA(email: String) async -> Bool {
         isLoading = true
         errorMessage = nil
-        
+
         do {
             logger.info("Attempting to check 2FA.")
             let response: UserVerificationResponseDTO = try await apiService.request(.checkUserHave2FAByEmail(email: email))
@@ -53,8 +53,6 @@ class AuthManager {
             
             return false
         }
-        isLoading = false
-        return false
     }
 
     func login(email: String, password: String, verificationCode: Int?) async -> Bool {
@@ -96,7 +94,7 @@ class AuthManager {
     }
 
     func sha256(_ input: String) -> String {
-        let inputData = Data(input.utf8)		
+        let inputData = Data(input.utf8)
         let hashed = SHA256.hash(data: inputData)
         let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
 

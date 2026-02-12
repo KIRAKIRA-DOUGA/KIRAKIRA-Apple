@@ -23,7 +23,7 @@ enum Endpoint {
         case .getVideoDanmaku(let id):
             return "/video/danmaku?videoId=\(id)"
         case .checkUserHave2FAByEmail(let email):
-            return "/user/checkUserHave2FAByEmail"
+            return "/user/checkUserHave2FAByEmail?email=\(email)"
         case .login:
             return "/user/login"
         case .logout:
