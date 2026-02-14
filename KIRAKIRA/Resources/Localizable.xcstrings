@@ -789,6 +789,17 @@
         }
       }
     },
+    "RESEND" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新发送"
+          }
+        }
+      }
+    },
     "SECURITY" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1495,6 +1506,20 @@
           }
         }
       }
+    },
+    "VERIFY_EMAIL_DESCRIPTION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请输入发送到你邮箱中的验证码。"
+          }
+        }
+      }
+    },
+    "VERIFY_TOTP_DESCRIPTION" : {
+      "extractionState" : "manual"
     },
     "VERIFY_YOUR_IDENTITY" : {
       "extractionState" : "manual",
