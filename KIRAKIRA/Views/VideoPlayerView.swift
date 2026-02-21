@@ -14,7 +14,7 @@ struct VideoPlayerView: View {
     @State private var collected = false
     @State private var player: AVPlayer?
 
-    func like() {
+    private func like() {
         liked = !liked
         if liked {
             countLike += 1
@@ -23,7 +23,7 @@ struct VideoPlayerView: View {
         }
     }
 
-    func dislike() {
+    private func dislike() {
         disliked = !disliked
         if disliked {
             countDislike += 1
@@ -32,7 +32,7 @@ struct VideoPlayerView: View {
         }
     }
 
-    func collect() {
+    private func collect() {
         collected = !collected
         if collected {
             countCollected += 1
@@ -118,7 +118,7 @@ struct VideoPlayerView: View {
                     Button(action: {}) {
                         Label(.userFollow, systemImage: "plus")
                     }
-                    .buttonStyle(.glassProminent)
+                    .buttonStyle(.bordered)
                 }
 
                 VStack(alignment: .leading, spacing: 16) {
@@ -156,53 +156,69 @@ struct VideoPlayerView: View {
 
                 // 操作
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 16) {
-                        GlassEffectContainer {
-                            HStack(spacing: 0) {
+                    HStack {
+                        Button(action: {}) {  // 使用我认为最扯淡但是居然真的可行的方式实现连体按钮
+                            HStack(spacing: 24) {
                                 Button(action: { like() }) {
                                     Image(systemName: "hand.thumbsup")
                                         .symbolVariant(liked ? .fill : .none)
+                                        .frame(width: 20, height: 20)
 
                                     Text(countLike, format: .number)
                                         .contentTransition(.numericText(value: Double(countLike)))
                                 }
+                                .foregroundStyle(liked ? .accent : .primary)
 
                                 Button(action: { dislike() }) {
                                     Image(systemName: "hand.thumbsdown")
                                         .symbolVariant(disliked ? .fill : .none)
+                                        .frame(width: 20, height: 20)
 
                                     Text(countDislike, format: .number)
                                         .contentTransition(.numericText(value: Double(-countDislike)))
                                 }
-                            }
-                            .glassEffectUnion(id: "like", namespace: namespace)
+                                .foregroundStyle(disliked ? .accent : .primary)
+                            }.buttonStyle(.plain)
                         }
 
                         Button(action: { collect() }) {
                             Image(systemName: "star")
                                 .symbolVariant(collected ? .fill : .none)
+                                .frame(width: 20, height: 20)
 
                             Text(countCollected, format: .number)
                                 .contentTransition(.numericText(value: Double(countCollected)))
                         }
+                        .foregroundStyle(collected ? .accent : .primary)
 
-                        Button(action: {}) {
-                            Label(.share, systemImage: "square.and.arrow.up")
+                        Group {
+                            Button(action: {}) {
+                                Label(.download, systemImage: "arrow.down")
+                                    .frame(width: 20, height: 20)
+                            }
+
+                            Button(action: {}) {
+                                Label(.share, systemImage: "square.and.arrow.up")
+                                    .frame(width: 20, height: 20)
+                            }
+
+                            
+                            Menu {
+                                Button(.report, systemImage: "exclamationmark.bubble", action: {})
+                                Button(.checkThumbnail, systemImage: "photo", action: {})
+                            } label: {
+                                Label(.menuMore, systemImage: "ellipsis")
+                                    .frame(width: 20, height: 20)
+                            }
                         }
                         .labelStyle(.iconOnly)
-
-                        Menu {
-                            Button(.report, systemImage: "flag", action: {})
-                            Button(.checkThumbnail, systemImage: "photo", action: {})
-                            Button(.download, systemImage: "square.and.arrow.down", action: {})
-                        } label: {
-                            Image(systemName: "ellipsis")
-                                .frame(height: 20)
-                        }
+                        .buttonBorderShape(.circle)
+                        .padding(.horizontal, -5)
                     }
                     .monospacedDigit()
-                    .contentTransition(.symbolEffect(.replace))
-                    .buttonStyle(.glass)
+                    .contentTransition(.symbolEffect(.replace.offUp.byLayer))
+                    .buttonStyle(.bordered)
+                    .foregroundStyle(.primary)
                 }
                 .scrollClipDisabled()
 
