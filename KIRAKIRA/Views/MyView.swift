@@ -4,6 +4,9 @@ struct MyView: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
     @State private var authManager = AuthManager.shared
 
+    let avatarSize: CGFloat = 60
+    let userInfoSpacing: CGFloat = 8
+
     var body: some View {
         NavigationStack {
             List {
@@ -12,30 +15,27 @@ struct MyView: View {
                         NavigationLink {
                             UserView()
                         } label: {
-                            LabeledContent {
-                                Text(.userPage)
-                            } label: {
-                                HStack {
-                                    Image("SamplePortrait")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 55, height: 55)
-                                        .clipShape(Circle())
-                                    
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        Text(verbatim: "艾了个拉")
-                                            .bold()
-                                        
-                                        Text(verbatim: "@Aira")
-                                            .font(.caption)
-                                            .fontDesign(.monospaced)
-                                            .foregroundStyle(.secondary)
-                                    }
+                            HStack(spacing: userInfoSpacing) {
+                                Image("SamplePortrait")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: avatarSize, height: avatarSize)
+                                    .clipShape(Circle())
+
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(verbatim: "艾了个拉")
+                                        .font(.title3)
+                                        .bold()
+
+                                    Text(verbatim: "@Aira")
+                                        .font(.footnote)
+                                        .fontDesign(.monospaced)
+                                        .foregroundStyle(.secondary)
                                 }
                             }
                         }
                     }
-                    
+
                     Section {
                         NavigationLink {
                             MyNotificationsView()
@@ -67,11 +67,12 @@ struct MyView: View {
                     }
                 } else {
                     Button(action: { globalStateManager.isShowingLogin = true }) {  // TODO: 打开登录fullscreenCover
-                        HStack {
+                        HStack(spacing: userInfoSpacing) {
                             Image(systemName: "person.crop.circle")
                                 .resizable()
-                                .frame(width: 55, height: 55)
+                                .frame(width: avatarSize, height: avatarSize)
                             Text(.logIn)
+                                .font(.title3)
                                 .bold()
                         }
                     }
