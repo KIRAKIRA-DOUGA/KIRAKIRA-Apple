@@ -1,11 +1,19 @@
 import SwiftUI
 
 struct UserView: View {
-    @State private var isShowingEditProfile = false
+    @Namespace private var namespace
+
     @State private var isSelf = false
-    @State private var isBannerVisible = true
-    @State private var isSegmentedVisible = true
+    @State private var isFollowing = false
+
     @State private var showingView: ViewTab = .videos
+    @State private var isShowingFollowDialog = false
+    @State private var isShowingFollowingDialog = false
+    @State private var isShowingEditProfileSheet = false
+
+    @State private var isBannerVisible = true  // for hide scroll edge effect
+    @State private var isUsernameVisble = true  // for toolbar content control
+
     @State private var userName: String = "艾了个拉"
     @State private var userUsername = "Aira"
 
@@ -13,17 +21,17 @@ struct UserView: View {
         ScrollView {
             // Banner
             BannerView()
-            .padding(.bottom, -74)
-            .onScrollVisibilityChange { visible in
-                if visible {
-                    isBannerVisible = true
-                } else {
-                    isBannerVisible = false
+                .padding(.bottom, -74)
+                .onScrollVisibilityChange { visible in
+                    if visible {
+                        isBannerVisible = true
+                    } else {
+                        isBannerVisible = false
+                    }
                 }
-            }
 
-            VStack(alignment: .leading, spacing: 8) {
-                HStack(alignment: .bottom) {
+            VStack(spacing: 16) {
+                VStack {
                     // Avatar
                     Button(action: {}) {
                         Image("SamplePortrait")
@@ -31,10 +39,9 @@ struct UserView: View {
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 100, height: 100)
                             .clipShape(Circle())
-                            .glassEffect(.regular.interactive())
                     }
                     .buttonStyle(.plain)
-                    .sheet(isPresented: $isShowingEditProfile) {
+                    .sheet(isPresented: $isShowingEditProfileSheet) {
                         NavigationStack {
                             SettingsProfileView()
                                 #if !os(macOS)
@@ -43,7 +50,7 @@ struct UserView: View {
                                 .toolbar {
                                     ToolbarItem(placement: .cancellationAction) {
                                         Button(action: {
-                                            isShowingEditProfile = false
+                                            isShowingEditProfileSheet = false
                                         }) {
                                             Image(systemName: "xmark")
                                         }
@@ -52,95 +59,131 @@ struct UserView: View {
                         }
                     }
 
-                    Spacer()
+                    // Name
+                    Text(verbatim: "\(userName)")
+                        .font(.title)
+                        .bold()
 
-                    // Actions
-                    if isSelf {
-                        Button(.userEditProfile, action: { isShowingEditProfile = true })
-                            .buttonStyle(.glass)
+                    // Username
+                    Text(verbatim: "@\(userUsername)")
+                        .foregroundStyle(.secondary)
+                        .fontDesign(.monospaced)
+                }
+                .onScrollVisibilityChange { visible in
+                    if visible {
+                        withAnimation {
+                            isUsernameVisble = true
+                        }
                     } else {
-                        HStack {
-                            Button(.userFollow, systemImage: "plus", action: {})
-                                .buttonStyle(.glassProminent)
-
-                            Button(action: {}) {
-                                Image(systemName: "message")
-                                    .frame(height: 20)
-                            }.buttonStyle(.glass)
-
-                            Menu {
-                                Button(.report, systemImage: "flag", action: {})
-                                Button(.userBlock, systemImage: "nosign", action: {})
-                                Button(.userHide, systemImage: "eye.slash", action: {})
-                            } label: {
-                                Image(systemName: "ellipsis")
-                                    .frame(height: 20)
-                            }.buttonStyle(.glass)
+                        withAnimation {
+                            isUsernameVisble = false
                         }
                     }
                 }
 
-                // Name
-                Text(verbatim: "\(userName)")
-                    .font(.title)
-                    .bold()
-
-                // Username
-                Text(verbatim: "@\(userUsername)")
-                    .foregroundStyle(.secondary)
-                    .fontDesign(.monospaced)
+                // Bio
+                Text(verbatim: "Kawaii Forever!~")
+                    .fontWeight(.medium)
 
                 // Follower Info
                 HStack(spacing: 16) {
-                    Text(.userFollowers(count: 233))
-                    Text(.userFollowing(count: 233))
+                    Button(.userFollowingCount(count: 233), action: {})
+                    Button(.userFollowersCount(count: 233), action: {})
                 }
 
-                // Bio
-                Text(verbatim: "Kawaii Forever!~")
-                    .padding(.top, 16)
+                // Main Actions
+                HStack {
+                    Button(.message, systemImage: "message", action: {})
+                        .labelStyle(.iconOnly)
+                        .buttonBorderShape(.circle)
+                        .padding(.horizontal, -6.5)  // 我实在是不理解SwiftUI为啥设置了圆形按钮后还保留原本药丸形状的大小？何意味？
+
+                    if isSelf {
+                        Button(.userEditProfile, action: { isShowingEditProfileSheet = true })
+                    } else {
+                        Button(
+                            role: isFollowing ? .cancel : .confirm,
+                            action: { withAnimation { isFollowing.toggle() } }
+                        ) {
+                            Label(
+                                isFollowing ? .userFollowing : .userFollow,
+                                systemImage: isFollowing ? "checkmark" : "plus"
+                            )
+                        }
+                    }
+                }
+                .buttonStyle(.bordered)
+                .tint(.accent)
+                .fontWeight(.medium)
+                .controlSize(.large)
             }
             .padding()
             .textSelection(.enabled)
 
-            segmented
-                .pickerStyle(.segmented)
-                .padding(.horizontal)
-                .onScrollVisibilityChange { visible in
-                    if visible {
-                        isSegmentedVisible = true
-                    } else {
-                        isSegmentedVisible = false
-                    }
-                }
-
             LazyVStack {
-                ForEach(1...100, id: \.self) { _ in
-                    Text(verbatim: "placeholder for scroll testing")
+                Section {
+                    switch showingView {
+                    case .videos:
+                        LazyVStack {
+                            ForEach(1...100, id: \.self) { _ in
+                                Text(verbatim: "VIDEOS PAGE")
+                            }
+                        }
+                    case .collections:
+                        LazyVStack {
+                            ForEach(1...100, id: \.self) { _ in
+                                Text(verbatim: "COLLECTIONS PAGE")
+                            }
+                        }
+                    }
+                } header: {
+                    Picker(.userTabPicker, selection: $showingView) {
+                        Text(.videos).tag(ViewTab.videos)
+                        Text(.userCollections).tag(ViewTab.collections)
+                    }
+                    .pickerStyle(.segmented)
+                    .padding(.horizontal)
                 }
             }
         }
         .toolbar {
-            if !isSegmentedVisible {
+            if !isUsernameVisble {
                 ToolbarItem(placement: .principal) {
-                    segmented
+                    VStack {
+                        Text(verbatim: userName)
+                        Text(verbatim: "@\(userUsername)")
+                            .foregroundStyle(.secondary)
+                            .font(.caption)
+                            .fontDesign(.monospaced)
+                    }
+                }
+            }
+            if !isSelf {
+                ToolbarItemGroup {
+                    Menu {
+                        ControlGroup {
+                            Button(
+                                isFollowing ? .userFollowing : .userFollow,
+                                systemImage: isFollowing ? "checkmark.circle" : "plus.circle",
+                                action: { withAnimation { isFollowing.toggle() } }
+                            )
+                            Button(.message, systemImage: "message", action: {})
+                            Button(.share, systemImage: "square.and.arrow.up", action: {})
+                        }
+                        Button(.report, systemImage: "exclamationmark.bubble", action: {})
+                        Button(.userBlock, systemImage: "nosign", action: {})
+                        Button(.userHide, systemImage: "eye.slash", action: {})
+                    } label: {
+                        Image(systemName: "ellipsis")
+                    }
                 }
             }
         }
-        .animation(.smooth, value: isSegmentedVisible)
         #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
         #endif
         .ignoresSafeArea(edges: .top)
         .scrollEdgeEffectHidden(isBannerVisible, for: .top)
-    }
-
-    var segmented: some View {
-        Picker(.userTabPicker, selection: $showingView) {
-            Text(.videos).tag(ViewTab.videos)
-            Text(.userCollections).tag(ViewTab.collections)
-        }
-        .pickerStyle(.segmented)
     }
 }
 
@@ -150,5 +193,8 @@ private enum ViewTab: Hashable {
 }
 
 #Preview {
-    UserView()
+    NavigationStack {
+        UserView()
+    }
+    .environment(\.locale, .init(identifier: "en"))
 }
