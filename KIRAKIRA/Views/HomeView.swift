@@ -24,7 +24,7 @@ struct HomeView: View {
                         LogoIcon()
                             .frame(width: 48, height: 48)
                             .foregroundStyle(.accent)
-                            .padding(.leading, -8)
+                            .padding(.leading, -6)
                     }
                     .sharedBackgroundVisibility(.hidden)
 
