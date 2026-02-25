@@ -5,7 +5,7 @@ struct MyMessagesView: View {
         List {
             Section {
                 ForEach(1...10, id: \.self) { _ in
-                    HStack(spacing: 16) {
+                    HStack(spacing: 12) {
                         HStack {
                             Circle()
                                 .foregroundStyle(.accent)
