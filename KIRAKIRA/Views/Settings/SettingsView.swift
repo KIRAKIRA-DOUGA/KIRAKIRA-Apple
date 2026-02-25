@@ -69,18 +69,17 @@ struct SettingsView: View {
                 } header: {
                     Text(.settingsGeneral)
                 }
-
+                
                 Section {
                     NavigationLink {
                         SettingsSwitchAccountView()
                     } label: {
-                        Label(.switchAccount, systemImage: "person.2")
+                        Text(.switchAccount)
                     }
 
                     if authManager.isAuthenticated {
-                        Button(role: .destructive, action: {}) {
-                            Label(.logOut, systemImage: "rectangle.portrait.and.arrow.forward")
-                        }.foregroundStyle(.red)
+                        Button(.logOut, role: .destructive, action: {})
+                            .foregroundStyle(.red)
                     }
                 }
             }
@@ -119,6 +118,6 @@ enum SettingsPath: Hashable {
     case changeEmailSuccess
 }
 
-#Preview {
+#Preview(traits: .commonPreviewTrait) {
     SettingsView()
 }
