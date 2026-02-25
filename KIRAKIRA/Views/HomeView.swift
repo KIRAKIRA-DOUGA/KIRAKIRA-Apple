@@ -9,7 +9,7 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             content
-                .navigationTitle("KIRAKIRA")
+                .navigationBarTitleDisplayMode(.large)
                 .task {
                     if !hasLoaded {
                         await viewModel.fetchHomeVideos()
@@ -22,7 +22,7 @@ struct HomeView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         LogoIcon()
-                            .frame(width: 40, height: 40)
+                            .frame(width: 48, height: 48)
                             .foregroundStyle(.accent)
                             .padding(.leading, -8)
                     }

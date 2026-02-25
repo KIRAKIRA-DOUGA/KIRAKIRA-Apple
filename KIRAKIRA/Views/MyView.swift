@@ -2,65 +2,78 @@ import SwiftUI
 
 struct MyView: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
+    @State private var authManager = AuthManager.shared
 
     var body: some View {
         NavigationStack {
             List {
-                Section {
-                    NavigationLink {
-                        UserView()
-                    } label: {
-                        LabeledContent {
-                            Text(.userPage)
+                if authManager.isAuthenticated {
+                    Section {
+                        NavigationLink {
+                            UserView()
                         } label: {
-                            HStack(spacing: 12) {
-                                Image("SamplePortrait")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 72, height: 72)
-                                    .clipShape(Circle())
-
-                                VStack(alignment: .leading, spacing: 5) {
-                                    Text(verbatim: "艾了个拉")
-                                        .font(.title3)
-
-                                    Text(verbatim: "@Aira")
-                                        .font(.callout)
-                                        .fontDesign(.monospaced)
-                                        .foregroundStyle(.secondary)
+                            LabeledContent {
+                                Text(.userPage)
+                            } label: {
+                                HStack {
+                                    Image("SamplePortrait")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 55, height: 55)
+                                        .clipShape(Circle())
+                                    
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(verbatim: "艾了个拉")
+                                            .bold()
+                                        
+                                        Text(verbatim: "@Aira")
+                                            .font(.caption)
+                                            .fontDesign(.monospaced)
+                                            .foregroundStyle(.secondary)
+                                    }
                                 }
                             }
                         }
                     }
-                }
+                    
+                    Section {
+                        NavigationLink {
+                            MyNotificationsView()
+                        } label: {
+                            Label(.notifications, systemImage: "bell")
+                                .badge(3)
+                        }
 
-                Section {
-                    NavigationLink {
-                        MyNotificationsView()
-                    } label: {
-                        Label(.notifications, systemImage: "bell")
-                            .badge(3)
+                        NavigationLink {
+                            MyMessagesView()
+                        } label: {
+                            Label(.messages, systemImage: "message")
+                                .badge(10)
+                        }
                     }
 
-                    NavigationLink {
-                        MyMessagesView()
-                    } label: {
-                        Label(.messages, systemImage: "message")
-                            .badge(10)
-                    }
-                }
+                    Section {
+                        NavigationLink {
+                            MyCollectionsView()
+                        } label: {
+                            Label(.userCollections, systemImage: "star")
+                        }
 
-                Section {
-                    NavigationLink {
-                        MyCollectionsView()
-                    } label: {
-                        Label(.userCollections, systemImage: "star")
+                        NavigationLink {
+                            MyHistoryView()
+                        } label: {
+                            Label(.userHistory, systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90")
+                        }
                     }
-
-                    NavigationLink {
-                        MyHistoryView()
-                    } label: {
-                        Label(.userHistory, systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90")
+                } else {
+                    Button(action: { globalStateManager.isShowingLogin = true }) {  // TODO: 打开登录fullscreenCover
+                        HStack {
+                            Image(systemName: "person.crop.circle")
+                                .resizable()
+                                .frame(width: 55, height: 55)
+                            Text(.logIn)
+                                .bold()
+                        }
                     }
                 }
 

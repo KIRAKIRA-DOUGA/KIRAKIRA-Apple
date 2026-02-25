@@ -90,6 +90,9 @@ struct MainView: View {
         .sheet(isPresented: $globalStateManager.isShowingSettings) {
             SettingsView()
         }
+        .sheet(isPresented: $globalStateManager.isShowingLogin) {
+            LoginView()
+        }
     }
 }
 

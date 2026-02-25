@@ -6,6 +6,7 @@ class GlobalStateManager {
     var mainTabSelection: MainTab = .home
     var selectedCategory: Category = categories.first!
     var isShowingSettings: Bool = false
+    var isShowingLogin: Bool = false
 }
 
 enum MainTab: Hashable {
