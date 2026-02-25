@@ -11,7 +11,6 @@ struct ErrorView: View {
             Button(.errorTryAgain) {
                 retry()
             }
-            .buttonStyle(.bordered)
             .padding(.top)
         }
     }
