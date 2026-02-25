@@ -7,12 +7,12 @@ struct SettingsDanmakuView: View {
 
     var body: some View {
         List {
-            ZStack {
+            ZStack(alignment: .top) {
                 Image("SampleLandscape")
                     .resizable()
                     .aspectRatio(16 / 9, contentMode: .fill)
                 Text(verbatim: "这是一条弹幕")
-                    .font(.system(size: danmakuSize))
+                    .font(.system(size: danmakuSize, weight: .semibold))
                     .opacity(danmakuOpacity)
                     .shadow(color: .black, radius: 1)
                     .foregroundStyle(.white)
