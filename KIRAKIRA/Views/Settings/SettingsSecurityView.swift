@@ -50,7 +50,7 @@ struct SettingsSecurityView: View {
                     LabeledContent {
                         Text(.on)
                     } label: {
-                        Label(.emailAddress, systemImage: "envelope")
+                        Label(.email, systemImage: "envelope")
                     }
                 }
                 NavigationLink {

@@ -3,40 +3,43 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @State var path = NavigationPath()
+    @State private var authManager = AuthManager.shared
 
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                Section {
-                    NavigationLink {
-                        SettingsProfileView()
-                    } label: {
-                        Label(.settingsProfile, systemImage: "person.crop.circle")
+                if authManager.isAuthenticated {
+                    Section {
+                        NavigationLink {
+                            SettingsProfileView()
+                        } label: {
+                            Label(.settingsProfile, systemImage: "person.crop.circle")
+                        }
+                        
+                        NavigationLink {
+                            
+                        } label: {
+                            Label(.settingsPrivacy, systemImage: "hand.raised")
+                        }
+                        
+                        NavigationLink(value: SettingsPath.security) {
+                            Label(.security, systemImage: "lock")
+                        }
+                        
+                        NavigationLink {
+                            
+                        } label: {
+                            Label(.settingsBlockAndHide, systemImage: "nosign")
+                        }
+                        
+                        NavigationLink {
+                            
+                        } label: {
+                            Label(.settingsInvitationCode, systemImage: "app.gift")
+                        }
+                    } header: {
+                        Text(.settingsMe)
                     }
-
-                    NavigationLink {
-
-                    } label: {
-                        Label(.settingsPrivacy, systemImage: "hand.raised")
-                    }
-
-                    NavigationLink(value: SettingsPath.security) {
-                        Label(.security, systemImage: "lock")
-                    }
-
-                    NavigationLink {
-
-                    } label: {
-                        Label(.settingsBlockAndHide, systemImage: "nosign")
-                    }
-
-                    NavigationLink {
-
-                    } label: {
-                        Label(.settingsInvitationCode, systemImage: "app.gift")
-                    }
-                } header: {
-                    Text(.settingsMe)
                 }
 
                 Section {
@@ -69,14 +72,16 @@ struct SettingsView: View {
 
                 Section {
                     NavigationLink {
-
+                        SettingsSwitchAccountView()
                     } label: {
                         Label(.switchAccount, systemImage: "person.2")
                     }
 
-                    Button(role: .destructive, action: {}) {
-                        Label(.logOut, systemImage: "rectangle.portrait.and.arrow.forward")
-                    }.foregroundStyle(.red)
+                    if authManager.isAuthenticated {
+                        Button(role: .destructive, action: {}) {
+                            Label(.logOut, systemImage: "rectangle.portrait.and.arrow.forward")
+                        }.foregroundStyle(.red)
+                    }
                 }
             }
             .navigationTitle(.settings)
