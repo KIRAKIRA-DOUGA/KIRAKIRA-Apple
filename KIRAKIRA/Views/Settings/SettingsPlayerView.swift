@@ -7,7 +7,7 @@ struct SettingsPlayerView: View {
     var body: some View {
         List {
             Toggle(isOn: $isAutoPlay) {
-                Label(.settingsPlayingAutoPlay, systemImage: "play")
+                Label(.settingsPlayingAutoPlay, systemImage: "autostartstop")
             }
             Toggle(isOn: $isPipOnExit) {
                 Label(.settingsPlayingAutoPip, systemImage: "pip")
