@@ -202,8 +202,15 @@ struct UserContentView<Content: View>: View {
                         Spacer()
                         
                         Button(action: {}) {
-                            Image(systemName: "arrowshape.turn.up.left")
-                                .frame(width: 20, height: 20)
+                            Label(.reply, systemImage: "arrowshape.turn.up.left")
+                                .labelStyle(.iconOnly)
+                        }
+                        
+                        Menu {
+                            Button(.report, systemImage: "exclamationmark.bubble", action: {})
+                        } label: {
+                            Label(.menuMore, systemImage: "ellipsis")
+                                .labelStyle(.iconOnly)
                         }
                     }
                     .buttonStyle(.plain)

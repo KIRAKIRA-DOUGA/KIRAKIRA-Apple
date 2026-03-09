@@ -911,6 +911,23 @@
         }
       }
     },
+    "REPLY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reply"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回复"
+          }
+        }
+      }
+    },
     "REPORT" : {
       "comment" : "The action of reporting, to a user or to a video.",
       "extractionState" : "manual",
