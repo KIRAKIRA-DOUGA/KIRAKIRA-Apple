@@ -1,5 +1,5 @@
 {
-  "originHash" : "be86ef2d6e8dbb9fda62eab632bbf3f58289b27ea7fcb7a24ed3e22c46a779cb",
+  "originHash" : "938899ad6fe665d8aa8a2daf4a5f4f3650a3480c02ac064686c551751b891121",
   "pins" : [
     {
       "identity" : "kingfisher",
@@ -11,12 +11,12 @@
       }
     },
     {
-      "identity" : "richtextkit",
+      "identity" : "richtext",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/danielsaidi/RichTextKit",
+      "location" : "https://github.com/LiYanan2004/RichText",
       "state" : {
         "branch" : "main",
-        "revision" : "fd2d21cfd4666fdef792394050b506a1163f6ff5"
+        "revision" : "276db3b87a13a9341fb7d869e9d82e8cffe0ce83"
       }
     },
     {
