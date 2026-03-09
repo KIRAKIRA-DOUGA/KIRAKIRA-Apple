@@ -23,8 +23,10 @@ struct LoginView: View {
                     
                 }.buttonStyle(.borderless)
             } footer: {
-                Button(.linkStart) {
+                Button {
                     
+                } label: {
+                    Text(verbatim: "LINK START")
                 }
             }
             .toolbar {

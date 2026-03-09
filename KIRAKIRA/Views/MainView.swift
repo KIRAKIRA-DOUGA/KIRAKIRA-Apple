@@ -5,13 +5,14 @@ struct MainView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var isPlayerExpanded = false
     @State var searchText: String = ""
+    @Namespace private var animationNamespace
 
     var body: some View {
         @Bindable var globalStateManager = globalStateManager
 
         TabView(selection: $globalStateManager.mainTabSelection) {
             Tab(.maintabHome, systemImage: "house", value: MainTab.home) {
-                HomeView(isPlayerExpanded: $isPlayerExpanded)
+                HomeView(isPlayerExpanded: $isPlayerExpanded, animationNamespace: animationNamespace)
             }
 
             Tab(.maintabFollowing, systemImage: "mail.stack", value: MainTab.feed) {
@@ -85,8 +86,19 @@ struct MainView: View {
             .buttonStyle(.plain)
             .buttonSizing(.flexible)
         }
-        .tabBarMinimizeBehavior(.onScrollDown)
         .tabViewStyle(.sidebarAdaptable)
+        .fullScreenCover(isPresented: $isPlayerExpanded, content: {
+            if globalStateManager.selectedVideo != nil {
+                VideoPlayerView(videoId: globalStateManager.selectedVideo!)
+                    .navigationTransition(
+                        .zoom(sourceID: globalStateManager.activeTransitionSource, in: animationNamespace)
+                    )
+            } else {
+                Image(systemName: "play.slash.fill")
+                    .foregroundStyle(.tertiary)
+                    .font(.largeTitle)
+            }
+        })
         .sheet(isPresented: $globalStateManager.isShowingSettings) {
             SettingsView()
         }

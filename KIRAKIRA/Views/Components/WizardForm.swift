@@ -29,7 +29,7 @@ struct WizardForm<Content: View, Footer: View>: View {
     private let horizontalPadding: CGFloat = 34
     private let verticalPadding: CGFloat = 36
     @State private var isAnimationPlayed = false
-    
+
     var body: some View {
         Form {
             Section {
@@ -40,7 +40,7 @@ struct WizardForm<Content: View, Footer: View>: View {
                             Image(image)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 72)
+                                .frame(height: 80)
                                 .foregroundStyle(iconStyle ?? AnyShapeStyle(.accent.gradient))
                                 .symbolEffect(.drawOn, isActive: !isAnimationPlayed)
                                 .onAppear {
@@ -51,9 +51,7 @@ struct WizardForm<Content: View, Footer: View>: View {
                         }
                         if let systemImage {
                             Image(systemName: systemImage)
-                                .font(.system(size: 60))
-                                .imageScale(.large)
-                                .frame(height: 72)
+                                .font(.system(size: 80, weight: .light))
                                 .foregroundStyle(iconStyle ?? AnyShapeStyle(.accent.gradient))
                                 .symbolEffect(.drawOn, isActive: !isAnimationPlayed)
                                 .onAppear {
@@ -87,12 +85,16 @@ struct WizardForm<Content: View, Footer: View>: View {
         .scrollContentBackground(.hidden)
         .scrollDismissesKeyboard(.interactively)
         .safeAreaBar(edge: .bottom) {
-            footer
-                .controlSize(.large)
-                .fontWeight(.semibold)
-                .buttonStyle(.glassProminent)
-                .buttonSizing(.flexible)
-                .padding(.horizontal, horizontalPadding)
+            HStack(spacing: 10) {
+                footer
+                    .controlSize(.large)
+                    .fontWeight(.semibold)
+                    .buttonStyle(.glassProminent)
+                    .buttonSizing(.flexible)
+                    .frame(maxWidth: 360)
+                    .padding(.horizontal, horizontalPadding)
+                    .padding(.bottom, UIDevice.current.userInterfaceIdiom == .phone ? 0 : 38)
+            }
         }
     }
 }

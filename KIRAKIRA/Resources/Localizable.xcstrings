@@ -38,6 +38,23 @@
         }
       }
     },
+    "ACTION_COPY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拷贝"
+          }
+        }
+      }
+    },
     "ACTION_DONE" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -68,6 +85,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "好"
+          }
+        }
+      }
+    },
+    "ACTION_SELECT" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择"
           }
         }
       }
@@ -550,9 +584,6 @@
         }
       }
     },
-    "KIRAKIRA" : {
-      "shouldTranslate" : false
-    },
     "LATEST" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -569,18 +600,6 @@
           }
         }
       }
-    },
-    "LINK_START" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LINK START"
-          }
-        }
-      },
-      "shouldTranslate" : false
     },
     "LOG_IN" : {
       "extractionState" : "manual",

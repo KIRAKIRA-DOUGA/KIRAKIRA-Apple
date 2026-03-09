@@ -3,6 +3,7 @@ import SwiftUI
 
 struct VideoPlayerView: View {
     let videoId: Int
+    @Environment(\.dismiss) private var dismiss
     @State private var viewModel = VideoViewModel()
     @State private var showingView: VideoPlayerTab = .info
     @Namespace private var namespace
@@ -42,15 +43,22 @@ struct VideoPlayerView: View {
     }
 
     var body: some View {
-        Group {
-            if let video = viewModel.video {
-                content(video: video.video)
-            } else {
-                ProgressView()
+        NavigationStack {
+            Group {
+                if let video = viewModel.video {
+                    content(video: video.video)
+                } else {
+                    ProgressView()
+                }
             }
-        }
-        .task {
-            await viewModel.fetchVideo(of: videoId)
+            .task {
+                await viewModel.fetchVideo(of: videoId)
+            }
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(role: .close, action: { dismiss() })
+                }
+            }
         }
     }
 
@@ -228,10 +236,7 @@ struct VideoPlayerView: View {
     }
 
     var comments: some View {
-        List(0..<30) { _ in
-            Text(verbatim: "你好")
-        }
-        .listStyle(.plain)
+        CommentsView()
     }
 
     var danmaku: some View {

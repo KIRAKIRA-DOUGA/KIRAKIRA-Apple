@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		456EE4462ED24F720040A84A /* VariableBlur in Frameworks */ = {isa = PBXBuildFile; productRef = 456EE4452ED24F720040A84A /* VariableBlur */; };
+		45AA76352F5E19E900D3D11E /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 45AA76342F5E19E900D3D11E /* SwiftUIX */; };
+		45C133ED2F5E91B500A10073 /* RichTextKit in Frameworks */ = {isa = PBXBuildFile; productRef = 45C133EC2F5E91B500A10073 /* RichTextKit */; };
 		8DFD93542EDC997400F18746 /* Flow in Frameworks */ = {isa = PBXBuildFile; productRef = 8DFD93532EDC997400F18746 /* Flow */; };
 		8DFD93612EDC9D1000F18746 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8DFD93602EDC9D1000F18746 /* Kingfisher */; };
 /* End PBXBuildFile section */
@@ -36,6 +38,8 @@
 				8DFD93612EDC9D1000F18746 /* Kingfisher in Frameworks */,
 				8DFD93542EDC997400F18746 /* Flow in Frameworks */,
 				456EE4462ED24F720040A84A /* VariableBlur in Frameworks */,
+				45C133ED2F5E91B500A10073 /* RichTextKit in Frameworks */,
+				45AA76352F5E19E900D3D11E /* SwiftUIX in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +89,8 @@
 				456EE4452ED24F720040A84A /* VariableBlur */,
 				8DFD93532EDC997400F18746 /* Flow */,
 				8DFD93602EDC9D1000F18746 /* Kingfisher */,
+				45AA76342F5E19E900D3D11E /* SwiftUIX */,
+				45C133EC2F5E91B500A10073 /* RichTextKit */,
 			);
 			productName = KIRAKIRA;
 			productReference = 456EE4032ED24D6B0040A84A /* KIRAKIRA.app */;
@@ -122,6 +128,8 @@
 				456EE4442ED24F720040A84A /* XCRemoteSwiftPackageReference "VariableBlur" */,
 				8DFD93522EDC997400F18746 /* XCRemoteSwiftPackageReference "SwiftUI-Flow" */,
 				8DFD935F2EDC9D1000F18746 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				45AA76332F5E19E900D3D11E /* XCRemoteSwiftPackageReference "SwiftUIX" */,
+				45C133EB2F5E91B500A10073 /* XCRemoteSwiftPackageReference "RichTextKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 456EE4042ED24D6B0040A84A /* Products */;
@@ -394,6 +402,22 @@
 				kind = branch;
 			};
 		};
+		45AA76332F5E19E900D3D11E /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		45C133EB2F5E91B500A10073 /* XCRemoteSwiftPackageReference "RichTextKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielsaidi/RichTextKit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		8DFD93522EDC997400F18746 /* XCRemoteSwiftPackageReference "SwiftUI-Flow" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tevelee/SwiftUI-Flow";
@@ -417,6 +441,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 456EE4442ED24F720040A84A /* XCRemoteSwiftPackageReference "VariableBlur" */;
 			productName = VariableBlur;
+		};
+		45AA76342F5E19E900D3D11E /* SwiftUIX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45AA76332F5E19E900D3D11E /* XCRemoteSwiftPackageReference "SwiftUIX" */;
+			productName = SwiftUIX;
+		};
+		45C133EC2F5E91B500A10073 /* RichTextKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45C133EB2F5E91B500A10073 /* XCRemoteSwiftPackageReference "RichTextKit" */;
+			productName = RichTextKit;
 		};
 		8DFD93532EDC997400F18746 /* Flow */ = {
 			isa = XCSwiftPackageProductDependency;

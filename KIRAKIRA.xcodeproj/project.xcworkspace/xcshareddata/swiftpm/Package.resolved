@@ -1,5 +1,5 @@
 {
-  "originHash" : "6d7e3c649f73417717a66d52ddbd2ae5a1392aa2983450693feff9c0bf93a786",
+  "originHash" : "be86ef2d6e8dbb9fda62eab632bbf3f58289b27ea7fcb7a24ed3e22c46a779cb",
   "pins" : [
     {
       "identity" : "kingfisher",
@@ -11,12 +11,30 @@
       }
     },
     {
+      "identity" : "richtextkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/danielsaidi/RichTextKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "fd2d21cfd4666fdef792394050b506a1163f6ff5"
+      }
+    },
+    {
       "identity" : "swiftui-flow",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/tevelee/SwiftUI-Flow",
       "state" : {
         "revision" : "d227f999b2894ab737ef5786d9b14d02d3e5362e",
         "version" : "3.1.1"
+      }
+    },
+    {
+      "identity" : "swiftuix",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftUIX/SwiftUIX.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "c1a29980849703457ec2e26d9682e309a3c0a171"
       }
     },
     {
