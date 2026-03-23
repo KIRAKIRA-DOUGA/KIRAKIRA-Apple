@@ -132,7 +132,7 @@ struct VideoPlayerView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 16) {
-                    Text(video.title)
+                    TextSelectable(video.title)
                         .font(.title2)
                         .bold()
 
@@ -161,7 +161,7 @@ struct VideoPlayerView: View {
                     .monospacedDigit()
                     .contentTransition(.numericText())
 
-                    Text(video.description)
+                    TextSelectable(video.description)
                 }
 
                 // 操作
