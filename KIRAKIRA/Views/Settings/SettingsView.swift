@@ -35,7 +35,7 @@ struct SettingsView: View {
                         NavigationLink {
                             
                         } label: {
-                            Label(.settingsInvitationCode, systemImage: "app.gift")
+                            Label(.invitationCode, systemImage: "gift")
                         }
                     } header: {
                         Text(.settingsMe)

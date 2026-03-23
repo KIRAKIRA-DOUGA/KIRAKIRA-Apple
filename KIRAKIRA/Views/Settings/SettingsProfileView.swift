@@ -111,7 +111,7 @@ struct SettingsProfileView: View {
         }
         .contentMargins(.top, 0)
         .ignoresSafeArea(edges: .top)
-        .scrollDismissesKeyboard(.interactively)
+        .scrollDismissesKeyboard(.immediately)
         .onChange(of: [username, name, bio]) {
             isEdited = true
         }

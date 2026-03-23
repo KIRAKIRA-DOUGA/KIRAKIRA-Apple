@@ -87,7 +87,7 @@ struct ChangeEmailPasswordVerification: View {
     var body: some View {
         WizardForm(
             systemImage: "lock",
-            title: .verifyYourIdentity,
+            title: .verifyIdentity,
             subtitle: .enterPasswordDescription,
         ) {
             WizardSection {
@@ -133,7 +133,7 @@ struct ChangeEmailViewNewAddressVerification: View {
 
     var body: some View {
         WizardForm(
-            systemImage: "envelope.open",
+            systemImage: "envelope.badge",
             title: .verifyEmailAddress,
             subtitle: .enterVerificationCodeEmailDescription,
         ) {

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		456EE4462ED24F720040A84A /* VariableBlur in Frameworks */ = {isa = PBXBuildFile; productRef = 456EE4452ED24F720040A84A /* VariableBlur */; };
+		45BD90662F6D5373009BFB12 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 45BD90652F6D5373009BFB12 /* SwiftUIIntrospect */; };
 		8D34529D2F5E9F6700CF2DB0 /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 8D34529C2F5E9F6700CF2DB0 /* SwiftUIX */; };
 		8D3452A02F5EA9B400CF2DB0 /* RichText in Frameworks */ = {isa = PBXBuildFile; productRef = 8D34529F2F5EA9B400CF2DB0 /* RichText */; };
 		8DFD93542EDC997400F18746 /* Flow in Frameworks */ = {isa = PBXBuildFile; productRef = 8DFD93532EDC997400F18746 /* Flow */; };
@@ -38,6 +39,7 @@
 				8DFD93612EDC9D1000F18746 /* Kingfisher in Frameworks */,
 				8DFD93542EDC997400F18746 /* Flow in Frameworks */,
 				456EE4462ED24F720040A84A /* VariableBlur in Frameworks */,
+				45BD90662F6D5373009BFB12 /* SwiftUIIntrospect in Frameworks */,
 				8D3452A02F5EA9B400CF2DB0 /* RichText in Frameworks */,
 				8D34529D2F5E9F6700CF2DB0 /* SwiftUIX in Frameworks */,
 			);
@@ -91,6 +93,7 @@
 				8DFD93602EDC9D1000F18746 /* Kingfisher */,
 				8D34529C2F5E9F6700CF2DB0 /* SwiftUIX */,
 				8D34529F2F5EA9B400CF2DB0 /* RichText */,
+				45BD90652F6D5373009BFB12 /* SwiftUIIntrospect */,
 			);
 			productName = KIRAKIRA;
 			productReference = 456EE4032ED24D6B0040A84A /* KIRAKIRA.app */;
@@ -130,6 +133,7 @@
 				8DFD935F2EDC9D1000F18746 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				8D34529B2F5E9F6700CF2DB0 /* XCRemoteSwiftPackageReference "SwiftUIX" */,
 				8D34529E2F5EA9B400CF2DB0 /* XCRemoteSwiftPackageReference "RichText" */,
+				45BD90642F6D5373009BFB12 /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 456EE4042ED24D6B0040A84A /* Products */;
@@ -402,6 +406,14 @@
 				kind = branch;
 			};
 		};
+		45BD90642F6D5373009BFB12 /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/swiftui-introspect";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 26.0.1;
+			};
+		};
 		8D34529B2F5E9F6700CF2DB0 /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX.git";
@@ -441,6 +453,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 456EE4442ED24F720040A84A /* XCRemoteSwiftPackageReference "VariableBlur" */;
 			productName = VariableBlur;
+		};
+		45BD90652F6D5373009BFB12 /* SwiftUIIntrospect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45BD90642F6D5373009BFB12 /* XCRemoteSwiftPackageReference "swiftui-introspect" */;
+			productName = SwiftUIIntrospect;
 		};
 		8D34529C2F5E9F6700CF2DB0 /* SwiftUIX */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -105,6 +105,12 @@ struct MainView: View {
         .sheet(isPresented: $globalStateManager.isShowingLogin) {
             LoginView()
         }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
+            globalStateManager.isShowingKeyboard = true
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
+            globalStateManager.isShowingKeyboard = false
+        }
     }
 }
 

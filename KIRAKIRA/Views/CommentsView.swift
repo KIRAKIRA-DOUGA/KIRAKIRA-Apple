@@ -1,7 +1,9 @@
 import RichText
 import SwiftUI
+import SwiftUIIntrospect
 
 struct CommentsView: View {
+    @Environment(GlobalStateManager.self) private var globalStateManager
     @State private var sendContent: String = ""
     @State private var countUpvote: Int = 9
     @State private var countDownvote: Int = 9
@@ -18,24 +20,25 @@ struct CommentsView: View {
 
     var body: some View {
         List(0..<30) { _ in
-            UserContentView(
-                name: "Endministrator",
-                username: "endmin",
-                avatarId: "avatar-1-xiQgrY2SDDx68HbIH8LSSBZqDpbSOFBf-1722666535442",
-                date: Date(timeIntervalSince1970: 0),
-                index: 2,
-                voteAppearance: .arrow,
-                countUpvote: $countUpvote,
-                countDownvote: $countDownvote,
-                upvoted: $upvoted,
-                downvoted: $downvoted,
-            ) {
-                TextView {
-                    Text(commentContent)
+            LazyVStack {
+                UserContentView(
+                    name: "Endministrator",
+                    username: "endmin",
+                    avatarId: "avatar-1-xiQgrY2SDDx68HbIH8LSSBZqDpbSOFBf-1722666535442",
+                    date: Date(timeIntervalSince1970: 0),
+                    index: 2,
+                    voteAppearance: .arrow,
+                    countUpvote: $countUpvote,
+                    countDownvote: $countDownvote,
+                    upvoted: $upvoted,
+                    downvoted: $downvoted,
+                ) {
+                    TextView {
+                        Text(commentContent)
+                    }
                 }
             }
         }
-        .listStyle(.plain)
         .safeAreaBar(edge: .bottom) {
             SendTextField(
                 text: $sendContent,
@@ -44,9 +47,10 @@ struct CommentsView: View {
                 showAddButton: true
             )
             .padding(.horizontal)
-            .padding(.vertical, 2)
+            .padding(.bottom, globalStateManager.isShowingKeyboard ? 16 : 0)
         }
-        .scrollDismissesKeyboard(.interactively)
+        .listStyle(.plain)
+        .scrollDismissesKeyboard(.immediately)
         //        .sheet(isPresented: $isShowingSelectionSheet) {
         //            NavigationStack {
         //                TextSelectView(text: $commentContent)

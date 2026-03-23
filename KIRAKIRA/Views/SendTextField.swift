@@ -1,12 +1,12 @@
 import SwiftUI
-import SwiftUIX
+import SwiftUIIntrospect
 
 struct SendTextField: View {
     @Binding var text: String
     let prompt: LocalizedStringResource
     let onSend: () -> Void
     let showAddButton: Bool?
-    
+
     init(
         text: Binding<String>,
         prompt: LocalizedStringResource,
@@ -18,53 +18,56 @@ struct SendTextField: View {
         self.onSend = onSend
         self.showAddButton = showAddButton
     }
-    
+
     var body: some View {
         HStack(alignment: .bottom) {
             if showAddButton ?? false {
                 Button(action: {}) {
                     Label(.menuMore, systemImage: "plus")
-                        .frame(height: 35)
+                        .frame(height: 26)
                 }
                 .buttonStyle(.glass)
                 .buttonBorderShape(.circle)
                 .labelStyle(.iconOnly)
                 .font(.system(size: 19))
-                .padding(.bottom, -2)
             }
             HStack(alignment: .bottom) {
                 TextField(prompt, text: $text, axis: .vertical)
+                    .introspect(.textField(axis: .vertical), on: .iOS(.v26)) { textField in
+                        textField.clipsToBounds = false
+                        textField.textContainerInset = UIEdgeInsets(top: 9, left: 0, bottom: 9, right: 0)
+                        textField.showsVerticalScrollIndicator = true
+                    }
+                    .lineHeight(.normal)
                     .submitLabel(.return)
                     .padding(.leading)
-                    .padding(.vertical, 8)
-                    .frame(minHeight: 45)
-                
-//                TextView(text: $text)
-//                    .submitLabel(.return)
-//                    .padding(.leading)
-//                    .padding(.vertical, 8)
-//                    .frame(minHeight: 45)
-//                    .font(.body)
-//                    .scrollDisabled(true)
-                
-                HStack {
+                    .lineLimit(12)
+
+                HStack(spacing: 0) {
                     Button(action: {}) {
                         Image(systemName: "face.smiling")
                             .foregroundStyle(.tertiary)
-                            .font(.system(size: 19))
-                            .padding(4)
+                            .frame(width: 38, height: 28)
                     }
                     .buttonStyle(.plain)
-                    .buttonBorderShape(.circle)
-                    
-                    Button(.actionSend, systemImage: "arrow.up", action: { onSend() })
+                    .buttonBorderShape(.capsule)
+
+                    if !text.isEmpty {
+                        Button(action: { onSend() }) {
+                            Image(systemName: "arrow.up")
+                                .font(.system(size: 17))
+                        }
                         .buttonStyle(.borderedProminent)
                         .labelStyle(.iconOnly)
                         .fontWeight(.bold)
-                        .disabled(text.isEmpty)
-                }.padding(6)
+                        .frame(width: 38, height: 28)
+                    }
+                }
+                .controlSize(.small)
+                .padding(6)
             }
-            .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 24))
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 20))
         }
     }
 }
