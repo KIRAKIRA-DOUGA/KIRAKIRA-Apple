@@ -68,12 +68,10 @@ struct VideoPlayerView: View {
             if player != nil {
                 VideoPlayer(player: player)
                     .aspectRatio(16 / 9, contentMode: .fit)
-                    .frame(maxWidth: .infinity)
                     .layoutPriority(1)
             } else {
                 Color.black
                     .aspectRatio(16 / 9, contentMode: .fit)
-                    .frame(maxWidth: .infinity)
                     .layoutPriority(1)
                     .task {
                         if let url = video.videoPart.first?.m3u8URL {
