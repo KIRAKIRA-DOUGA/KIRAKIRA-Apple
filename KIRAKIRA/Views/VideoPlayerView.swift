@@ -255,6 +255,6 @@ private enum VideoPlayerTab: Hashable, CaseIterable {
     case danmakus
 }
 
-#Preview {
+#Preview(traits: .commonPreviewTrait) {
     VideoPlayerView(videoId: 1)
 }

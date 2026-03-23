@@ -82,7 +82,7 @@ struct UserView: View {
                 }
 
                 // Bio
-                Text(verbatim: "Kawaii Forever!~")
+                TextSelectable("Kawaii Forever!~")
                     .fontWeight(.medium)
 
                 // Follower Info
@@ -119,6 +119,7 @@ struct UserView: View {
             }
             .padding()
             .textSelection(.enabled)
+            .multilineTextAlignment(.center)
 
             LazyVStack {
                 Section {
