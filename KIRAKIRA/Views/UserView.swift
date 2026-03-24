@@ -83,7 +83,7 @@ struct UserView: View {
                 }
 
                 // Bio
-                TextView("Kawaii Forever!~")
+                TextView(verbatim: "Kawaii Forever!~")
                     .fontWeight(.medium)
 
                 // Follower Info
