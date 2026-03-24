@@ -1,4 +1,5 @@
 import SwiftUI
+import RichText
 
 struct UserView: View {
     @Namespace private var namespace
@@ -82,7 +83,7 @@ struct UserView: View {
                 }
 
                 // Bio
-                TextSelectable("Kawaii Forever!~")
+                TextView("Kawaii Forever!~")
                     .fontWeight(.medium)
 
                 // Follower Info

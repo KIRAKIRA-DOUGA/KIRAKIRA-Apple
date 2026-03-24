@@ -1,5 +1,6 @@
 import AVKit
 import SwiftUI
+import RichText
 
 struct VideoPlayerView: View {
     let videoId: Int
@@ -132,7 +133,7 @@ struct VideoPlayerView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 16) {
-                    TextSelectable(video.title)
+                    TextView(video.title)
                         .font(.title2)
                         .bold()
 
@@ -161,7 +162,7 @@ struct VideoPlayerView: View {
                     .monospacedDigit()
                     .contentTransition(.numericText())
 
-                    TextSelectable(video.description)
+                    TextView(video.description)
                 }
 
                 // 操作
