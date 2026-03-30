@@ -148,7 +148,7 @@ struct VideoPlayerView: View {
 
                         if let uploadDate = video.uploadDate {
                             Label {
-                                Text(uploadDate, format: .dateTime)
+                                Text(uploadDate, format: .smart)
                             } icon: {
                                 Image(systemName: "calendar")
                             }
@@ -239,7 +239,7 @@ struct VideoPlayerView: View {
     }
 
     var comments: some View {
-        CommentsView()
+        CommentsView(videoId: videoId)
     }
 
     var danmaku: some View {

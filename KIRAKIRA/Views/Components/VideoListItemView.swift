@@ -79,7 +79,7 @@ struct VideoListItemView: View {
 
             if let uploadDate = video.uploadDate {
                 Label {
-                    Text(uploadDate, style: .date)
+                    Text(uploadDate, format: .smart)
                 } icon: {
                     Image(systemName: "calendar")
                 }
