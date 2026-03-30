@@ -1,11 +1,12 @@
 import AVKit
-import SwiftUI
 import RichText
+import SwiftUI
 
 struct VideoPlayerView: View {
     let videoId: Int
     @Environment(\.dismiss) private var dismiss
     @State private var viewModel = VideoViewModel()
+    @State private var commentViewModel = CommentViewModel()
     @State private var showingView: VideoPlayerTab = .info
     @Namespace private var namespace
     @State private var countLike = 0
@@ -213,7 +214,6 @@ struct VideoPlayerView: View {
                                     .frame(width: 20, height: 20)
                             }
 
-                            
                             Menu {
                                 Button(.report, systemImage: "exclamationmark.bubble", action: {})
                                 Button(.checkThumbnail, systemImage: "photo", action: {})
@@ -239,7 +239,7 @@ struct VideoPlayerView: View {
     }
 
     var comments: some View {
-        CommentsView(videoId: videoId)
+        CommentsView(videoId: videoId, commentViewModel: commentViewModel)
     }
 
     var danmaku: some View {

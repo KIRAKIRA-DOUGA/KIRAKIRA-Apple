@@ -6,6 +6,7 @@ class CommentViewModel {
     var comments: [VideoCommentDTO] = []
     var isLoading = false
     var errorMessage: String?
+    private var loadedVideoId: Int?
 
     private let apiService = APIService.shared
 
@@ -22,10 +23,16 @@ class CommentViewModel {
         do {
             let response: VideoRequestCommentDTO = try await apiService.request(.getVideoComments(id: id))
             self.comments = response.videoCommentList
+            loadedVideoId = id
         } catch {
             self.errorMessage = error.localizedDescription
         }
 
         isLoading = false
+    }
+
+    func fetchVideoCommentIfNeeded(of id: Int?) async {
+        guard loadedVideoId != id else { return }
+        await fetchVideoComment(of: id)
     }
 }

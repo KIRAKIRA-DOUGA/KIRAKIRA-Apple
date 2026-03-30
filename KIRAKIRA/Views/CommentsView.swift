@@ -4,9 +4,9 @@ import SwiftUIIntrospect
 
 struct CommentsView: View {
     let videoId: Int
+    let commentViewModel: CommentViewModel
     @Environment(GlobalStateManager.self) private var globalStateManager
     @State private var sendContent: String = ""
-    @State private var commentViewModel = CommentViewModel()
 
     private func sendComment() {
         sendContent = ""
@@ -38,7 +38,7 @@ struct CommentsView: View {
             }
         }
         .task {
-            await commentViewModel.fetchVideoComment(of: videoId)
+            await commentViewModel.fetchVideoCommentIfNeeded(of: videoId)
         }
         .safeAreaBar(edge: .bottom) {
             SendTextField(
@@ -57,6 +57,6 @@ struct CommentsView: View {
 
 #Preview(traits: .commonPreviewTrait) {
     NavigationStack {
-        CommentsView(videoId: 1)
+        CommentsView(videoId: 1, commentViewModel: CommentViewModel())
     }
 }
