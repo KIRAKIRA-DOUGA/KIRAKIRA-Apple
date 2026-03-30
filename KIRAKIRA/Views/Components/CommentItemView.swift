@@ -12,12 +12,10 @@ struct CommentItemView: View {
                     .frame(width: 40, height: 40)
                     .clipShape(.circle)
             } else {
-                Image(.akkarin)
+                Image(systemName: "person.crop.circle")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 40, height: 40)
-                    .background(.white)
-                    .clipShape(.circle)
             }
 
             HStack {
