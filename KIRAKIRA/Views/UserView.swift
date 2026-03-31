@@ -1,4 +1,5 @@
 import SwiftUI
+import RichText
 
 struct UserView: View {
     @Namespace private var namespace
@@ -82,7 +83,7 @@ struct UserView: View {
                 }
 
                 // Bio
-                Text(verbatim: "Kawaii Forever!~")
+                TextView(verbatim: "Kawaii Forever!~")
                     .fontWeight(.medium)
 
                 // Follower Info
@@ -119,6 +120,7 @@ struct UserView: View {
             }
             .padding()
             .textSelection(.enabled)
+            .multilineTextAlignment(.center)
 
             LazyVStack {
                 Section {

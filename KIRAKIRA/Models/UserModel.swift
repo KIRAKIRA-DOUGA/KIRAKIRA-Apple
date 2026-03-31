@@ -1,10 +1,7 @@
 import Foundation
 
-struct UserProfile: Codable {
+struct UserInfoDTO: Codable {
     let username: String
-    let name: String
-    let bio: String?
-    let birthday: Date?
-    let avatarID: String?
-    let bannerID: String?
+    let userNickname: String
+    let avatar: String?  // path of the avatar image
 }

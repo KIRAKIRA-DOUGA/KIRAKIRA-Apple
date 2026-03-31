@@ -7,6 +7,14 @@ class GlobalStateManager {
     var selectedCategory: Category = categories.first!
     var isShowingSettings: Bool = false
     var isShowingLogin: Bool = false
+    var isShowingKeyboard: Bool = false
+    var selectedVideo: Int?
+    var activeTransitionSource: AnimationTransitionSource = .none
+}
+
+enum AnimationTransitionSource: Hashable {
+    case video(Int)
+    case none
 }
 
 enum MainTab: Hashable {

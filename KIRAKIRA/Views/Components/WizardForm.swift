@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct WizardForm<Content: View, Footer: View>: View {
+    @Environment(GlobalStateManager.self) private var globalStateManager
     let systemImage: String?
     let image: String?
     let iconStyle: AnyShapeStyle?
@@ -29,7 +30,7 @@ struct WizardForm<Content: View, Footer: View>: View {
     private let horizontalPadding: CGFloat = 34
     private let verticalPadding: CGFloat = 36
     @State private var isAnimationPlayed = false
-    
+
     var body: some View {
         Form {
             Section {
@@ -40,7 +41,7 @@ struct WizardForm<Content: View, Footer: View>: View {
                             Image(image)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 72)
+                                .frame(height: 80)
                                 .foregroundStyle(iconStyle ?? AnyShapeStyle(.accent.gradient))
                                 .symbolEffect(.drawOn, isActive: !isAnimationPlayed)
                                 .onAppear {
@@ -51,9 +52,7 @@ struct WizardForm<Content: View, Footer: View>: View {
                         }
                         if let systemImage {
                             Image(systemName: systemImage)
-                                .font(.system(size: 60))
-                                .imageScale(.large)
-                                .frame(height: 72)
+                                .font(.system(size: 80, weight: .light))
                                 .foregroundStyle(iconStyle ?? AnyShapeStyle(.accent.gradient))
                                 .symbolEffect(.drawOn, isActive: !isAnimationPlayed)
                                 .onAppear {
@@ -81,18 +80,62 @@ struct WizardForm<Content: View, Footer: View>: View {
             .listRowBackground(Color.clear)
 
             content
+                .listRowBackground(Color.clear)
         }
         .contentMargins(.top, 0)
         .listSectionSpacing(15)
         .scrollContentBackground(.hidden)
-        .scrollDismissesKeyboard(.interactively)
+        .background(Color(UIColor.secondarySystemGroupedBackground))
+        .scrollDismissesKeyboard(.immediately)
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Color.clear.frame(width: 0, height: 0)  // Hide navigation bar title
+            }
+        }
         .safeAreaBar(edge: .bottom) {
-            footer
-                .controlSize(.large)
-                .fontWeight(.semibold)
-                .buttonStyle(.glassProminent)
-                .buttonSizing(.flexible)
-                .padding(.horizontal, horizontalPadding)
+            VStack(spacing: 10) {
+                footer
+                    .controlSize(.large)
+                    .fontWeight(.semibold)
+                    .buttonStyle(.glassProminent)
+                    .buttonSizing(.flexible)
+                    .frame(maxWidth: 360)
+                    .padding(.horizontal, horizontalPadding)
+                    .padding(.bottom, UIDevice.current.userInterfaceIdiom == .phone ? 0 : 38)
+                    .padding(.bottom, globalStateManager.isShowingKeyboard ? 16 : 0)
+            }
+        }
+    }
+}
+
+#Preview {
+    NavigationStack {
+        WizardForm(
+            systemImage: "testtube.2", title: "WizardForm Test", subtitle: "Apple's wizard layout, now reusable!"
+        ) {
+            WizardSection {
+                Text(verbatim: "Some text")
+            }
+        } footer: {
+            Button {
+
+            } label: {
+                Text(verbatim: "Action Button")
+            }
+
+            Button {
+
+            } label: {
+                Text(verbatim: "Secondary Action Button")
+            }.buttonStyle(.glass)
+        }
+        .navigationTitle("WizardForm Test")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Menu", systemImage: "ellipsis", action: {})
+            }
         }
     }
 }

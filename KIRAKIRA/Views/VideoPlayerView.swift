@@ -1,9 +1,12 @@
 import AVKit
+import RichText
 import SwiftUI
 
 struct VideoPlayerView: View {
     let videoId: Int
+    @Environment(\.dismiss) private var dismiss
     @State private var viewModel = VideoViewModel()
+    @State private var commentViewModel = CommentViewModel()
     @State private var showingView: VideoPlayerTab = .info
     @Namespace private var namespace
     @State private var countLike = 0
@@ -42,15 +45,22 @@ struct VideoPlayerView: View {
     }
 
     var body: some View {
-        Group {
-            if let video = viewModel.video {
-                content(video: video.video)
-            } else {
-                ProgressView()
+        NavigationStack {
+            Group {
+                if let video = viewModel.video {
+                    content(video: video.video)
+                } else {
+                    ProgressView()
+                }
             }
-        }
-        .task {
-            await viewModel.fetchVideo(of: videoId)
+            .task {
+                await viewModel.fetchVideo(of: videoId)
+            }
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(role: .close, action: { dismiss() })
+                }
+            }
         }
     }
 
@@ -60,9 +70,11 @@ struct VideoPlayerView: View {
             if player != nil {
                 VideoPlayer(player: player)
                     .aspectRatio(16 / 9, contentMode: .fit)
+                    .layoutPriority(1)
             } else {
                 Color.black
                     .aspectRatio(16 / 9, contentMode: .fit)
+                    .layoutPriority(1)
                     .task {
                         if let url = video.videoPart.first?.m3u8URL {
                             player = AVPlayer(url: url)
@@ -122,7 +134,7 @@ struct VideoPlayerView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 16) {
-                    Text(video.title)
+                    TextView(video.title)
                         .font(.title2)
                         .bold()
 
@@ -137,7 +149,7 @@ struct VideoPlayerView: View {
 
                         if let uploadDate = video.uploadDate {
                             Label {
-                                Text(uploadDate, format: .dateTime)
+                                Text(uploadDate, format: .smart)
                             } icon: {
                                 Image(systemName: "calendar")
                             }
@@ -151,7 +163,7 @@ struct VideoPlayerView: View {
                     .monospacedDigit()
                     .contentTransition(.numericText())
 
-                    Text(video.description)
+                    TextView(video.description)
                 }
 
                 // 操作
@@ -202,7 +214,6 @@ struct VideoPlayerView: View {
                                     .frame(width: 20, height: 20)
                             }
 
-                            
                             Menu {
                                 Button(.report, systemImage: "exclamationmark.bubble", action: {})
                                 Button(.checkThumbnail, systemImage: "photo", action: {})
@@ -228,10 +239,7 @@ struct VideoPlayerView: View {
     }
 
     var comments: some View {
-        List(0..<30) { _ in
-            Text(verbatim: "你好")
-        }
-        .listStyle(.plain)
+        CommentsView(videoId: videoId, commentViewModel: commentViewModel)
     }
 
     var danmaku: some View {
@@ -248,6 +256,6 @@ private enum VideoPlayerTab: Hashable, CaseIterable {
     case danmakus
 }
 
-#Preview {
+#Preview(traits: .commonPreviewTrait) {
     VideoPlayerView(videoId: 1)
 }

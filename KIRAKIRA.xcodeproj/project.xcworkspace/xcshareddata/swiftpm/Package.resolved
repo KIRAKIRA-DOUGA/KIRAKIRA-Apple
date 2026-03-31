@@ -1,5 +1,5 @@
 {
-  "originHash" : "6d7e3c649f73417717a66d52ddbd2ae5a1392aa2983450693feff9c0bf93a786",
+  "originHash" : "204c30163212bc5b8e4264b4498e45216e0200032a38b3b5682294dd6ea1b8e1",
   "pins" : [
     {
       "identity" : "kingfisher",
@@ -11,12 +11,39 @@
       }
     },
     {
+      "identity" : "richtext",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/LiYanan2004/RichText",
+      "state" : {
+        "branch" : "main",
+        "revision" : "276db3b87a13a9341fb7d869e9d82e8cffe0ce83"
+      }
+    },
+    {
       "identity" : "swiftui-flow",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/tevelee/SwiftUI-Flow",
       "state" : {
         "revision" : "d227f999b2894ab737ef5786d9b14d02d3e5362e",
         "version" : "3.1.1"
+      }
+    },
+    {
+      "identity" : "swiftui-introspect",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/siteline/swiftui-introspect",
+      "state" : {
+        "revision" : "26986a57e31c813f98262ddb62d4b07d40008535",
+        "version" : "26.0.1"
+      }
+    },
+    {
+      "identity" : "swiftuix",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftUIX/SwiftUIX.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "c1a29980849703457ec2e26d9682e309a3c0a171"
       }
     },
     {
