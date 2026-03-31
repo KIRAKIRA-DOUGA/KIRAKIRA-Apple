@@ -5,6 +5,8 @@ import SwiftUI
 struct VideoPlayerView: View {
     let videoId: Int
     @Environment(\.dismiss) private var dismiss
+    @State private var authManager = AuthManager.shared
+    @State private var isShowingLogin = false
     @State private var viewModel = VideoViewModel()
     @State private var commentViewModel = CommentViewModel()
     @State private var showingView: VideoPlayerTab = .info
@@ -60,6 +62,9 @@ struct VideoPlayerView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(role: .close, action: { dismiss() })
                 }
+            }
+            .sheet(isPresented: $isShowingLogin) {
+                LoginView()
             }
         }
     }
@@ -127,7 +132,13 @@ struct VideoPlayerView: View {
 
                     Spacer()
 
-                    Button(action: {}) {
+                    Button {
+                        if authManager.isAuthenticated {
+                            
+                        } else {
+                            isShowingLogin = true
+                        }
+                    } label: {
                         Label(.userFollow, systemImage: "plus")
                     }
                     .buttonStyle(.bordered)
@@ -180,6 +191,9 @@ struct VideoPlayerView: View {
                                         .contentTransition(.numericText(value: Double(countLike)))
                                 }
                                 .foregroundStyle(liked ? .accent : .primary)
+                                .sensoryFeedback(.success, trigger: liked) { oldValue, newValue in
+                                    return newValue
+                                }
 
                                 Button(action: { dislike() }) {
                                     Image(systemName: "hand.thumbsdown")
@@ -202,6 +216,9 @@ struct VideoPlayerView: View {
                                 .contentTransition(.numericText(value: Double(countCollected)))
                         }
                         .foregroundStyle(collected ? .accent : .primary)
+                        .sensoryFeedback(.success, trigger: collected) { oldValue, newValue in
+                            return newValue
+                        }
 
                         Group {
                             Button(action: {}) {
