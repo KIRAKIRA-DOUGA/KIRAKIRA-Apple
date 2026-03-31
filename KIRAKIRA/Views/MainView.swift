@@ -15,7 +15,7 @@ struct MainView: View {
                 HomeView(isPlayerExpanded: $isPlayerExpanded, animationNamespace: animationNamespace)
             }
 
-            Tab(.maintabFollowing, systemImage: "mail.stack", value: MainTab.feed) {
+            Tab(.maintabFollowing, systemImage: "rectangle.stack", value: MainTab.feed) {
                 FollowingFeedView()
             }
 
