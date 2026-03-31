@@ -686,6 +686,23 @@
         }
       }
     },
+    "LOGIN_PROMPT_FOLLOWING_FEED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log in to see updates from everything you follow"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录以查看你关注的所有动态"
+          }
+        }
+      }
+    },
     "MAINTAB_FOLLOWING" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1061,6 +1078,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "举报"
+          }
+        }
+      }
+    },
+    "SEARCH" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索"
           }
         }
       }
