@@ -10,8 +10,10 @@ class CommentViewModel {
 
     private let apiService = APIService.shared
 
-    func fetchVideoComment(of id: Int?) async {
-        isLoading = true
+    func fetchVideoComment(of id: Int?, isRefresh: Bool = false) async {
+        if !isRefresh {
+            isLoading = true
+        }
         errorMessage = nil
 
         guard let id else {
@@ -28,7 +30,9 @@ class CommentViewModel {
             self.errorMessage = error.localizedDescription
         }
 
-        isLoading = false
+        if !isRefresh {
+            isLoading = false
+        }
     }
 
     func fetchVideoCommentIfNeeded(of id: Int?) async {

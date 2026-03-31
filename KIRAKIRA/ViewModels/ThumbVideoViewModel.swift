@@ -9,8 +9,10 @@ class ThumbVideoViewModel {
 
     private let apiService = APIService.shared
 
-    func fetchHomeVideos() async {
-        isLoading = true
+    func fetchHomeVideos(isRefresh: Bool = false) async {
+        if !isRefresh {
+            isLoading = true
+        }
         errorMessage = nil
 
         do {
@@ -20,6 +22,8 @@ class ThumbVideoViewModel {
             self.errorMessage = error.localizedDescription
         }
 
-        isLoading = false
+        if !isRefresh {
+            isLoading = false
+        }
     }
 }

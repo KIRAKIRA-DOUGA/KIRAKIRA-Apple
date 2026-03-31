@@ -31,9 +31,7 @@ struct CommentsView: View {
                     CommentItemView(comment: comment)
                 }
                 .refreshable {
-                    Task {
-                        await commentViewModel.fetchVideoComment(of: videoId)
-                    }
+                    await commentViewModel.fetchVideoComment(of: videoId, isRefresh: true)
                 }
             }
         }

@@ -18,7 +18,7 @@ struct HomeView: View {
                     }
                 }
                 .refreshable {
-                    await viewModel.fetchHomeVideos()
+                    await viewModel.fetchHomeVideos(isRefresh: true)
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
