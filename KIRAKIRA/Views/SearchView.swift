@@ -15,7 +15,7 @@ struct SearchView: View {
                 }
                 .padding()
             }
-            .navigationTitle(.category)
+            .navigationTitle(.search)
             .toolbarTitleDisplayMode(.inlineLarge)
         }
     }
