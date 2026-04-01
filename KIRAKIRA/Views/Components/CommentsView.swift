@@ -1,6 +1,5 @@
 import RichText
 import SwiftUI
-import SwiftUIIntrospect
 
 struct CommentsView: View {
     let videoId: Int
