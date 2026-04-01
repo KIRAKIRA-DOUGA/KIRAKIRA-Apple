@@ -9,6 +9,7 @@ struct VideoPlayerView: View {
     @State private var isShowingLogin = false
     @State private var viewModel = VideoViewModel()
     @State private var commentViewModel = CommentViewModel()
+    @State private var danmakuViewModel = DanmakuViewModel()
     @State private var showingView: VideoPlayerTab = .info
     @Namespace private var namespace
     @State private var countLike = 0
@@ -134,7 +135,7 @@ struct VideoPlayerView: View {
 
                     Button {
                         if authManager.isAuthenticated {
-                            
+
                         } else {
                             isShowingLogin = true
                         }
@@ -260,10 +261,7 @@ struct VideoPlayerView: View {
     }
 
     var danmaku: some View {
-        List(0..<30) { _ in
-            Text(verbatim: "好！")
-        }
-        .listStyle(.plain)
+        DanmakuView(videoId: videoId, danmakuViewModel: danmakuViewModel)
     }
 }
 
