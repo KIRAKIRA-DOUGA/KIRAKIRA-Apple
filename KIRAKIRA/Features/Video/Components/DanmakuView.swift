@@ -36,7 +36,7 @@ struct DanmakuView: View {
         }
         .listStyle(.plain)
         .task {
-            await danmakuViewModel.load(videoID: videoId)
+            await danmakuViewModel.loadIfNeeded(videoID: videoId)
         }
     }
 }
