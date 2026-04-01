@@ -11,7 +11,7 @@ struct SmartDateFormatStyle: FormatStyle {
         let components = calendar.dateComponents([.day], from: value, to: now)
         let daysDifference = abs(components.day ?? 0)
 
-        if daysDifference < 7 {
+        if daysDifference < absoluteThresholdInDays {
             let formatter = RelativeDateTimeFormatter()
             formatter.unitsStyle = .abbreviated
             formatter.dateTimeStyle = .named
