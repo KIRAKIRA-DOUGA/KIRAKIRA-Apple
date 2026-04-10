@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(GlobalStateManager.self) private var globalStateManager
     @Environment(\.horizontalSizeClass) private var horizontalSize
     @State private var viewModel = ThumbVideoViewModel()
     @State private var hasLoaded = false
@@ -51,7 +52,7 @@ struct HomeView: View {
 
     @ViewBuilder
     private var content: some View {
-        if viewModel.isLoading {
+        if !globalStateManager.isSplashFinished || viewModel.isLoading {
             VStack {
                 Spacer()
                 ProgressView()

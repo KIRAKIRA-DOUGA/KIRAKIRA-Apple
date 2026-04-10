@@ -26,6 +26,9 @@ struct KIRAKIRAApp: App {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                             isSplashHitAllowed = false
                         }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                            globalStateManager.isSplashFinished = true
+                        }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                             isSplashVisible = false
                         }

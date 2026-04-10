@@ -5,6 +5,7 @@ import SwiftUI
 class GlobalStateManager {
     var mainTabSelection: MainTab = .home
     var selectedCategory: Category = categories.first!
+    var isSplashFinished: Bool = false
     var isShowingSettings: Bool = false
     var isShowingLogin: Bool = false
     var isShowingKeyboard: Bool = false
