@@ -11,6 +11,7 @@ struct DanmakuView: View {
                 VStack {
                     Spacer()
                     ProgressView()
+                        .controlSize(.large)
                     Spacer()
                 }
             } else if let errorMessage = danmakuViewModel.errorMessage {

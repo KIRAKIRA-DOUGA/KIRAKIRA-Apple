@@ -17,6 +17,7 @@ struct CommentsView: View {
                 VStack {
                     Spacer()
                     ProgressView()
+                        .controlSize(.large)
                     Spacer()
                 }
             } else if let errorMessage = commentViewModel.errorMessage {

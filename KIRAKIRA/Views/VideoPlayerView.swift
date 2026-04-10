@@ -54,6 +54,7 @@ struct VideoPlayerView: View {
                     content(video: video.video)
                 } else {
                     ProgressView()
+                        .controlSize(.large)
                 }
             }
             .task {

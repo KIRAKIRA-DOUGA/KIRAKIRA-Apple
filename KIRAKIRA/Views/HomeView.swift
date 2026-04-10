@@ -56,6 +56,7 @@ struct HomeView: View {
             VStack {
                 Spacer()
                 ProgressView()
+                    .controlSize(.large)
                 Spacer()
             }
         } else if let errorMessage = viewModel.errorMessage {
