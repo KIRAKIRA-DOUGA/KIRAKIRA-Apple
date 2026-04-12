@@ -10,14 +10,15 @@ struct HomeView: View {
         NavigationStack {
             Group {
                 switch homeVideoViewModel.state {
-                case .idle, .loading(previous: nil):
-                    LoadingView()
-                case .success(let videos), .loading(previous: .some(let videos)):
+                case .success(let videos) where globalStateManager.isSplashFinished,
+                    .loading(previous: .some(let videos)) where globalStateManager.isSplashFinished:
                     HomeVideoListView(
                         videos: videos,
                         animationNamespace: animationNamespace,
                     )
                     .transition(.opacity)
+                case .idle, .loading, .success:
+                    LoadingView()
                 case .error(let msg):
                     ErrorView(errorMessage: msg)
                 default:
@@ -26,12 +27,8 @@ struct HomeView: View {
             }
             .animation(.default, value: homeVideoViewModel.state)
             .navigationBarTitleDisplayMode(.large)
-            .onChange(of: globalStateManager.isSplashFinished) { oldValue, newValue in
-                if newValue {
-                    Task {
-                        await homeVideoViewModel.fetch()
-                    }
-                }
+            .task {
+                await homeVideoViewModel.fetch()
             }
             .refreshable {
                 await homeVideoViewModel.fetch()
