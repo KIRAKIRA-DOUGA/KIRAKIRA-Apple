@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct LoginView: View {
+struct AuthView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var emailAddress = ""
     @State private var password = ""
@@ -21,11 +21,11 @@ struct LoginView: View {
                 }
 
                 Button(.createAccount, systemImage: "plus.circle") {
-                    path.append(LoginPath.registerName)
+                    path.append(AuthPath.registerName)
                 }.buttonStyle(.borderless)
             } footer: {
                 Button {
-                    path.append(LoginPath.loginEmailVerification)
+                    path.append(AuthPath.loginEmailVerification)
                 } label: {
                     Text(verbatim: "LINK START")
                 }
@@ -35,7 +35,7 @@ struct LoginView: View {
                     Button(.close, systemImage: "xmark", role: .close, action: { dismiss() })
                 }
             }
-            .navigationDestination(for: LoginPath.self) { route in
+            .navigationDestination(for: AuthPath.self) { route in
                 switch route {
                 case .loginEmailVerification:
                     LoginEmailVerificationView(path: $path, dismissSheet: dismiss)
@@ -131,7 +131,7 @@ struct RegisterNameView: View {
             }
         } footer: {
             Button {
-                path.append(LoginPath.registerCredentials)
+                path.append(AuthPath.registerCredentials)
             } label: {
                 Text(.actionContinue)
             }
@@ -161,7 +161,7 @@ struct RegisterCredentialsView: View {
             }
         } footer: {
             Button {
-                path.append(LoginPath.registerVerifyInvitationCode)
+                path.append(AuthPath.registerVerifyInvitationCode)
             } label: {
                 Text(.actionContinue)
             }
@@ -180,7 +180,7 @@ struct RegisterVerifyInvitationCodeView: View {
             }
         } footer: {
             Button {
-                path.append(LoginPath.registerVerifyEmail)
+                path.append(AuthPath.registerVerifyEmail)
             } label: {
                 Text(.actionContinue)
             }
@@ -202,7 +202,7 @@ struct RegisterVerifyEmailView: View {
             }
         } footer: {
             Button {
-                path.append(LoginPath.registerSuccess)
+                path.append(AuthPath.registerSuccess)
             } label: {
                 Text(.actionContinue)
             }
@@ -228,7 +228,7 @@ struct RegisterSuccessView: View {
     }
 }
 
-enum LoginPath: Hashable {
+enum AuthPath: Hashable {
     case loginEmailVerification
     case loginAuthenticatorVerification
     case registerName
@@ -239,5 +239,5 @@ enum LoginPath: Hashable {
 }
 
 #Preview(traits: .commonPreviewTrait) {
-    LoginView()
+    AuthView()
 }

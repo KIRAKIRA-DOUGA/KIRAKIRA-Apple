@@ -103,7 +103,7 @@ struct MainView: View {
             SettingsView()
         }
         .sheet(isPresented: $globalStateManager.isShowingLogin) {
-            LoginView()
+            AuthView()
         }
         .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
             globalStateManager.isShowingKeyboard = true

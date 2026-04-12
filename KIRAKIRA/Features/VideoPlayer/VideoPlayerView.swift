@@ -53,8 +53,7 @@ struct VideoPlayerView: View {
                 if let video = viewModel.video {
                     content(video: video.video)
                 } else {
-                    ProgressView()
-                        .controlSize(.large)
+                    LoadingView()
                 }
             }
             .task {
@@ -66,7 +65,7 @@ struct VideoPlayerView: View {
                 }
             }
             .sheet(isPresented: $isShowingLogin) {
-                LoginView()
+                AuthView()
             }
         }
     }

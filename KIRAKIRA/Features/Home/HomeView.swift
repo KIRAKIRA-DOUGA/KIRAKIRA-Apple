@@ -53,12 +53,7 @@ struct HomeView: View {
     @ViewBuilder
     private var content: some View {
         if !globalStateManager.isSplashFinished || viewModel.isLoading {
-            VStack {
-                Spacer()
-                ProgressView()
-                    .controlSize(.large)
-                Spacer()
-            }
+            LoadingView()
         } else if let errorMessage = viewModel.errorMessage {
             ErrorView(errorMessage: errorMessage) {
                 Task {

@@ -14,12 +14,7 @@ struct CommentsView: View {
     var body: some View {
         Group {
             if commentViewModel.isLoading {
-                VStack {
-                    Spacer()
-                    ProgressView()
-                        .controlSize(.large)
-                    Spacer()
-                }
+                LoadingView()
             } else if let errorMessage = commentViewModel.errorMessage {
                 ErrorView(errorMessage: errorMessage) {
                     Task {
