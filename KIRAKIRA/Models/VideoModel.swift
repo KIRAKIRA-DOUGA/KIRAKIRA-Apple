@@ -1,14 +1,14 @@
 import Foundation
 import os
 
-struct GetVideoByKvidResponseDTO: Codable {
+struct GetVideoByKvidResponseDTO: Codable, Equatable {
     let video: VideoItem
     let isBlocked: Bool
     let isBlockedByOther: Bool
     let isHidden: Bool
 }
 
-struct VideoItem: Codable, Identifiable {
+struct VideoItem: Codable, Identifiable, Equatable {
     let videoId: Int
     let videoPart: [VideoPartDTO]
     let title: String
@@ -23,6 +23,10 @@ struct VideoItem: Codable, Identifiable {
     let copyright: String
 
     var id: Int { videoId }
+
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.videoId == rhs.videoId
+    }
 
     struct UploaderInfoDTO: Codable {
         let uid: Int

@@ -50,12 +50,19 @@ struct VideoPlayerView: View {
     var body: some View {
         NavigationStack {
             Group {
-                if let video = viewModel.video {
-                    content(video: video.video)
-                } else {
+                switch viewModel.state {
+                case .idle, .loading(previous: nil):
                     LoadingView()
+                case .success(let videoDto), .loading(previous: .some(let videoDto)):
+                    content(video: videoDto.video)
+                        .transition(.opacity)
+                case .error(let msg):
+                    ErrorView(errorMessage: msg)
+                default:
+                    Color.clear
                 }
             }
+            .animation(.default, value: viewModel.state)
             .task {
                 await viewModel.fetchVideo(of: videoId)
             }
