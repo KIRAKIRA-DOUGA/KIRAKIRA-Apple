@@ -26,6 +26,7 @@ struct HomeView: View {
                 }
             }
             .animation(.default, value: homeVideoViewModel.state)
+            .animation(.default, value: globalStateManager.isSplashFinished)
             .navigationBarTitleDisplayMode(.large)
             .task {
                 await homeVideoViewModel.fetch()
