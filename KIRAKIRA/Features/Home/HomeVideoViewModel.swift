@@ -3,16 +3,16 @@ import Foundation
 
 @MainActor
 @Observable
-class DanmakuViewModel {
-    var state: LoadingState<[DanmakuDTO]> = .idle
+class HomeVideoViewModel {
+    var state: LoadingState<[ThumbVideoItem]> = .idle
     private let apiService = APIService.shared
 
-    func fetch(of id: Int) async {
+    func fetch() async {
         state.beginLoading()
 
         do {
-            let response: DanmakuResponseDTO = try await apiService.request(.getVideoDanmaku(id: id))
-            state = response.danmaku.isEmpty ? .empty : .success(response.danmaku)
+            let response: ThumbVideoResponseDTO = try await apiService.request(.getHomeVideos)
+            state = response.videos.isEmpty ? .empty : .success(response.videos)
         } catch is CancellationError {
             state.cancelLoading()
         } catch {

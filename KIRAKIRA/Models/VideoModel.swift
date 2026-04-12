@@ -56,7 +56,7 @@ struct ThumbVideoResponseDTO: Codable {
     let videos: [ThumbVideoItem]
 }
 
-struct ThumbVideoItem: Codable, Identifiable {
+struct ThumbVideoItem: Codable, Identifiable, Equatable {
     let videoId: Int
     let title: String
     let image: String?  // path of the thumbnail image
@@ -65,6 +65,10 @@ struct ThumbVideoItem: Codable, Identifiable {
     let uploaderNickname: String?
     let duration: TimeInterval?
     let `description`: String?
+
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.videoId == rhs.videoId
+    }
 
     var id: Int { videoId }
 }

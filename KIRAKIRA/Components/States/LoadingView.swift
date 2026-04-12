@@ -9,9 +9,12 @@ struct LoadingView: View {
             Spacer()
             if isShowingProgress {
                 ProgressView()
+                    .controlSize(.large)
+                /*
                     .introspect(.progressView(style: .circular), on: .iOS(.v26)) { UIActivityIndicatorView in
                         UIActivityIndicatorView.style = .large
                     }  // 细致的你一定发现了设置controlSize为.large的和UIKit层的设置了style为.large的看上去不一样，UIKit每一瓣都比SwiftUI的小一像素。
+                 */
             }
             Spacer()
         }

@@ -1,11 +1,8 @@
 import SwiftUI
 
 struct HomeView: View {
-    @Environment(GlobalStateManager.self) private var globalStateManager
     @Environment(\.horizontalSizeClass) private var horizontalSize
-    @State private var viewModel = ThumbVideoViewModel()
-    @State private var hasLoaded = false
-    @Binding var isPlayerExpanded: Bool
+    @State private var homeVideoViewModel = HomeVideoViewModel()
     let animationNamespace: Namespace.ID
 
     var body: some View {
@@ -13,13 +10,10 @@ struct HomeView: View {
             content
                 .navigationBarTitleDisplayMode(.large)
                 .task {
-                    if !hasLoaded {
-                        await viewModel.fetchHomeVideos()
-                        hasLoaded = true
-                    }
+                    await homeVideoViewModel.fetch()
                 }
                 .refreshable {
-                    await viewModel.fetchHomeVideos(isRefresh: true)
+                    await homeVideoViewModel.fetch()
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
@@ -52,21 +46,22 @@ struct HomeView: View {
 
     @ViewBuilder
     private var content: some View {
-        if !globalStateManager.isSplashFinished || viewModel.isLoading {
-            LoadingView()
-        } else if let errorMessage = viewModel.errorMessage {
-            ErrorView(errorMessage: errorMessage) {
-                Task {
-                    await viewModel.fetchHomeVideos()
-                }
+        Group {
+            switch homeVideoViewModel.state {
+            case .idle, .loading(previous: nil):
+                LoadingView()
+            case .success(let videos), .loading(previous: .some(let videos)):
+                HomeVideoListView(
+                    videos: videos,
+                    animationNamespace: animationNamespace,
+                )
+            case .error(let msg):
+                ErrorView(errorMessage: msg)
+            default:
+                Color.clear
             }
-        } else {
-            HomeVideoListView(
-                videos: viewModel.videos,
-                isPlayerExpanded: $isPlayerExpanded,
-                animationNamespace: animationNamespace,
-            )
         }
+        .animation(.default, value: homeVideoViewModel.state)
     }
 }
 
@@ -74,5 +69,5 @@ struct HomeView: View {
     @Previewable @State var isPlayerExpanded: Bool = true
     @Previewable @Namespace var animationNamespace
 
-    HomeView(isPlayerExpanded: $isPlayerExpanded, animationNamespace: animationNamespace)
+    HomeView(animationNamespace: animationNamespace)
 }

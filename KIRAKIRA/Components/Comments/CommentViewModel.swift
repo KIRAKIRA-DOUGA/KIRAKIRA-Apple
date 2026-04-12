@@ -1,42 +1,22 @@
 import Combine
 import Foundation
 
+@MainActor
 @Observable
 class CommentViewModel {
-    var comments: [VideoCommentDTO] = []
-    var isLoading = false
-    var errorMessage: String?
-    private var loadedVideoId: Int?
-
+    var state: LoadingState<[VideoCommentDTO]> = .idle
     private let apiService = APIService.shared
 
-    func fetchVideoComment(of id: Int?, isRefresh: Bool = false) async {
-        if !isRefresh {
-            isLoading = true
-        }
-        errorMessage = nil
-
-        guard let id else {
-            isLoading = false
-            errorMessage = "No comments"
-            return
-        }
+    func fetch(of id: Int) async {
+        state.beginLoading()
 
         do {
             let response: VideoRequestCommentDTO = try await apiService.request(.getVideoComments(id: id))
-            self.comments = response.videoCommentList
-            loadedVideoId = id
+            state = response.videoCommentList.isEmpty ? .empty : .success(response.videoCommentList)
+        } catch is CancellationError {
+            state.cancelLoading()
         } catch {
-            self.errorMessage = error.localizedDescription
+            state = .error(error.localizedDescription)
         }
-
-        if !isRefresh {
-            isLoading = false
-        }
-    }
-
-    func fetchVideoCommentIfNeeded(of id: Int?) async {
-        guard loadedVideoId != id else { return }
-        await fetchVideoComment(of: id)
     }
 }
