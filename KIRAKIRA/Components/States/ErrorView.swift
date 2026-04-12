@@ -6,7 +6,8 @@ struct ErrorView: View {
 
     var body: some View {
         ContentUnavailableView {
-            Label(errorMessage, systemImage: "exclamationmark.triangle.fill")
+            Label(errorMessage, systemImage: "xmark.octagon.fill")
+                .symbolRenderingMode(.multicolor)
         } description: {
             Button(.errorTryAgain) {
                 retry()

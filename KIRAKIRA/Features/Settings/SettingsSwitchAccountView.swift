@@ -52,7 +52,7 @@ struct SettingsSwitchAccountView: View {
                 isShowingLogin = true
             }
             .sheet(isPresented: $isShowingLogin) {
-                LoginView()
+                AuthView()
             }
         }
         .navigationTitle(.switchAccount)

@@ -8,12 +8,7 @@ struct DanmakuView: View {
     var body: some View {
         Group {
             if danmakuViewModel.isLoading {
-                VStack {
-                    Spacer()
-                    ProgressView()
-                        .controlSize(.large)
-                    Spacer()
-                }
+                LoadingView()
             } else if let errorMessage = danmakuViewModel.errorMessage {
                 ErrorView(errorMessage: errorMessage) {
                     Task {
