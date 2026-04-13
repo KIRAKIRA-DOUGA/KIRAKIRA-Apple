@@ -3,7 +3,6 @@ import SwiftUI
 struct MainView: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    @State private var isPlayerExpanded = false
     @State var searchText: String = ""
     @Namespace private var animationNamespace
 
@@ -12,7 +11,7 @@ struct MainView: View {
 
         TabView(selection: $globalStateManager.mainTabSelection) {
             Tab(.maintabHome, systemImage: "house", value: MainTab.home) {
-                HomeView(isPlayerExpanded: $isPlayerExpanded, animationNamespace: animationNamespace)
+                HomeView(animationNamespace: animationNamespace)
             }
 
             Tab(.maintabFollowing, systemImage: "rectangle.stack", value: MainTab.feed) {
@@ -87,7 +86,7 @@ struct MainView: View {
             .buttonSizing(.flexible)
         }
         .tabViewStyle(.sidebarAdaptable)
-        .fullScreenCover(isPresented: $isPlayerExpanded, content: {
+        .fullScreenCover(isPresented: $globalStateManager.isPlayerExpanded, content: {
             if globalStateManager.selectedVideo != nil {
                 VideoPlayerView(videoId: globalStateManager.selectedVideo!)
                     .navigationTransition(

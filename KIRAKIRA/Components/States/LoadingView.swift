@@ -1,5 +1,19 @@
+// 细致的你一定发现了「ProgressView.controlSize(.large)」和「UIActivityIndicatorView(style: .large)」看上去不一样。
+// SwiftUI 每一瓣都比 UIKit 的大了一点，造成中心很小。
+// 根据官方设计文档，它应该是长 UIKit 的样子才对，因此我们不使用 ProgressView。
+
 import SwiftUI
-import SwiftUIIntrospect
+
+private struct ActivityIndicator: UIViewRepresentable {
+    func makeUIView(context: Context) -> UIActivityIndicatorView {
+        let view = UIActivityIndicatorView(style: .large)
+        return view
+    }
+    
+    func updateUIView(_ uiView: UIActivityIndicatorView, context: Context) {
+        uiView.startAnimating()
+    }
+}
 
 struct LoadingView: View {
     @State private var isShowingProgress: Bool = false
@@ -8,10 +22,7 @@ struct LoadingView: View {
         VStack {
             Spacer()
             if isShowingProgress {
-                ProgressView()
-                    .introspect(.progressView(style: .circular), on: .iOS(.v26)) { UIActivityIndicatorView in
-                        UIActivityIndicatorView.style = .large
-                    }  // 细致的你一定发现了设置controlSize为.large的和UIKit层的设置了style为.large的看上去不一样，UIKit每一瓣都比SwiftUI的小一像素。
+                ActivityIndicator()
             }
             Spacer()
         }

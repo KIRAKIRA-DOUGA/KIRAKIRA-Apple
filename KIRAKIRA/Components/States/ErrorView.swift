@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ErrorView: View {
     let errorMessage: String
-    let retry: () -> Void
+    @Environment(\.refresh) private var refresh
 
     var body: some View {
         ContentUnavailableView {
@@ -10,7 +10,9 @@ struct ErrorView: View {
                 .symbolRenderingMode(.multicolor)
         } description: {
             Button(.errorTryAgain) {
-                retry()
+                Task {
+                    await refresh?()
+                }
             }
             .padding(.top)
         }
@@ -18,5 +20,5 @@ struct ErrorView: View {
 }
 
 #Preview {
-    ErrorView(errorMessage: "测试错误", retry: {})
+    ErrorView(errorMessage: "测试错误")
 }

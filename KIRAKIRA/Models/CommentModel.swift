@@ -5,7 +5,7 @@ struct VideoRequestCommentDTO: Codable {
     let videoCommentList: [VideoCommentDTO]
 }
 
-struct VideoCommentDTO: Codable, Identifiable {
+struct VideoCommentDTO: Codable, Identifiable, Equatable {
     let _id: String
     let text: String  // the comment text
     let commentIndex: Int
@@ -17,6 +17,10 @@ struct VideoCommentDTO: Codable, Identifiable {
     let isDownvote: Bool
 
     var id: String { _id }
+
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs._id == rhs._id
+    }
 
     var score: Int {
         upvoteCount - downvoteCount

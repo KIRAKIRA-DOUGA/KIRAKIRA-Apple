@@ -4,7 +4,6 @@ struct VideoListView<Header: View>: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
     @AppSetting(\.videoDisplayStyle) private var videoDisplayStyle
     let videos: [ThumbVideoItem]
-    @Binding var isPlayerExpanded: Bool
     let animationNamespace: Namespace.ID
     @ViewBuilder let header: Header?
     
@@ -87,6 +86,6 @@ struct VideoListView<Header: View>: View {
     private func play(_ video: ThumbVideoItem) {
         globalStateManager.selectedVideo = video.videoId
         globalStateManager.activeTransitionSource = .video(video.videoId)
-        isPlayerExpanded = true
+        globalStateManager.isPlayerExpanded = true
     }
 }
