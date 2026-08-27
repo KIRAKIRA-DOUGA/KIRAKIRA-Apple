@@ -8,7 +8,7 @@ struct HomeView: View {
 
     var body: some View {
         NavigationStack {
-            Group {
+            ZStack {
                 switch homeVideoViewModel.state {
                 case .success(let videos) where globalStateManager.isSplashFinished,
                     .loading(previous: .some(let videos)) where globalStateManager.isSplashFinished:
@@ -25,8 +25,8 @@ struct HomeView: View {
                     Color.clear
                 }
             }
-            .animation(.default, value: homeVideoViewModel.state)
-            .animation(.default, value: globalStateManager.isSplashFinished)
+            .animation(.easeInOut(duration: 0.25), value: homeVideoViewModel.state)
+            .animation(.easeInOut(duration: 0.25), value: globalStateManager.isSplashFinished)
             .navigationBarTitleDisplayMode(.large)
             .task {
                 await homeVideoViewModel.fetch()

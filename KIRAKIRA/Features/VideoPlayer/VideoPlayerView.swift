@@ -7,6 +7,7 @@ struct VideoPlayerView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var authManager = AuthManager.shared
     @State private var isShowingLogin = false
+    @State private var isShowingEditTag = false
     @State private var viewModel = VideoViewModel()
     @State private var commentViewModel = CommentViewModel()
     @State private var danmakuViewModel = DanmakuViewModel()
@@ -49,7 +50,7 @@ struct VideoPlayerView: View {
 
     var body: some View {
         NavigationStack {
-            Group {
+            ZStack {
                 switch viewModel.state {
                 case .idle, .loading(previous: nil):
                     LoadingView()
@@ -62,17 +63,20 @@ struct VideoPlayerView: View {
                     Color.clear
                 }
             }
-            .animation(.default, value: viewModel.state)
+            .animation(.easeInOut(duration: 0.25), value: viewModel.state)
             .task {
                 await viewModel.fetchVideo(of: videoId)
             }
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(role: .close, action: { dismiss() })
-                }
-            }
+//            .toolbar {
+//                ToolbarItem(placement: .cancellationAction) {
+//                    Button(role: .close, action: { dismiss() })
+//                }
+//            }
             .sheet(isPresented: $isShowingLogin) {
                 AuthView()
+            }
+            .sheet(isPresented: $isShowingEditTag) {
+                EditTagView()
             }
         }
     }
@@ -115,6 +119,32 @@ struct VideoPlayerView: View {
                     .pickerStyle(.segmented)
                     .padding(.top)
                     .padding(.horizontal)
+                    
+                    if showingView == .comments {
+                        HStack {
+                            Spacer()
+                            
+                            Button {
+                                
+                            } label: {
+                                Text(verbatim: "1 / 6")
+                            }
+                            
+                            Button {
+                                
+                            } label: {
+                                Label {
+                                    Text(verbatim: "按时间")
+                                } icon: {
+                                    Image(systemName: "arrow.down")
+                                }
+                                
+                            }
+                        }
+                        .font(.caption)
+                        .padding(.horizontal)
+                        .buttonStyle(.glass)
+                    }
                 }
             }
         }
@@ -258,6 +288,15 @@ struct VideoPlayerView: View {
                 }
                 .scrollClipDisabled()
 
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    Button {
+                        isShowingEditTag = true
+                    } label: {
+                        Text(verbatim: "打开标签编辑页")
+                    }
+                }
+                .scrollClipDisabled()
             }
             .padding()
         }

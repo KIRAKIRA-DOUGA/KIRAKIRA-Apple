@@ -12,7 +12,7 @@ struct CommentsView: View {
     }
 
     var body: some View {
-        Group {
+        ZStack {
             switch commentViewModel.state {
             case .idle, .loading(previous: nil):
                 LoadingView()
@@ -26,6 +26,7 @@ struct CommentsView: View {
                 Color.clear
             }
         }
+        .animation(.easeInOut(duration: 0.25), value: commentViewModel.state)
         .task {
             await commentViewModel.fetch(of: videoId)
         }

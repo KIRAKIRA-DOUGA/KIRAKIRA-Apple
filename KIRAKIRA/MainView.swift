@@ -55,7 +55,7 @@ struct MainView: View {
             }
             .hidden(horizontalSizeClass == .compact)
 
-            Tab(.maintabMy, systemImage: "person", value: MainTab.me) {
+            Tab(.maintabMy, systemImage: "person.crop.circle", value: MainTab.me) {
                 MyView()
             }
             .hidden(horizontalSizeClass != .compact)

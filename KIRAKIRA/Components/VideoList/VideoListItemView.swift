@@ -22,6 +22,8 @@ struct VideoListItemView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 12))
 
             VStack(alignment: .leading, spacing: 8) {
+                uploader
+                
                 Text(video.title)
                     .lineLimit(4)
 
@@ -33,14 +35,20 @@ struct VideoListItemView: View {
 
     @ViewBuilder
     private var cardLayout: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 6) {
             CFImageView(imageId: video.image)
                 .aspectRatio(16 / 9, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
 
-            Text(video.title)
-                .lineLimit(2, reservesSpace: true)
-                .multilineTextAlignment(.leading)
+            VStack(alignment: .leading, spacing: 2) {
+                uploader
+                
+                Text(video.title)
+                    .font(.system(size: 14))
+                    .lineLimit(2, reservesSpace: true)
+                    .multilineTextAlignment(.leading)
+                    .fontWeight(.medium)
+            }
 
             metadata
                 .labelReservedIconWidth(16)
@@ -50,15 +58,6 @@ struct VideoListItemView: View {
     @ViewBuilder
     private var metadata: some View {
         HFlow(rowSpacing: 4) {
-            Label {
-                Text(video.uploaderNickname ?? "Anonymous User")
-            } icon: {
-                Image(systemName: "person")
-            }
-            .lineLimit(1)
-
-            LineBreak()
-
             if let watchedCount = video.watchedCount {
                 Label {
                     Text(watchedCount, format: .number)
@@ -88,7 +87,15 @@ struct VideoListItemView: View {
         }
         .labelIconToTitleSpacing(4)
         .foregroundStyle(.secondary)
-        .font(.caption)
+        .font(.caption2)
+    }
+    
+    @ViewBuilder
+    private var uploader: some View {
+        Text(video.uploaderNickname ?? "Anonymous User")
+            .lineLimit(1)
+            .font(.caption2)
+            .foregroundStyle(.secondary)
     }
 }
 

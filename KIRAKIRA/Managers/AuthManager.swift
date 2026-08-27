@@ -8,7 +8,7 @@ import Security
 class AuthManager {
     static let shared = AuthManager()
 
-    var isAuthenticated: Bool = false
+    var isAuthenticated: Bool = true
     var credentials: Credentials? = nil
     var isLoading: Bool = false
     var errorMessage: String? = nil
