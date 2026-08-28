@@ -12,26 +12,26 @@ struct CommentsView: View {
     }
 
     var body: some View {
-        Group {
-            if commentViewModel.isLoading {
+        ZStack {
+            switch commentViewModel.state {
+            case .idle, .loading(previous: nil):
                 LoadingView()
-            } else if let errorMessage = commentViewModel.errorMessage {
-                ErrorView(errorMessage: errorMessage) {
-                    Task {
-                        await commentViewModel.fetchVideoComment(of: videoId)
-                    }
-                }
-            } else {
-                List(commentViewModel.comments) { comment in
+            case .success(let comments), .loading(previous: .some(let comments)):
+                List(comments) { comment in
                     CommentItemView(comment: comment)
                 }
-                .refreshable {
-                    await commentViewModel.fetchVideoComment(of: videoId, isRefresh: true)
-                }
+            case .error(let msg):
+                ErrorView(errorMessage: msg)
+            default:
+                Color.clear
             }
         }
+        .animation(.easeInOut(duration: 0.25), value: commentViewModel.state)
         .task {
-            await commentViewModel.fetchVideoCommentIfNeeded(of: videoId)
+            await commentViewModel.fetch(of: videoId)
+        }
+        .refreshable {
+            await commentViewModel.fetch(of: videoId)
         }
         .safeAreaBar(edge: .bottom) {
             SendTextField(

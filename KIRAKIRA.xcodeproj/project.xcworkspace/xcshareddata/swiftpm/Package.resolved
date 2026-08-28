@@ -1,13 +1,13 @@
 {
-  "originHash" : "204c30163212bc5b8e4264b4498e45216e0200032a38b3b5682294dd6ea1b8e1",
+  "originHash" : "c74f4318e9c4e650599b1454964a5b94aa7237528428fc3918224a2693a93346",
   "pins" : [
     {
       "identity" : "kingfisher",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onevcat/Kingfisher.git",
       "state" : {
-        "revision" : "d30a5fad881137e2267f96a8e3fc35c58999bb94",
-        "version" : "8.6.2"
+        "revision" : "c92b84898e34ab46ff0dad86c02a0acbe2d87008",
+        "version" : "8.8.0"
       }
     },
     {
@@ -16,7 +16,7 @@
       "location" : "https://github.com/LiYanan2004/RichText",
       "state" : {
         "branch" : "main",
-        "revision" : "276db3b87a13a9341fb7d869e9d82e8cffe0ce83"
+        "revision" : "a2fb191988f6f2ce60574962c96a0e1846c36dae"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/tevelee/SwiftUI-Flow",
       "state" : {
-        "revision" : "d227f999b2894ab737ef5786d9b14d02d3e5362e",
-        "version" : "3.1.1"
+        "revision" : "19e86b750b3c67260cbb28c459004c0dfdb11899",
+        "version" : "3.5.1"
       }
     },
     {
@@ -38,21 +38,12 @@
       }
     },
     {
-      "identity" : "swiftuix",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SwiftUIX/SwiftUIX.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "c1a29980849703457ec2e26d9682e309a3c0a171"
-      }
-    },
-    {
       "identity" : "variableblur",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/nikstar/VariableBlur",
       "state" : {
         "branch" : "main",
-        "revision" : "84ce30edfee2aaeebcaedcc2b352347f5734cf22"
+        "revision" : "5073a0d9080e488a2d317e04859c001a57fbb3e8"
       }
     }
   ],

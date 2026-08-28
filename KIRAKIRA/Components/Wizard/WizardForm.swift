@@ -110,7 +110,7 @@ struct WizardForm<Content: View, Footer: View>: View {
     }
 }
 
-#Preview {
+#Preview(traits: .commonPreviewTrait) {
     NavigationStack {
         WizardForm(
             systemImage: "testtube.2", title: "WizardForm Test", subtitle: "Apple's wizard layout, now reusable!"

@@ -6,17 +6,12 @@ struct DanmakuView: View {
     let danmakuViewModel: DanmakuViewModel
 
     var body: some View {
-        Group {
-            if danmakuViewModel.isLoading {
+        ZStack {
+            switch danmakuViewModel.state {
+            case .idle, .loading(previous: nil):
                 LoadingView()
-            } else if let errorMessage = danmakuViewModel.errorMessage {
-                ErrorView(errorMessage: errorMessage) {
-                    Task {
-                        await danmakuViewModel.fetchVideoDanmakuIfNeeded(of: videoId)
-                    }
-                }
-            } else {
-                List(danmakuViewModel.danmaku) { danmakuItem in
+            case .success(let danmaku), .loading(previous: .some(let danmaku)):
+                List(danmaku) { danmakuItem in
                     HStack {
                         Text(danmakuItem.time, format: .timeInterval)
                             .monospacedDigit()
@@ -25,14 +20,19 @@ struct DanmakuView: View {
                         TextView(danmakuItem.text)
                     }
                 }
-                .refreshable {
-                    await danmakuViewModel.fetchVideoDanmaku(of: videoId, isRefresh: true)
-                }
+            case .error(let msg):
+                ErrorView(errorMessage: msg)
+            default:
+                Color.clear
             }
         }
+        .animation(.easeInOut(duration: 0.25), value: danmakuViewModel.state)
         .listStyle(.plain)
+        .refreshable {
+            await danmakuViewModel.fetch(of: videoId)
+        }
         .task {
-            await danmakuViewModel.fetchVideoDanmaku(of: videoId)
+            await danmakuViewModel.fetch(of: videoId)
         }
     }
 }

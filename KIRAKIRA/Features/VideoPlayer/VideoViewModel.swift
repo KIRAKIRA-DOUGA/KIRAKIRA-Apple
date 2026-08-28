@@ -1,31 +1,22 @@
 import Combine
 import Foundation
 
+@MainActor
 @Observable
 class VideoViewModel {
-    var video: GetVideoByKvidResponseDTO?
-    var isLoading = false
-    var errorMessage: String?
-
+    var state: LoadingState<GetVideoByKvidResponseDTO> = .idle
     private let apiService = APIService.shared
 
-    func fetchVideo(of id: Int?) async {
-        isLoading = true
-        errorMessage = nil
-
-        guard let id else {
-            isLoading = false
-            errorMessage = "No Video"
-            return
-        }
+    func fetchVideo(of id: Int) async {
+        state.beginLoading()
 
         do {
             let response: GetVideoByKvidResponseDTO = try await apiService.request(.getVideo(id: id))
-            self.video = response
+            state = .success(response)
+        } catch is CancellationError {
+            state.cancelLoading()
         } catch {
-            self.errorMessage = error.localizedDescription
+            state = .error(error.localizedDescription)
         }
-
-        isLoading = false
     }
 }

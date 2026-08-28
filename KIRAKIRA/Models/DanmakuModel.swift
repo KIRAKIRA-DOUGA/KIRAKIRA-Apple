@@ -4,7 +4,7 @@ struct DanmakuResponseDTO: Codable {
     let danmaku: [DanmakuDTO]
 }
 
-struct DanmakuDTO: Codable, Identifiable {
+struct DanmakuDTO: Codable, Identifiable, Equatable {
     let _id: String
     let text: String  // the danmaku content
     let color: String  // hex color code, e.g. "#FFFFFF"
@@ -14,6 +14,10 @@ struct DanmakuDTO: Codable, Identifiable {
     let enableRainbow: Bool
 
     var id: String { _id }
+
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs._id == rhs._id
+    }
 }
 
 enum DanmakuPosition: String, Codable {
