@@ -2,17 +2,17 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
-    @State var path = NavigationPath()
+    @Environment(GlobalStateManager.self) private var globalStateManager
     @State private var authManager = AuthManager.shared
 
     var body: some View {
-        NavigationStack(path: $path) {
+        @Bindable var globalStateManager = globalStateManager
+
+        NavigationStack(path: $globalStateManager.settingsPath) {
             List {
                 if authManager.isAuthenticated {
                     Section {
-                        NavigationLink {
-                            SettingsProfileView()
-                        } label: {
+                        NavigationLink(value: SettingsPath.profile) {
                             Label(.settingsProfile, systemImage: "person.crop.circle")
                         }
                         
@@ -78,7 +78,9 @@ struct SettingsView: View {
                     }
 
                     if authManager.isAuthenticated {
-                        Button(.logOut, role: .destructive, action: {})
+                        Button(.logOut, role: .destructive) {
+                            Task { await authManager.logout() }
+                        }
                             .foregroundStyle(.red)
                     }
                 }
@@ -86,16 +88,18 @@ struct SettingsView: View {
             .navigationTitle(.settings)
             .navigationDestination(for: SettingsPath.self) { route in
                 switch route {
+                case .profile:
+                    SettingsProfileView()
                 case .security:
-                    SettingsSecurityView(path: $path)
+                    SettingsSecurityView(path: $globalStateManager.settingsPath)
                 case .changeEmailPasswordVerification:
-                    ChangeEmailPasswordVerification(path: $path)
+                    ChangeEmailPasswordVerification(path: $globalStateManager.settingsPath)
                 case .changeEmailNewAddress:
-                    ChangeEmailViewNewAddress(path: $path)
+                    ChangeEmailViewNewAddress(path: $globalStateManager.settingsPath)
                 case .changeEmailNewAddressVerification:
-                    ChangeEmailViewNewAddressVerification(path: $path)
+                    ChangeEmailViewNewAddressVerification(path: $globalStateManager.settingsPath)
                 case .changeEmailSuccess:
-                    ChangeEmailViewSuccess(path: $path)
+                    ChangeEmailViewSuccess(path: $globalStateManager.settingsPath)
                 }
             }
             .toolbar {
@@ -111,6 +115,7 @@ struct SettingsView: View {
 }
 
 enum SettingsPath: Hashable {
+    case profile
     case security
     case changeEmailPasswordVerification
     case changeEmailNewAddress

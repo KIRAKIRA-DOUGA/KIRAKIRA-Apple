@@ -4,6 +4,13 @@ import SwiftUI
 struct VideoListItemView: View {
     let video: ThumbVideoItem
     let style: ViewStyle
+    let uploaderNameOverride: String?
+
+    init(video: ThumbVideoItem, style: ViewStyle, uploaderNameOverride: String? = nil) {
+        self.video = video
+        self.style = style
+        self.uploaderNameOverride = uploaderNameOverride
+    }
 
     var body: some View {
         switch style {
@@ -92,7 +99,7 @@ struct VideoListItemView: View {
     
     @ViewBuilder
     private var uploader: some View {
-        Text(video.uploaderNickname ?? "Anonymous User")
+        Text(uploaderNameOverride ?? video.uploaderNickname ?? "Anonymous User")
             .lineLimit(1)
             .font(.caption2)
             .foregroundStyle(.secondary)

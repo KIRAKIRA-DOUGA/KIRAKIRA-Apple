@@ -6,19 +6,30 @@ struct SettingsProfileView: View {
     @State private var isEdited = false
     @State private var isShowingConfirmationDialog = false
 
-    @State private var username: String = "Aira"
-    @State private var name: String = "艾了个拉"
-    @State private var bio: String = "Kawaii Forever!~\nwow"
-    @State private var birthday: Date = Date()
-    @State private var avatarId = "avatar-1-xiQgrY2SDDx68HbIH8LSSBZqDpbSOFBf-1722666535442"
+    @State private var username: String
+    @State private var name: String
+    @State private var bio: String
+    @State private var birthday: Date?
+    @State private var avatarId: String?
+    @State private var bannerId: String?
 
     private let bioMaxLength = 200
+
+    init() {
+        let account = AuthManager.shared.credentials
+        _username = State(initialValue: account?.username ?? "")
+        _name = State(initialValue: account?.userNickname ?? "")
+        _bio = State(initialValue: account?.signature ?? "")
+        _birthday = State(initialValue: Self.parseBirthday(account?.userBirthday))
+        _avatarId = State(initialValue: account?.avatar)
+        _bannerId = State(initialValue: account?.userBannerImage)
+    }
 
     var body: some View {
         Form {
             Section {
                 Button(action: {}) {
-                    BannerView()
+                    BannerView(imageId: bannerId)
                 }
                 .buttonStyle(.plain)
             }
@@ -30,9 +41,8 @@ struct SettingsProfileView: View {
 
             Section {
                 Button(action: {}) {
-                    CFImageView(imageId: avatarId)
+                    UserAvatarView(imageId: avatarId)
                         .frame(width: 128, height: 128)
-                        .clipShape(.circle)
                         .glassEffect(.regular.interactive())
                 }.buttonStyle(.plain)
             }
@@ -76,11 +86,21 @@ struct SettingsProfileView: View {
             }
 
             Section {
-                DatePicker(
-                    .settingsProfileBirthday,
-                    selection: $birthday,
-                    displayedComponents: [.date]
-                )
+                if birthday != nil {
+                    DatePicker(
+                        .settingsProfileBirthday,
+                        selection: Binding(
+                            get: { birthday ?? Date() },
+                            set: { birthday = $0 }
+                        ),
+                        displayedComponents: [.date]
+                    )
+                } else {
+                    LabeledContent(.settingsProfileBirthday) {
+                        Text(verbatim: "—")
+                            .foregroundStyle(.secondary)
+                    }
+                }
             }
         }
         .navigationTitle(.settingsProfile)
@@ -121,6 +141,15 @@ struct SettingsProfileView: View {
         .onChange(of: avatarId) {
             isEdited = true
         }
+    }
+
+    private static func parseBirthday(_ value: String?) -> Date? {
+        guard let value else { return nil }
+        let components = value.prefix(10).split(separator: "-").compactMap { Int($0) }
+        guard components.count == 3 else { return nil }
+        return Calendar(identifier: .gregorian).date(
+            from: DateComponents(year: components[0], month: components[1], day: components[2])
+        )
     }
 }
 

@@ -2,18 +2,17 @@ import SwiftUI
 
 struct SettingsSwitchAccountView: View {
     @State private var isShowingLogin = false
-    @State private var selection: String = "guest"
-    @State private var users = ["Endministrator", "Perlica", "Chen Qianyu"]
+    @State private var authManager = AuthManager.shared
     private let hStackSpacing: CGFloat = 12
 
     func delete(at offsets: IndexSet) {
-        users.remove(atOffsets: offsets)
+        authManager.removeAccounts(at: offsets)
     }
 
     var body: some View {
         List {
             Group {
-                Button(action: { selection = "guest" }) {
+                Button(action: { authManager.continueAsGuest() }) {
                     HStack(spacing: hStackSpacing) {
                         Image(systemName: "person.crop.circle")
                             .resizable()
@@ -23,24 +22,27 @@ struct SettingsSwitchAccountView: View {
 
                         Spacer()
 
-                        checkmark
-                            .symbolEffect(.drawOn, isActive: selection != "guest")
+                        if !authManager.isAuthenticated { checkmark }
                     }
                 }
 
-                ForEach(users, id: \.self) { user in
-                    Button(action: { selection = user }) {
+                ForEach(authManager.accounts) { account in
+                    Button(action: { authManager.switchAccount(to: account.id) }) {
                         HStack(spacing: hStackSpacing) {
-                            Image(systemName: "person.crop.circle")  // TODO: 显示用户头像
-                                .resizable()
-                                .frame(width: 50, height: 50)
-                                .foregroundStyle(.secondary)
-                            Text(verbatim: user)
+                            accountAvatar(account)
+
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(verbatim: account.displayName)
+                                if let username = account.username, !username.isEmpty {
+                                    Text(verbatim: "@\(username)")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
 
                             Spacer()
 
-                            checkmark
-                                .symbolEffect(.drawOn, isActive: selection != user)
+                            if authManager.credentials?.id == account.id { checkmark }
                         }
                     }
                 }
@@ -58,8 +60,11 @@ struct SettingsSwitchAccountView: View {
         .navigationTitle(.switchAccount)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
-                EditButton()
+                if !authManager.accounts.isEmpty { EditButton() }
             }
+        }
+        .task {
+            await authManager.refreshAccountProfiles()
         }
     }
 
@@ -67,6 +72,12 @@ struct SettingsSwitchAccountView: View {
         Image(systemName: "checkmark")
             .foregroundStyle(.accent)
             .fontWeight(.semibold)
+    }
+
+    @ViewBuilder
+    private func accountAvatar(_ account: Credentials) -> some View {
+        UserAvatarView(imageId: account.avatar)
+            .frame(width: 50, height: 50)
     }
 }
 

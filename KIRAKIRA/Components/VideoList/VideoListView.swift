@@ -5,24 +5,91 @@ struct VideoListView<Header: View>: View {
     @AppSetting(\.videoDisplayStyle) private var videoDisplayStyle
     let videos: [ThumbVideoItem]
     let animationNamespace: Namespace.ID
-    @ViewBuilder let header: Header?
-    
+    let uploaderNameOverride: String?
+    let headerHorizontalPadding: Bool
+    let isEmbedded: Bool
+    @ViewBuilder let header: Header
 
+    init(
+        videos: [ThumbVideoItem],
+        animationNamespace: Namespace.ID,
+        uploaderNameOverride: String? = nil,
+        headerHorizontalPadding: Bool = true,
+        isEmbedded: Bool = false,
+        @ViewBuilder header: () -> Header
+    ) {
+        self.videos = videos
+        self.animationNamespace = animationNamespace
+        self.uploaderNameOverride = uploaderNameOverride
+        self.headerHorizontalPadding = headerHorizontalPadding
+        self.isEmbedded = isEmbedded
+        self.header = header()
+    }
+
+    @ViewBuilder
     var body: some View {
+        if isEmbedded {
+            embeddedContent
+        } else {
+            switch videoDisplayStyle {
+            case .row:
+                rowList
+            case .card, .smallCard:
+                gridList
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var embeddedContent: some View {
+        header
+
         switch videoDisplayStyle {
         case .row:
-            rowList
+            LazyVStack(spacing: 0) {
+                ForEach(videos) { video in
+                    Button {
+                        play(video)
+                    } label: {
+                        videoContent(for: video, style: .row)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+
+                    if video.id != videos.last?.id {
+                        Divider()
+                            .padding(.leading, 152)
+                    }
+                }
+            }
         case .card, .smallCard:
-            gridList
+            LazyVGrid(
+                columns: gridColumns,
+                alignment: .leading,
+                spacing: 16
+            ) {
+                ForEach(videos) { video in
+                    Button {
+                        play(video)
+                    } label: {
+                        videoContent(for: video, style: videoDisplayStyle)
+                            .frame(alignment: .top)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding(.horizontal)
+            .padding(.bottom)
         }
     }
 
     private var rowList: some View {
         List {
-            if let header {
-                header
-                    .listRowSeparator(.hidden)
-            }
+            header
+                .listRowSeparator(.hidden)
 
             ForEach(videos) { video in
                 Button {
@@ -41,9 +108,11 @@ struct VideoListView<Header: View>: View {
 
     private var gridList: some View {
         ScrollView {
-            if let header {
+            if headerHorizontalPadding {
                 header
                     .padding(.horizontal)
+            } else {
+                header
             }
 
             LazyVGrid(
@@ -78,7 +147,11 @@ struct VideoListView<Header: View>: View {
 
     @ViewBuilder
     private func videoContent(for video: ThumbVideoItem, style: ViewStyle) -> some View {
-        let content = VideoListItemView(video: video, style: style)
+        let content = VideoListItemView(
+            video: video,
+            style: style,
+            uploaderNameOverride: uploaderNameOverride
+        )
         content
             .matchedTransitionSource(id: AnimationTransitionSource.video(video.videoId), in: animationNamespace)
     }

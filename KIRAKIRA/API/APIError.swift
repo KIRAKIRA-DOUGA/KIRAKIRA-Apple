@@ -9,11 +9,19 @@ enum APIError: Error, LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .invalidURL: return "The URL was invalid."
-        case .requestFailed: return "The network request failed."
-        case .decodingError: return "Failed to decode the response."
-        case .httpError(let code): return "Server returned status code \(code)."
-        case .unknown: return "An unknown error occurred."
+        case .invalidURL:
+            return String(localized: "ERROR_INVALID_URL")
+        case .requestFailed:
+            return String(localized: "ERROR_NETWORK_REQUEST_FAILED")
+        case .decodingError:
+            return String(localized: "ERROR_RESPONSE_DECODING_FAILED")
+        case .httpError(let code):
+            return String.localizedStringWithFormat(
+                String(localized: "ERROR_HTTP_STATUS"),
+                code
+            )
+        case .unknown:
+            return String(localized: "ERROR_UNKNOWN")
         }
     }
 }

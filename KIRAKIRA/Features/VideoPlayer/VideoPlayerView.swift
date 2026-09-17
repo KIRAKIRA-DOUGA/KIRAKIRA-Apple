@@ -4,13 +4,17 @@ import SwiftUI
 
 struct VideoPlayerView: View {
     let videoId: Int
+    let animationNamespace: Namespace.ID
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.scenePhase) private var scenePhase
     @State private var authManager = AuthManager.shared
     @State private var isShowingLogin = false
     @State private var isShowingEditTag = false
     @State private var viewModel = VideoViewModel()
     @State private var commentViewModel = CommentViewModel()
     @State private var danmakuViewModel = DanmakuViewModel()
+    @State private var historyManager = BrowsingHistoryManager.shared
+    @State private var playbackHistoryController = VideoPlaybackHistoryController()
     @State private var showingView: VideoPlayerTab = .info
     @Namespace private var namespace
     @State private var countLike = 0
@@ -20,6 +24,9 @@ struct VideoPlayerView: View {
     @State private var disliked = false
     @State private var collected = false
     @State private var player: AVPlayer?
+    @State private var uploaderIsFollowing = false
+    @State private var isUploaderFollowLoading = false
+    @State private var uploaderFollowError: String?
 
     private func like() {
         liked = !liked
@@ -64,8 +71,17 @@ struct VideoPlayerView: View {
                 }
             }
             .animation(.easeInOut(duration: 0.25), value: viewModel.state)
-            .task {
+            .task(id: videoId) {
+                await historyManager.loadIfNeeded()
                 await viewModel.fetchVideo(of: videoId)
+            }
+            .onDisappear {
+                playbackHistoryController.stop()
+            }
+            .onChange(of: scenePhase) {
+                if scenePhase != .active {
+                    playbackHistoryController.flush()
+                }
             }
 //            .toolbar {
 //                ToolbarItem(placement: .cancellationAction) {
@@ -77,6 +93,17 @@ struct VideoPlayerView: View {
             }
             .sheet(isPresented: $isShowingEditTag) {
                 EditTagView()
+            }
+            .alert(
+                String(localized: .errorOperationFailed),
+                isPresented: Binding(
+                    get: { uploaderFollowError != nil },
+                    set: { if !$0 { uploaderFollowError = nil } }
+                )
+            ) {
+                Button(.actionOk) { uploaderFollowError = nil }
+            } message: {
+                Text(uploaderFollowError ?? String(localized: .errorRequestFailed))
             }
         }
     }
@@ -94,7 +121,13 @@ struct VideoPlayerView: View {
                     .layoutPriority(1)
                     .task {
                         if let url = video.videoPart.first?.m3u8URL {
-                            player = AVPlayer(url: url)
+                            let newPlayer = AVPlayer(url: url)
+                            playbackHistoryController.attach(
+                                to: newPlayer,
+                                videoID: videoId,
+                                resumeAt: historyManager.resumePosition(for: videoId)
+                            )
+                            player = newPlayer
                         }
                     }
             }
@@ -134,7 +167,7 @@ struct VideoPlayerView: View {
                                 
                             } label: {
                                 Label {
-                                    Text(verbatim: "按时间")
+                                    Text(.videoSortByTime)
                                 } icon: {
                                     Image(systemName: "arrow.down")
                                 }
@@ -155,31 +188,54 @@ struct VideoPlayerView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
-                    CFImageView(imageId: video.uploaderInfo?.avatar)
-                        .frame(width: 48, height: 48)
-                        .clipShape(Circle())
-                        .glassEffect(.regular.interactive())
+                    if let uploader = video.uploaderInfo {
+                        NavigationLink {
+                            UserView(uid: uploader.uid, animationNamespace: animationNamespace)
+                        } label: {
+                            HStack(spacing: 12) {
+                                UserAvatarView(imageId: uploader.avatar)
+                                    .frame(width: 48, height: 48)
+                                    .glassEffect(.regular.interactive())
 
-                    VStack(alignment: .leading) {
-                        Text(verbatim: video.uploaderInfo?.userNickname ?? "Unknown User")
-                            .bold()
-                        Text(verbatim: "1024粉丝")
-                            .foregroundStyle(.secondary)
-                            .font(.caption)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(verbatim: uploader.userNickname ?? uploader.username)
+                                        .bold()
+                                    Text(verbatim: "@\(uploader.username)")
+                                        .foregroundStyle(.secondary)
+                                        .font(.caption)
+                                        .fontDesign(.monospaced)
+                                }
+                            }
+                        }
+                        .buttonStyle(.plain)
                     }
 
                     Spacer()
 
-                    Button {
-                        if authManager.isAuthenticated {
-
-                        } else {
-                            isShowingLogin = true
+                    if let uploader = video.uploaderInfo, !uploader.isSelf {
+                        Button {
+                            if authManager.isAuthenticated {
+                                Task { await toggleUploaderFollow(uid: uploader.uid) }
+                            } else {
+                                isShowingLogin = true
+                            }
+                        } label: {
+                            if isUploaderFollowLoading {
+                                ProgressView()
+                                    .controlSize(.regular)
+                            } else {
+                                Label(
+                                    uploaderIsFollowing ? .userFollowing : .userFollow,
+                                    systemImage: uploaderIsFollowing ? "checkmark" : "plus"
+                                )
+                            }
                         }
-                    } label: {
-                        Label(.userFollow, systemImage: "plus")
+                        .buttonStyle(.bordered)
+                        .disabled(isUploaderFollowLoading)
                     }
-                    .buttonStyle(.bordered)
+                }
+                .task(id: video.uploaderInfo?.uid) {
+                    uploaderIsFollowing = video.uploaderInfo?.isFollowing ?? false
                 }
 
                 VStack(alignment: .leading, spacing: 16) {
@@ -279,7 +335,6 @@ struct VideoPlayerView: View {
                         }
                         .labelStyle(.iconOnly)
                         .buttonBorderShape(.circle)
-                        .padding(.horizontal, -5)
                     }
                     .monospacedDigit()
                     .contentTransition(.symbolEffect(.replace.offUp.byLayer))
@@ -293,12 +348,42 @@ struct VideoPlayerView: View {
                     Button {
                         isShowingEditTag = true
                     } label: {
-                        Text(verbatim: "打开标签编辑页")
+                        Text(.videoOpenTagEditor)
                     }
                 }
                 .scrollClipDisabled()
             }
             .padding()
+        }
+    }
+
+    @MainActor
+    private func toggleUploaderFollow(uid: Int) async {
+        guard !isUploaderFollowLoading else { return }
+        isUploaderFollowLoading = true
+        uploaderFollowError = nil
+        defer { isUploaderFollowLoading = false }
+
+        do {
+            let response: UserActionResponseDTO
+            if uploaderIsFollowing {
+                response = try await APIService.shared.request(
+                    .unfollowUser,
+                    body: UnfollowUserRequestDTO(unfollowingUid: uid)
+                )
+            } else {
+                response = try await APIService.shared.request(
+                    .followUser,
+                    body: FollowUserRequestDTO(followingUid: uid)
+                )
+            }
+
+            guard response.success else {
+                throw VideoUploaderFollowError.server(response.message)
+            }
+            uploaderIsFollowing.toggle()
+        } catch {
+            uploaderFollowError = error.localizedDescription
         }
     }
 
@@ -311,6 +396,16 @@ struct VideoPlayerView: View {
     }
 }
 
+private enum VideoUploaderFollowError: LocalizedError {
+    case server(String?)
+
+    var errorDescription: String? {
+        switch self {
+        case .server(let message): message ?? String(localized: .errorRequestFailed)
+        }
+    }
+}
+
 private enum VideoPlayerTab: Hashable, CaseIterable {
     case info
     case comments
@@ -318,5 +413,6 @@ private enum VideoPlayerTab: Hashable, CaseIterable {
 }
 
 #Preview(traits: .commonPreviewTrait) {
-    VideoPlayerView(videoId: 1)
+    @Previewable @Namespace var animationNamespace
+    VideoPlayerView(videoId: 1, animationNamespace: animationNamespace)
 }

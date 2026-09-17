@@ -30,7 +30,19 @@ actor APIService: APIServiceProtocol {
         return try await performRequest(endpoint, body: body)
     }
 
-    private func performRequest<T: Decodable, U: Encodable>(_ endpoint: Endpoint, body: U?) async throws -> T {
+    func request<T: Decodable, U: Encodable>(
+        _ endpoint: Endpoint,
+        body: U?,
+        authenticatedWith credentials: Credentials
+    ) async throws -> T {
+        return try await performRequest(endpoint, body: body, credentialsOverride: credentials)
+    }
+
+    private func performRequest<T: Decodable, U: Encodable>(
+        _ endpoint: Endpoint,
+        body: U?,
+        credentialsOverride: Credentials? = nil
+    ) async throws -> T {
         guard let url = await endpoint.url else {
             logger.error("Invalid URL for endpoint")
             throw APIError.invalidURL
@@ -43,7 +55,13 @@ actor APIService: APIServiceProtocol {
         request.httpMethod = await endpoint.method.rawValue.uppercased()
 
         // Get credentials from AuthManager
-        if let credentials = await AuthManager.shared.credentials {
+        let requestCredentials: Credentials?
+        if let credentialsOverride {
+            requestCredentials = credentialsOverride
+        } else {
+            requestCredentials = await AuthManager.shared.credentials
+        }
+        if let credentials = requestCredentials {
             let cookie = await credentials.cookieString
             request.setValue(cookie, forHTTPHeaderField: "Cookie")
         }
@@ -54,7 +72,13 @@ actor APIService: APIServiceProtocol {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
 
-        let (responseData, response) = try await URLSession.shared.data(for: request)
+        let responseData: Data
+        let response: URLResponse
+        do {
+            (responseData, response) = try await URLSession.shared.data(for: request)
+        } catch let error as URLError where error.code == .cancelled {
+            throw CancellationError()
+        }
         logger.info("Received response from \(url.absoluteString)")
 
         // TODO: Handle 401 unauthorized globally

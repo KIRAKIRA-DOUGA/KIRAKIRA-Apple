@@ -2,6 +2,22 @@ import Kingfisher
 import SwiftUI
 import os
 
+enum CFImageURLBuilder {
+    private static let deliveryBaseURL = URL(
+        string: "https://kirafile.com/cdn-cgi/imagedelivery/Gyz90amG54C4b_dtJiRpYg/"
+    )!
+
+    static func url(for imageId: String?, pixelWidth: Int? = nil) -> URL? {
+        guard let imageId, !imageId.isEmpty else { return nil }
+
+        let baseURL = deliveryBaseURL.appendingPathComponent(imageId)
+        if let pixelWidth {
+            return baseURL.appendingPathComponent("w=\(pixelWidth),f=auto")
+        }
+        return baseURL.appendingPathComponent("f=auto")
+    }
+}
+
 struct CFImageView: View {
     let imageId: String?
 
@@ -22,11 +38,6 @@ struct CFImageView: View {
 
     /// Constructs the final Cloudflare URL with size and format variants.
     private func buildURL(for size: CGSize, lowResolution: Bool?) -> URL? {
-        guard let imageId else { return .none }
-
-        let baseURL = URL(string: "https://kirafile.com/cdn-cgi/imagedelivery/Gyz90amG54C4b_dtJiRpYg/")!
-            .appendingPathComponent(imageId)
-
         let pixelWidth: Int? =
             switch ceil(size.width * displayScale) {
             case 0..<240: 240
@@ -37,12 +48,25 @@ struct CFImageView: View {
             default: nil
             }
 
-        if let pixelWidth {
-            return baseURL.appendingPathComponent("/w=\(pixelWidth),f=auto")
-        } else {
-            return baseURL.appendingPathComponent("/f=auto")
-        }
+        return CFImageURLBuilder.url(for: imageId, pixelWidth: pixelWidth)
+    }
+}
 
+struct UserAvatarView: View {
+    let imageId: String?
+
+    var body: some View {
+        Group {
+            if let imageId, !imageId.isEmpty {
+                CFImageView(imageId: imageId)
+            } else {
+                Image(systemName: "person.crop.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .clipShape(Circle())
     }
 }
 

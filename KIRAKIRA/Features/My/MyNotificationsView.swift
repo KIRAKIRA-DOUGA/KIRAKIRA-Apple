@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct MyNotificationsView: View {
+    let animationNamespace: Namespace.ID
+
     var body: some View {
         List {
             Section {
@@ -23,7 +25,7 @@ struct MyNotificationsView: View {
 
                 VStack(alignment: .leading) {
                     NavigationLink {
-                        UserView()
+                        UserView(animationNamespace: animationNamespace)
                     } label: {
                         LabeledContent {
                             Text(verbatim: "2025/12/08")
@@ -48,5 +50,6 @@ struct MyNotificationsView: View {
 }
 
 #Preview {
-    MyNotificationsView()
+    @Previewable @Namespace var animationNamespace
+    MyNotificationsView(animationNamespace: animationNamespace)
 }

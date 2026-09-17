@@ -8,11 +8,8 @@ struct ProfileToolbarItem: ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button(action: { globalStateManager.mainTabSelection = .me }) {
                 if authManager.isAuthenticated {
-                    Image("SamplePortrait")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    UserAvatarView(imageId: authManager.credentials?.avatar)
                         .frame(width: 40, height: 40)
-                        .clipShape(Circle())
                 } else {
                     Image(systemName: "person.crop.circle")
                         .resizable()

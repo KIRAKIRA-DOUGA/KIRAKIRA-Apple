@@ -3,6 +3,7 @@ import SwiftUI
 struct MainView: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @State private var authManager = AuthManager.shared
     @State var searchText: String = ""
     @Namespace private var animationNamespace
 
@@ -21,13 +22,13 @@ struct MainView: View {
             TabSection(.maintabMy) {
                 Tab(.userPage, systemImage: "person", value: MainTab.myUserPage) {
                     NavigationStack {
-                        UserView()
+                        UserView(animationNamespace: animationNamespace)
                     }
                 }
 
                 Tab(.notifications, systemImage: "bell", value: MainTab.myNotifications) {
                     NavigationStack {
-                        MyNotificationsView()
+                        MyNotificationsView(animationNamespace: animationNamespace)
                     }
                 }
 
@@ -56,7 +57,7 @@ struct MainView: View {
             .hidden(horizontalSizeClass == .compact)
 
             Tab(.maintabMy, systemImage: "person.crop.circle", value: MainTab.me) {
-                MyView()
+                MyView(animationNamespace: animationNamespace)
             }
             .hidden(horizontalSizeClass != .compact)
 
@@ -67,17 +68,22 @@ struct MainView: View {
         }
         .tabViewSidebarBottomBar {
             Button {
-                globalStateManager.isShowingSettings = true
+                if authManager.isAuthenticated {
+                    globalStateManager.showSettings()
+                } else {
+                    globalStateManager.isShowingLogin = true
+                }
             } label: {
                 Label {
-                    Text(verbatim: "艾了个拉").fontWeight(.medium)
+                    if let account = authManager.credentials {
+                        Text(verbatim: account.displayName).fontWeight(.medium)
+                    } else {
+                        Text(.logIn).fontWeight(.medium)
+                    }
                     Spacer()
                 } icon: {
-                    Image("SamplePortrait")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    UserAvatarView(imageId: authManager.credentials?.avatar)
                         .frame(width: 30, height: 30)
-                        .clipShape(Circle())
                 }
             }
             .padding(.horizontal)
@@ -88,7 +94,10 @@ struct MainView: View {
         .tabViewStyle(.sidebarAdaptable)
         .fullScreenCover(isPresented: $globalStateManager.isPlayerExpanded, content: {
             if globalStateManager.selectedVideo != nil {
-                VideoPlayerView(videoId: globalStateManager.selectedVideo!)
+                VideoPlayerView(
+                    videoId: globalStateManager.selectedVideo!,
+                    animationNamespace: animationNamespace
+                )
                     .navigationTransition(
                         .zoom(sourceID: globalStateManager.activeTransitionSource, in: animationNamespace)
                     )
@@ -98,7 +107,10 @@ struct MainView: View {
                     .font(.largeTitle)
             }
         })
-        .sheet(isPresented: $globalStateManager.isShowingSettings) {
+        .sheet(
+            isPresented: $globalStateManager.isShowingSettings,
+            onDismiss: { globalStateManager.resetSettingsNavigation() }
+        ) {
             SettingsView()
         }
         .sheet(isPresented: $globalStateManager.isShowingLogin) {
@@ -109,6 +121,9 @@ struct MainView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
             globalStateManager.isShowingKeyboard = false
+        }
+        .task {
+            await authManager.refreshAccountProfiles()
         }
     }
 }
