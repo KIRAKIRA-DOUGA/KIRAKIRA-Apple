@@ -9,7 +9,6 @@ class GlobalStateManager {
     var isShowingSettings: Bool = false
     var settingsPath = NavigationPath()
     var isShowingLogin: Bool = false
-    var isShowingKeyboard: Bool = false
     var selectedVideo: Int?
     var isPlayerExpanded: Bool = false
     var activeTransitionSource: AnimationTransitionSource = .none

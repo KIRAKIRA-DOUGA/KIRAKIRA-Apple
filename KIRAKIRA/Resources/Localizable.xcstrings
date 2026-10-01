@@ -140,6 +140,142 @@
         }
       }
     },
+    "AUTH_EMAIL_ALREADY_REGISTERED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This email address is already registered."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该电子邮件地址已注册。"
+          }
+        }
+      }
+    },
+    "AUTH_INVITATION_CODE_INVALID" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The invitation code is invalid or has already been used."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "邀请码无效或已被使用。"
+          }
+        }
+      }
+    },
+    "AUTH_LOGIN_FAILED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Login failed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录失败"
+          }
+        }
+      }
+    },
+    "AUTH_LOGIN_FAILED_WITH_PASSWORD_HINT" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ (Password hint: %2$@)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@（密码提示：%2$@）"
+          }
+        }
+      }
+    },
+    "AUTH_RESEND_VERIFICATION_CODE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resend Verification Code"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新发送验证码"
+          }
+        }
+      }
+    },
+    "AUTH_TOO_MANY_REQUESTS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Too many requests. Please try again later."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "操作过于频繁，请稍后再试。"
+          }
+        }
+      }
+    },
+    "AUTH_USERNAME_UNAVAILABLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This username is unavailable."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该用户名不可用。"
+          }
+        }
+      }
+    },
+    "AUTH_VERIFICATION_DAILY_LIMIT" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have reached today's verification code attempt limit."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今天的验证码尝试次数已达上限。"
+          }
+        }
+      }
+    },
     "AUTHENTICATOR" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -498,6 +634,9 @@
         }
       }
     },
+    "Emoji" : {
+
+    },
     "ENTER_PASSWORD_DESCRIPTION" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -549,6 +688,108 @@
         }
       }
     },
+    "ERROR_HTTP_STATUS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The server returned status code %ld."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务器返回了状态码 %ld。"
+          }
+        }
+      }
+    },
+    "ERROR_INVALID_URL" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The URL is invalid."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请求地址无效。"
+          }
+        }
+      }
+    },
+    "ERROR_NETWORK_REQUEST_FAILED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The network request failed."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网络请求失败。"
+          }
+        }
+      }
+    },
+    "ERROR_OPERATION_FAILED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Operation Failed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "操作失败"
+          }
+        }
+      }
+    },
+    "ERROR_REQUEST_FAILED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The request failed. Please try again later."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请求失败，请稍后再试。"
+          }
+        }
+      }
+    },
+    "ERROR_RESPONSE_DECODING_FAILED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to read the server response."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法解析服务器响应。"
+          }
+        }
+      }
+    },
     "ERROR_TRY_AGAIN" : {
       "comment" : "The try again button if an error occurred when loading things from the API.",
       "extractionState" : "manual",
@@ -563,6 +804,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重试"
+          }
+        }
+      }
+    },
+    "ERROR_UNKNOWN" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An unknown error occurred."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发生未知错误。"
           }
         }
       }
@@ -584,6 +842,108 @@
         }
       }
     },
+    "HISTORY_EMPTY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Watch History"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无播放历史"
+          }
+        }
+      }
+    },
+    "HISTORY_EMPTY_DESCRIPTION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Videos you watch will appear here."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "看过的视频会显示在这里。"
+          }
+        }
+      }
+    },
+    "HISTORY_LOGIN_PROMPT" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log in to view and sync your watch history."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录后可以查看并同步播放历史。"
+          }
+        }
+      }
+    },
+    "HISTORY_NO_SEARCH_RESULTS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Results"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有搜索结果"
+          }
+        }
+      }
+    },
+    "HISTORY_REQUEST_FAILED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to load watch history. Please try again later."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "浏览历史请求失败，请稍后再试。"
+          }
+        }
+      }
+    },
+    "HISTORY_TRY_OTHER_KEYWORDS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try searching with different keywords."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请尝试其他关键词。"
+          }
+        }
+      }
+    },
     "HOT" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -597,6 +957,142 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "最热"
+          }
+        }
+      }
+    },
+    "IMAGE_VIEWER_DOWNLOAD_FAILED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to download the original image. Check your connection and try again."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "原图下载失败，请检查网络连接后重试。"
+          }
+        }
+      }
+    },
+    "IMAGE_VIEWER_IMAGE_ACCESSIBILITY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full-size image"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "大图"
+          }
+        }
+      }
+    },
+    "IMAGE_VIEWER_LOAD_FAILED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to Load Image"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法加载图片"
+          }
+        }
+      }
+    },
+    "IMAGE_VIEWER_OPEN_SETTINGS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Settings"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "前往设置"
+          }
+        }
+      }
+    },
+    "IMAGE_VIEWER_PHOTO_ACCESS_DENIED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KIRAKIRA does not have permission to add photos. Allow access in Settings to save this image."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有相册写入权限，请在系统设置中允许 KIRAKIRA 添加照片。"
+          }
+        }
+      }
+    },
+    "IMAGE_VIEWER_SAVE_ERROR_FALLBACK" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to save the image. Please try again later."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法保存图片，请稍后再试。"
+          }
+        }
+      }
+    },
+    "IMAGE_VIEWER_SAVE_FAILED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Failed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存失败"
+          }
+        }
+      }
+    },
+    "IMAGE_VIEWER_SAVE_TO_PHOTOS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save to Photos"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存到相册"
           }
         }
       }
@@ -1594,6 +2090,23 @@
         }
       }
     },
+    "USER_AVATAR_PREVIEW_ACCESSIBILITY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View full-size avatar"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看头像大图"
+          }
+        }
+      }
+    },
     "USER_BLOCK" : {
       "comment" : "The action of blocking the user.",
       "extractionState" : "manual",
@@ -1608,6 +2121,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "屏蔽"
+          }
+        }
+      }
+    },
+    "USER_BLOCK_CONFIRM_MESSAGE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blocking this user will unfollow them and prevent you from viewing their profile and videos."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "屏蔽后将取消关注，并且无法查看该用户的主页和视频。"
+          }
+        }
+      }
+    },
+    "USER_BLOCK_CONFIRM_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Block This User?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "屏蔽该用户？"
+          }
+        }
+      }
+    },
+    "USER_BLOCKED_BY_TARGET" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This user has blocked you"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该用户已屏蔽你"
+          }
+        }
+      }
+    },
+    "USER_BLOCKED_STATUS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "User Blocked"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已屏蔽该用户"
           }
         }
       }
@@ -1684,6 +2265,40 @@
         }
       }
     },
+    "USER_FOLLOWERS_LIST_EMPTY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Followers"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无粉丝"
+          }
+        }
+      }
+    },
+    "USER_FOLLOWERS_LIST_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Followers"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "粉丝"
+          }
+        }
+      }
+    },
     "USER_FOLLOWING" : {
       "comment" : "The status of you are following this user.",
       "extractionState" : "manual",
@@ -1720,6 +2335,57 @@
         }
       }
     },
+    "USER_FOLLOWING_LIST_EMPTY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Following Anyone"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无关注"
+          }
+        }
+      }
+    },
+    "USER_FOLLOWING_LIST_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Following"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关注"
+          }
+        }
+      }
+    },
+    "USER_HIDDEN_STATUS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This user's recommended content is hidden"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已隐藏该用户的推荐内容"
+          }
+        }
+      }
+    },
     "USER_HIDE" : {
       "comment" : "The action of hiding the user.",
       "extractionState" : "manual",
@@ -1738,6 +2404,40 @@
         }
       }
     },
+    "USER_HIDE_CONFIRM_MESSAGE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Content from this user will no longer appear in recommendations."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐藏后将不再在推荐内容中看到该用户。"
+          }
+        }
+      }
+    },
+    "USER_HIDE_CONFIRM_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide This User?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐藏该用户？"
+          }
+        }
+      }
+    },
     "USER_HISTORY" : {
       "comment" : "The videos that the user have watched.",
       "extractionState" : "manual",
@@ -1752,6 +2452,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "历史"
+          }
+        }
+      }
+    },
+    "USER_LOGIN_REQUIRED_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log In to View Your Profile"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录后查看个人主页"
+          }
+        }
+      }
+    },
+    "USER_NO_VIDEOS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Videos"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无视频"
           }
         }
       }
@@ -1786,6 +2520,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "用户主页标签页面"
+          }
+        }
+      }
+    },
+    "USER_UNAVAILABLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to View This User"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法查看该用户"
+          }
+        }
+      }
+    },
+    "USER_UNBLOCK" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unblock"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消屏蔽"
+          }
+        }
+      }
+    },
+    "USER_UNHIDE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unhide"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消隐藏"
+          }
+        }
+      }
+    },
+    "USER_VIDEOS_LOAD_FAILED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to load this user's videos."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "获取用户视频失败。"
           }
         }
       }
@@ -1871,6 +2673,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "输入好友或管理员提供的邀请码。"
+          }
+        }
+      }
+    },
+    "VIDEO_OPEN_TAG_EDITOR" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Tag Editor"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开标签编辑页"
+          }
+        }
+      }
+    },
+    "VIDEO_SORT_BY_TIME" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By Time"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按时间"
           }
         }
       }
@@ -1996,349 +2832,6 @@
             "value" : "你是谁？"
           }
         }
-      }
-    },
-    "AUTH_EMAIL_ALREADY_REGISTERED" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "This email address is already registered." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "该电子邮件地址已注册。" } }
-      }
-    },
-    "AUTH_INVITATION_CODE_INVALID" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "The invitation code is invalid or has already been used." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "邀请码无效或已被使用。" } }
-      }
-    },
-    "AUTH_LOGIN_FAILED" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Login failed" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "登录失败" } }
-      }
-    },
-    "AUTH_LOGIN_FAILED_WITH_PASSWORD_HINT" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "%1$@ (Password hint: %2$@)" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%1$@（密码提示：%2$@）" } }
-      }
-    },
-    "AUTH_RESEND_VERIFICATION_CODE" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Resend Verification Code" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重新发送验证码" } }
-      }
-    },
-    "AUTH_TOO_MANY_REQUESTS" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Too many requests. Please try again later." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "操作过于频繁，请稍后再试。" } }
-      }
-    },
-    "AUTH_USERNAME_UNAVAILABLE" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "This username is unavailable." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "该用户名不可用。" } }
-      }
-    },
-    "AUTH_VERIFICATION_DAILY_LIMIT" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "You have reached today's verification code attempt limit." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "今天的验证码尝试次数已达上限。" } }
-      }
-    },
-    "ERROR_OPERATION_FAILED" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Operation Failed" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "操作失败" } }
-      }
-    },
-    "ERROR_HTTP_STATUS" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "The server returned status code %ld." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "服务器返回了状态码 %ld。" } }
-      }
-    },
-    "ERROR_INVALID_URL" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "The URL is invalid." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "请求地址无效。" } }
-      }
-    },
-    "ERROR_NETWORK_REQUEST_FAILED" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "The network request failed." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "网络请求失败。" } }
-      }
-    },
-    "ERROR_REQUEST_FAILED" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "The request failed. Please try again later." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "请求失败，请稍后再试。" } }
-      }
-    },
-    "ERROR_RESPONSE_DECODING_FAILED" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Unable to read the server response." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "无法解析服务器响应。" } }
-      }
-    },
-    "ERROR_UNKNOWN" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "An unknown error occurred." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "发生未知错误。" } }
-      }
-    },
-    "HISTORY_EMPTY" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "No Watch History" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "暂无播放历史" } }
-      }
-    },
-    "HISTORY_EMPTY_DESCRIPTION" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Videos you watch will appear here." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "看过的视频会显示在这里。" } }
-      }
-    },
-    "HISTORY_LOGIN_PROMPT" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Log in to view and sync your watch history." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "登录后可以查看并同步播放历史。" } }
-      }
-    },
-    "HISTORY_NO_SEARCH_RESULTS" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "No Results" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "没有搜索结果" } }
-      }
-    },
-    "HISTORY_REQUEST_FAILED" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Unable to load watch history. Please try again later." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "浏览历史请求失败，请稍后再试。" } }
-      }
-    },
-    "HISTORY_TRY_OTHER_KEYWORDS" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Try searching with different keywords." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "请尝试其他关键词。" } }
-      }
-    },
-    "IMAGE_VIEWER_DOWNLOAD_FAILED" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Unable to download the original image. Check your connection and try again." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "原图下载失败，请检查网络连接后重试。" } }
-      }
-    },
-    "IMAGE_VIEWER_IMAGE_ACCESSIBILITY" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Full-size image" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "大图" } }
-      }
-    },
-    "IMAGE_VIEWER_LOAD_FAILED" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Unable to Load Image" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "无法加载图片" } }
-      }
-    },
-    "IMAGE_VIEWER_OPEN_SETTINGS" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open Settings" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "前往设置" } }
-      }
-    },
-    "IMAGE_VIEWER_PHOTO_ACCESS_DENIED" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "KIRAKIRA does not have permission to add photos. Allow access in Settings to save this image." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "没有相册写入权限，请在系统设置中允许 KIRAKIRA 添加照片。" } }
-      }
-    },
-    "IMAGE_VIEWER_SAVE_ERROR_FALLBACK" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Unable to save the image. Please try again later." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "无法保存图片，请稍后再试。" } }
-      }
-    },
-    "IMAGE_VIEWER_SAVE_FAILED" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save Failed" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "保存失败" } }
-      }
-    },
-    "IMAGE_VIEWER_SAVE_TO_PHOTOS" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save to Photos" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "保存到相册" } }
-      }
-    },
-    "USER_AVATAR_PREVIEW_ACCESSIBILITY" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "View full-size avatar" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "查看头像大图" } }
-      }
-    },
-    "USER_BLOCK_CONFIRM_MESSAGE" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Blocking this user will unfollow them and prevent you from viewing their profile and videos." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "屏蔽后将取消关注，并且无法查看该用户的主页和视频。" } }
-      }
-    },
-    "USER_BLOCK_CONFIRM_TITLE" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Block This User?" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "屏蔽该用户？" } }
-      }
-    },
-    "USER_BLOCKED_BY_TARGET" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "This user has blocked you" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "该用户已屏蔽你" } }
-      }
-    },
-    "USER_BLOCKED_STATUS" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "User Blocked" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已屏蔽该用户" } }
-      }
-    },
-    "USER_FOLLOWERS_LIST_EMPTY" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "No Followers" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "暂无粉丝" } }
-      }
-    },
-    "USER_FOLLOWERS_LIST_TITLE" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Followers" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "粉丝" } }
-      }
-    },
-    "USER_FOLLOWING_LIST_EMPTY" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Not Following Anyone" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "暂无关注" } }
-      }
-    },
-    "USER_FOLLOWING_LIST_TITLE" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Following" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关注" } }
-      }
-    },
-    "USER_HIDDEN_STATUS" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "This user's recommended content is hidden" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已隐藏该用户的推荐内容" } }
-      }
-    },
-    "USER_HIDE_CONFIRM_MESSAGE" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Content from this user will no longer appear in recommendations." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "隐藏后将不再在推荐内容中看到该用户。" } }
-      }
-    },
-    "USER_HIDE_CONFIRM_TITLE" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Hide This User?" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "隐藏该用户？" } }
-      }
-    },
-    "USER_LOGIN_REQUIRED_TITLE" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Log In to View Your Profile" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "登录后查看个人主页" } }
-      }
-    },
-    "USER_NO_VIDEOS" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "No Videos" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "暂无视频" } }
-      }
-    },
-    "USER_UNAVAILABLE" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Unable to View This User" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "无法查看该用户" } }
-      }
-    },
-    "USER_UNBLOCK" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Unblock" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "取消屏蔽" } }
-      }
-    },
-    "USER_UNHIDE" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Unhide" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "取消隐藏" } }
-      }
-    },
-    "USER_VIDEOS_LOAD_FAILED" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Unable to load this user's videos." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "获取用户视频失败。" } }
-      }
-    },
-    "VIDEO_OPEN_TAG_EDITOR" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open Tag Editor" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开标签编辑页" } }
-      }
-    },
-    "VIDEO_SORT_BY_TIME" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "By Time" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "按时间" } }
       }
     },
     "添加别名" : {

@@ -1,5 +1,4 @@
 import AVKit
-import RichText
 import SwiftUI
 
 struct VideoPlayerView: View {
@@ -7,6 +6,8 @@ struct VideoPlayerView: View {
     let animationNamespace: Namespace.ID
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @State private var authManager = AuthManager.shared
     @State private var isShowingLogin = false
     @State private var isShowingEditTag = false
@@ -57,23 +58,32 @@ struct VideoPlayerView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
+            Group {
+                if let videoDto = viewModel.state.value {
+                    content(video: videoDto.video)
+                        .transition(.opacity)
+                } else {
+                    Color.clear
+                }
+            }
+            .overlay {
                 switch viewModel.state {
                 case .idle, .loading(previous: nil):
                     LoadingView()
-                case .success(let videoDto), .loading(previous: .some(let videoDto)):
-                    content(video: videoDto.video)
-                        .transition(.opacity)
                 case .error(let msg):
                     ErrorView(errorMessage: msg)
                 default:
-                    Color.clear
+                    EmptyView()
                 }
             }
             .animation(.easeInOut(duration: 0.25), value: viewModel.state)
             .task(id: videoId) {
+                // Keep initial requests outside the size-class-dependent layout branches.
+                async let comments: Void = commentViewModel.fetch(of: videoId)
+                async let danmaku: Void = danmakuViewModel.fetch(of: videoId)
                 await historyManager.loadIfNeeded()
                 await viewModel.fetchVideo(of: videoId)
+                _ = await (comments, danmaku)
             }
             .onDisappear {
                 playbackHistoryController.stop()
@@ -83,11 +93,11 @@ struct VideoPlayerView: View {
                     playbackHistoryController.flush()
                 }
             }
-//            .toolbar {
-//                ToolbarItem(placement: .cancellationAction) {
-//                    Button(role: .close, action: { dismiss() })
-//                }
-//            }
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(role: .close, action: { dismiss() })
+                }
+            }
             .sheet(isPresented: $isShowingLogin) {
                 AuthView()
             }
@@ -110,7 +120,41 @@ struct VideoPlayerView: View {
 
     @ViewBuilder
     func content(video: VideoItem) -> some View {
-        VStack(spacing: 0) {
+        if horizontalSizeClass == .regular {
+            HStack(spacing: 0) {
+                VStack(spacing: 0) {
+                    videoPlayer(video: video)
+                    CommentsView(videoId: videoId, commentViewModel: commentViewModel) {
+                        infoContent(video: video)
+                        Text(.videoTabComment)
+                            .font(.headline)
+                            .padding(.horizontal)
+                            .padding(.vertical, 12)
+                    }
+                }
+                .containerRelativeFrame(
+                    .horizontal,
+                    count: 3,
+                    span: 2,
+                    spacing: 0
+                )
+
+                danmaku
+                    .containerRelativeFrame(
+                        .horizontal,
+                        count: 3,
+                        span: 1,
+                        spacing: 0
+                    )
+            }
+        } else {
+            compactContent(video: video)
+        }
+    }
+
+    @ViewBuilder
+    private func videoPlayer(video: VideoItem) -> some View {
+        Group {
             if player != nil {
                 VideoPlayer(player: player)
                     .aspectRatio(16 / 9, contentMode: .fit)
@@ -131,6 +175,13 @@ struct VideoPlayerView: View {
                         }
                     }
             }
+        }
+    }
+
+    @ViewBuilder
+    private func compactContent(video: VideoItem) -> some View {
+        VStack(spacing: 0) {
+            videoPlayer(video: video)
 
             VStack {
                 switch showingView {
@@ -152,26 +203,26 @@ struct VideoPlayerView: View {
                     .pickerStyle(.segmented)
                     .padding(.top)
                     .padding(.horizontal)
-                    
+
                     if showingView == .comments {
                         HStack {
                             Spacer()
-                            
+
                             Button {
-                                
+
                             } label: {
                                 Text(verbatim: "1 / 6")
                             }
-                            
+
                             Button {
-                                
+
                             } label: {
                                 Label {
                                     Text(.videoSortByTime)
                                 } icon: {
                                     Image(systemName: "arrow.down")
                                 }
-                                
+
                             }
                         }
                         .font(.caption)
@@ -180,181 +231,188 @@ struct VideoPlayerView: View {
                     }
                 }
             }
+            .scrollEdgeEffectStyle(.soft, for: .top)
         }
     }
 
     @ViewBuilder
     func info(video: VideoItem) -> some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                HStack {
-                    if let uploader = video.uploaderInfo {
-                        NavigationLink {
-                            UserView(uid: uploader.uid, animationNamespace: animationNamespace)
-                        } label: {
-                            HStack(spacing: 12) {
-                                UserAvatarView(imageId: uploader.avatar)
-                                    .frame(width: 48, height: 48)
-                                    .glassEffect(.regular.interactive())
-
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text(verbatim: uploader.userNickname ?? uploader.username)
-                                        .bold()
-                                    Text(verbatim: "@\(uploader.username)")
-                                        .foregroundStyle(.secondary)
-                                        .font(.caption)
-                                        .fontDesign(.monospaced)
-                                }
-                            }
-                        }
-                        .buttonStyle(.plain)
-                    }
-
-                    Spacer()
-
-                    if let uploader = video.uploaderInfo, !uploader.isSelf {
-                        Button {
-                            if authManager.isAuthenticated {
-                                Task { await toggleUploaderFollow(uid: uploader.uid) }
-                            } else {
-                                isShowingLogin = true
-                            }
-                        } label: {
-                            if isUploaderFollowLoading {
-                                ProgressView()
-                                    .controlSize(.regular)
-                            } else {
-                                Label(
-                                    uploaderIsFollowing ? .userFollowing : .userFollow,
-                                    systemImage: uploaderIsFollowing ? "checkmark" : "plus"
-                                )
-                            }
-                        }
-                        .buttonStyle(.bordered)
-                        .disabled(isUploaderFollowLoading)
-                    }
-                }
-                .task(id: video.uploaderInfo?.uid) {
-                    uploaderIsFollowing = video.uploaderInfo?.isFollowing ?? false
-                }
-
-                VStack(alignment: .leading, spacing: 16) {
-                    TextView(video.title)
-                        .font(.title2)
-                        .bold()
-
-                    HStack(spacing: 20) {
-                        if let watchedCount = video.watchedCount {
-                            Label {
-                                Text(watchedCount, format: .number)
-                            } icon: {
-                                Image(systemName: "play")
-                            }
-                        }
-
-                        if let uploadDate = video.uploadDate {
-                            Label {
-                                Text(uploadDate, format: .smart)
-                            } icon: {
-                                Image(systemName: "calendar")
-                            }
-
-                        }
-
-                        Label(video.videoCategory, systemImage: "square.grid.2x2")
-                    }
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
-                    .monospacedDigit()
-                    .contentTransition(.numericText())
-
-                    TextView(video.description)
-                }
-
-                // 操作
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        Button(action: {}) {  // 使用我认为最扯淡但是居然真的可行的方式实现连体按钮
-                            HStack(spacing: 24) {
-                                Button(action: { like() }) {
-                                    Image(systemName: "hand.thumbsup")
-                                        .symbolVariant(liked ? .fill : .none)
-                                        .frame(width: 20, height: 20)
-
-                                    Text(countLike, format: .number)
-                                        .contentTransition(.numericText(value: Double(countLike)))
-                                }
-                                .foregroundStyle(liked ? .accent : .primary)
-                                .sensoryFeedback(.success, trigger: liked) { oldValue, newValue in
-                                    return newValue
-                                }
-
-                                Button(action: { dislike() }) {
-                                    Image(systemName: "hand.thumbsdown")
-                                        .symbolVariant(disliked ? .fill : .none)
-                                        .frame(width: 20, height: 20)
-
-                                    Text(countDislike, format: .number)
-                                        .contentTransition(.numericText(value: Double(-countDislike)))
-                                }
-                                .foregroundStyle(disliked ? .accent : .primary)
-                            }.buttonStyle(.plain)
-                        }
-
-                        Button(action: { collect() }) {
-                            Image(systemName: "star")
-                                .symbolVariant(collected ? .fill : .none)
-                                .frame(width: 20, height: 20)
-
-                            Text(countCollected, format: .number)
-                                .contentTransition(.numericText(value: Double(countCollected)))
-                        }
-                        .foregroundStyle(collected ? .accent : .primary)
-                        .sensoryFeedback(.success, trigger: collected) { oldValue, newValue in
-                            return newValue
-                        }
-
-                        Group {
-                            Button(action: {}) {
-                                Label(.download, systemImage: "arrow.down")
-                                    .frame(width: 20, height: 20)
-                            }
-
-                            Button(action: {}) {
-                                Label(.share, systemImage: "square.and.arrow.up")
-                                    .frame(width: 20, height: 20)
-                            }
-
-                            Menu {
-                                Button(.report, systemImage: "exclamationmark.bubble", action: {})
-                                Button(.checkThumbnail, systemImage: "photo", action: {})
-                            } label: {
-                                Label(.menuMore, systemImage: "ellipsis")
-                                    .frame(width: 20, height: 20)
-                            }
-                        }
-                        .labelStyle(.iconOnly)
-                        .buttonBorderShape(.circle)
-                    }
-                    .monospacedDigit()
-                    .contentTransition(.symbolEffect(.replace.offUp.byLayer))
-                    .buttonStyle(.bordered)
-                    .foregroundStyle(.primary)
-                }
-                .scrollClipDisabled()
-
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    Button {
-                        isShowingEditTag = true
-                    } label: {
-                        Text(.videoOpenTagEditor)
-                    }
-                }
-                .scrollClipDisabled()
-            }
-            .padding()
+            infoContent(video: video)
         }
+    }
+
+    @ViewBuilder
+    private func infoContent(video: VideoItem) -> some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                if let uploader = video.uploaderInfo {
+                    NavigationLink {
+                        UserView(uid: uploader.uid, animationNamespace: animationNamespace)
+                    } label: {
+                        HStack(spacing: 12) {
+                            UserAvatarView(imageId: uploader.avatar)
+                                .frame(width: 48, height: 48)
+                                .glassEffect(.regular.interactive())
+
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(verbatim: uploader.userNickname ?? uploader.username)
+                                    .bold()
+                                Text(verbatim: "@\(uploader.username)")
+                                    .foregroundStyle(.secondary)
+                                    .font(.caption)
+                                    .fontDesign(.monospaced)
+                            }
+                        }
+                    }
+                    .buttonStyle(.plain)
+                }
+
+                Spacer()
+
+                if let uploader = video.uploaderInfo, !uploader.isSelf {
+                    Button {
+                        if authManager.isAuthenticated {
+                            Task { await toggleUploaderFollow(uid: uploader.uid) }
+                        } else {
+                            isShowingLogin = true
+                        }
+                    } label: {
+                        if isUploaderFollowLoading {
+                            ProgressView()
+                                .controlSize(.regular)
+                        } else {
+                            Label(
+                                uploaderIsFollowing ? .userFollowing : .userFollow,
+                                systemImage: uploaderIsFollowing ? "checkmark" : "plus"
+                            )
+                        }
+                    }
+                    .buttonStyle(.bordered)
+                    .disabled(isUploaderFollowLoading)
+                }
+            }
+            .task(id: video.uploaderInfo?.uid) {
+                uploaderIsFollowing = video.uploaderInfo?.isFollowing ?? false
+            }
+
+            VStack(alignment: .leading, spacing: 16) {
+                Text(video.title)
+                    .font(.title2)
+                    .bold()
+                    .textSelection(.enabled)
+
+                HStack(spacing: 20) {
+                    if let watchedCount = video.watchedCount {
+                        Label {
+                            Text(watchedCount, format: .number)
+                        } icon: {
+                            Image(systemName: "play")
+                        }
+                    }
+
+                    if let uploadDate = video.uploadDate {
+                        Label {
+                            Text(uploadDate, format: .smart)
+                        } icon: {
+                            Image(systemName: "calendar")
+                        }
+
+                    }
+
+                    Label(video.videoCategory, systemImage: "square.grid.2x2")
+                }
+                .font(.callout)
+                .foregroundStyle(.secondary)
+                .monospacedDigit()
+                .contentTransition(.numericText())
+
+                Text(video.description)
+                    .textSelection(.enabled)
+            }
+
+            // 操作
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    Button(action: {}) {  // 使用我认为最扯淡但是居然真的可行的方式实现连体按钮
+                        HStack(spacing: 24) {
+                            Button(action: { like() }) {
+                                Image(systemName: "hand.thumbsup")
+                                    .symbolVariant(liked ? .fill : .none)
+                                    .frame(width: 20, height: 20)
+
+                                Text(countLike, format: .number)
+                                    .contentTransition(.numericText(value: Double(countLike)))
+                            }
+                            .foregroundStyle(liked ? .accent : .primary)
+                            .sensoryFeedback(.success, trigger: liked) { oldValue, newValue in
+                                return newValue
+                            }
+
+                            Button(action: { dislike() }) {
+                                Image(systemName: "hand.thumbsdown")
+                                    .symbolVariant(disliked ? .fill : .none)
+                                    .frame(width: 20, height: 20)
+
+                                Text(countDislike, format: .number)
+                                    .contentTransition(.numericText(value: Double(-countDislike)))
+                            }
+                            .foregroundStyle(disliked ? .accent : .primary)
+                        }.buttonStyle(.plain)
+                    }
+
+                    Button(action: { collect() }) {
+                        Image(systemName: "star")
+                            .symbolVariant(collected ? .fill : .none)
+                            .frame(width: 20, height: 20)
+
+                        Text(countCollected, format: .number)
+                            .contentTransition(.numericText(value: Double(countCollected)))
+                    }
+                    .foregroundStyle(collected ? .accent : .primary)
+                    .sensoryFeedback(.success, trigger: collected) { oldValue, newValue in
+                        return newValue
+                    }
+
+                    Group {
+                        Button(action: {}) {
+                            Label(.download, systemImage: "arrow.down")
+                                .frame(width: 20, height: 20)
+                        }
+
+                        Button(action: {}) {
+                            Label(.share, systemImage: "square.and.arrow.up")
+                                .frame(width: 20, height: 20)
+                        }
+
+                        Menu {
+                            Button(.report, systemImage: "exclamationmark.bubble", action: {})
+                            Button(.checkThumbnail, systemImage: "photo", action: {})
+                        } label: {
+                            Label(.menuMore, systemImage: "ellipsis")
+                                .frame(width: 20, height: 20)
+                        }
+                    }
+                    .labelStyle(.iconOnly)
+                    .buttonBorderShape(.circle)
+                }
+                .monospacedDigit()
+                .contentTransition(.symbolEffect(.replace.offUp.byLayer))
+                .buttonStyle(.bordered)
+                .foregroundStyle(.primary)
+            }
+            .scrollClipDisabled()
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                Button {
+                    isShowingEditTag = true
+                } label: {
+                    Text(.videoOpenTagEditor)
+                }
+            }
+            .scrollClipDisabled()
+        }
+        .padding()
     }
 
     @MainActor

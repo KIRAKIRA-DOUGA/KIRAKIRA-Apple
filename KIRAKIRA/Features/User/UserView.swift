@@ -1,4 +1,3 @@
-import RichText
 import SwiftUI
 
 struct UserView: View {
@@ -178,8 +177,9 @@ struct UserView: View {
                 }
 
                 if let signature = profile.signature, !signature.isEmpty {
-                    TextView(verbatim: signature)
+                    Text(verbatim: signature)
                         .fontWeight(.medium)
+                        .textSelection(.enabled)
                 }
 
                 if viewModel.isBlockedByOther {

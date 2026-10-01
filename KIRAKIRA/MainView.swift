@@ -91,6 +91,7 @@ struct MainView: View {
             .buttonStyle(.plain)
             .buttonSizing(.flexible)
         }
+        .scrollEdgeEffectStyle(.soft, for: .top)
         .tabViewStyle(.sidebarAdaptable)
         .fullScreenCover(isPresented: $globalStateManager.isPlayerExpanded, content: {
             if globalStateManager.selectedVideo != nil {
@@ -101,6 +102,7 @@ struct MainView: View {
                     .navigationTransition(
                         .zoom(sourceID: globalStateManager.activeTransitionSource, in: animationNamespace)
                     )
+                    .interactiveDismissDisabled()
             } else {
                 Image(systemName: "play.slash.fill")
                     .foregroundStyle(.tertiary)
@@ -115,12 +117,6 @@ struct MainView: View {
         }
         .sheet(isPresented: $globalStateManager.isShowingLogin) {
             AuthView()
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
-            globalStateManager.isShowingKeyboard = true
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
-            globalStateManager.isShowingKeyboard = false
         }
         .task {
             await authManager.refreshAccountProfiles()
