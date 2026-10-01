@@ -10,11 +10,12 @@ struct SearchView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 10) {
                     ForEach(categories, id: \.id) { category in
-                        CategoryCard(name: category.name, icon: category.systemImage)
+                        CategoryCard(name: category.name, icon: category.systemImage, color: category.color)
                     }
                 }
                 .padding()
             }
+            .background(Color(UIColor.systemGroupedBackground))
             .navigationTitle(.search)
             .toolbarTitleDisplayMode(.inlineLarge)
         }
@@ -24,18 +25,19 @@ struct SearchView: View {
 private struct CategoryCard: View {
     let name: String
     let icon: String
+    let color: Color
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 26)
-                .foregroundStyle(.accent)
-                .frame(minHeight: 110)
-                .shadow(color: .accent.opacity(0.25), radius: 10, y: 10)
+            RoundedRectangle(cornerRadius: 16)
+                .foregroundStyle(Color(UIColor.secondarySystemGroupedBackground))
+                .frame(minHeight: 100)
             HStack {
                 VStack(alignment: .leading) {
                     Image(systemName: icon)
                         .font(.system(size: 25))
                         .opacity(0.8)
+                        .foregroundStyle(color)
                     Spacer()
                     Text(name)
                         .bold()
@@ -43,12 +45,10 @@ private struct CategoryCard: View {
                 .padding()
                 Spacer()
             }
-            .foregroundStyle(.white)
         }
     }
 }
 
 #Preview {
-    //	MainView()
     SearchView()
 }

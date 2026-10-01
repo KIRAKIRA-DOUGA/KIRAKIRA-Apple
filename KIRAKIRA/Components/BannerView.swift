@@ -2,10 +2,22 @@ import SwiftUI
 import VariableBlur
 
 struct BannerView: View {
+    let imageId: String?
+
+    init(imageId: String? = nil) {
+        self.imageId = imageId
+    }
+
     var body: some View {
         VStack {
-            Image("DefaultBanner")
-                .resizable()
+            Group {
+                if let imageId, !imageId.isEmpty {
+                    CFImageView(imageId: imageId)
+                } else {
+                    Image("DefaultBanner")
+                        .resizable()
+                }
+            }
                 .aspectRatio(contentMode: .fill)
                 .frame(
                     minWidth: 0,

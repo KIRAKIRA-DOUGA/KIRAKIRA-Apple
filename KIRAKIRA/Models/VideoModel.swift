@@ -56,6 +56,8 @@ struct VideoPartDTO: Codable, Identifiable {
 }
 
 struct ThumbVideoResponseDTO: Codable {
+    let success: Bool?
+    let message: String?
     let videosCount: Int
     let videos: [ThumbVideoItem]
 }
@@ -66,7 +68,9 @@ struct ThumbVideoItem: Codable, Identifiable, Equatable {
     let image: String?  // path of the thumbnail image
     let uploadDate: Date?
     let watchedCount: Int?
+    let uploader: String?
     let uploaderNickname: String?
+    let uploaderId: Int?
     let duration: TimeInterval?
     let `description`: String?
 

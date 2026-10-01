@@ -3,6 +3,7 @@ import SwiftUI
 struct MyView: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
     @State private var authManager = AuthManager.shared
+    let animationNamespace: Namespace.ID
 
     let avatarSize: CGFloat = 60
     let userInfoSpacing: CGFloat = 8
@@ -13,44 +14,43 @@ struct MyView: View {
                 if authManager.isAuthenticated {
                     Section {
                         NavigationLink {
-                            UserView()
+                            UserView(animationNamespace: animationNamespace)
                         } label: {
                             HStack(spacing: userInfoSpacing) {
-                                Image("SamplePortrait")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
+                                UserAvatarView(imageId: authManager.credentials?.avatar)
                                     .frame(width: avatarSize, height: avatarSize)
-                                    .clipShape(Circle())
 
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text(verbatim: "艾了个拉")
+                                    Text(verbatim: authManager.credentials?.displayName ?? authManager.credentials?.email ?? "")
                                         .font(.title3)
                                         .bold()
 
-                                    Text(verbatim: "@Aira")
-                                        .font(.footnote)
-                                        .fontDesign(.monospaced)
-                                        .foregroundStyle(.secondary)
+                                    if let username = authManager.credentials?.username, !username.isEmpty {
+                                        Text(verbatim: "@\(username)")
+                                            .font(.footnote)
+                                            .fontDesign(.monospaced)
+                                            .foregroundStyle(.secondary)
+                                    }
                                 }
                             }
                         }
                     }
 
-                    Section {
-                        NavigationLink {
-                            MyNotificationsView()
-                        } label: {
-                            Label(.notifications, systemImage: "bell")
-                                .badge(3)
-                        }
-
-                        NavigationLink {
-                            MyMessagesView()
-                        } label: {
-                            Label(.messages, systemImage: "message")
-                                .badge(10)
-                        }
-                    }
+//                    Section {
+//                        NavigationLink {
+//                            MyNotificationsView()
+//                        } label: {
+//                            Label(.notifications, systemImage: "bell")
+//                                .badge(3)
+//                        }
+//
+//                        NavigationLink {
+//                            MyMessagesView()
+//                        } label: {
+//                            Label(.messages, systemImage: "message")
+//                                .badge(10)
+//                        }
+//                    }
 
                     Section {
                         NavigationLink {
@@ -80,14 +80,14 @@ struct MyView: View {
 
             }
             #if os(iOS)
-                .contentMargins(.top, 20)
+                .contentMargins(.top, 16)
             #endif
             .navigationTitle(.maintabMy)
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
                 ToolbarItem {
                     Button(.settings, systemImage: "gear") {
-                        globalStateManager.isShowingSettings = true
+                        globalStateManager.showSettings()
                     }
                 }
             }
@@ -96,5 +96,6 @@ struct MyView: View {
 }
 
 #Preview(traits: .commonPreviewTrait) {
-    MyView()
+    @Previewable @Namespace var animationNamespace
+    MyView(animationNamespace: animationNamespace)
 }

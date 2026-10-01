@@ -14,9 +14,3 @@ struct WizardSection<Content: View>: View {
         .listRowBackground(colorScheme == .dark ? Color(UIColor.tertiarySystemGroupedBackground) : Color(UIColor.systemGroupedBackground))
     }
 }
-
-#Preview {
-    WizardSection() {
-        Text("测试")
-    }
-}
