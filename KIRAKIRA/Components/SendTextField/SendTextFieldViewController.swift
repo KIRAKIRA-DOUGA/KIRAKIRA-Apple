@@ -31,16 +31,14 @@ final class SendTextFieldViewController: UIViewController {
     }
 
     @objc private func keyboardFrameWillChange(_ notification: Notification) {
-        #if !os(visionOS)
-            guard let window = view.window, let screen = window.windowScene?.screen,
-                let frame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-            else { return }
-            let keyboardFrame = window.convert(frame, from: screen.coordinateSpace)
-            // Floating keyboards also use the open-keyboard padding. SwiftUI decides
-            // whether the host needs to move; no keyboard height is added here.
-            isKeyboardVisible = window.bounds.intersects(keyboardFrame)
-            updateMargins()
-        #endif
+        guard let window = view.window, let screen = window.windowScene?.screen,
+            let frame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else { return }
+        let keyboardFrame = window.convert(frame, from: screen.coordinateSpace)
+        // Floating keyboards also use the open-keyboard padding. SwiftUI decides
+        // whether the host needs to move; no keyboard height is added here.
+        isKeyboardVisible = window.bounds.intersects(keyboardFrame)
+        updateMargins()
     }
 
     @objc private func keyboardWillShow() {

@@ -33,16 +33,11 @@ final class SendTextInputView: UIView, UITextViewDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
-        #if !os(visionOS)
-            glassContainer.effect = UIGlassContainerEffect()
-            let glass = UIGlassEffect(style: .regular)
-            glass.isInteractive = true
-            fieldBackground.effect = glass
-            addButton.configuration = .glass()
-        #else
-            fieldBackground.effect = UIBlurEffect(style: .systemMaterial)
-            addButton.configuration = .plain()
-        #endif
+        glassContainer.effect = UIGlassContainerEffect()
+        let glass = UIGlassEffect(style: .regular)
+        glass.isInteractive = true
+        fieldBackground.effect = glass
+        addButton.configuration = .glass()
         addSubview(glassContainer)
         glassContainer.contentView.addSubview(fieldBackground)
         glassContainer.contentView.addSubview(addButton)
