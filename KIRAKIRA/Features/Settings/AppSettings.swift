@@ -5,6 +5,7 @@ public class AppSettings: ObservableObject {
     @AppStorage("videoDisplayStyle") var videoDisplayStyle: ViewStyle = .card
     @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
     @AppStorage("globalColorScheme") var globalColorScheme: GlobalColorScheme = .auto
+    @AppStorage("tabViewCustomization") var tabViewCustomization = TabViewCustomization()
 
     public static let shared = AppSettings()
 }

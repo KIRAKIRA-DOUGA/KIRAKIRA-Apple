@@ -8,7 +8,7 @@ struct HomeView: View {
 
     var body: some View {
         NavigationStack {
-            HomeVideoListView(
+            VideoListView(
                 videos: homeVideoViewModel.state.value ?? [],
                 animationNamespace: animationNamespace,
             )

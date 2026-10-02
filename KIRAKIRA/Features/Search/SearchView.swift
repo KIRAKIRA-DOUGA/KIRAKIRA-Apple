@@ -9,7 +9,7 @@ struct SearchView: View {
         NavigationStack {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 10) {
-                    ForEach(categories, id: \.id) { category in
+                    ForEach(Category.allCases) { category in
                         CategoryCard(name: category.name, icon: category.systemImage, color: category.color)
                     }
                 }

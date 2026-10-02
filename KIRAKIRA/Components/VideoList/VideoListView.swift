@@ -1,29 +1,23 @@
 import SwiftUI
 
-struct VideoListView<Header: View>: View {
+struct VideoListView: View {
     @Environment(GlobalStateManager.self) private var globalStateManager
     @AppSetting(\.videoDisplayStyle) private var videoDisplayStyle
     let videos: [ThumbVideoItem]
     let animationNamespace: Namespace.ID
     let uploaderNameOverride: String?
-    let headerHorizontalPadding: Bool
     let isEmbedded: Bool
-    @ViewBuilder let header: Header
 
     init(
         videos: [ThumbVideoItem],
         animationNamespace: Namespace.ID,
         uploaderNameOverride: String? = nil,
-        headerHorizontalPadding: Bool = true,
-        isEmbedded: Bool = false,
-        @ViewBuilder header: () -> Header
+        isEmbedded: Bool = false
     ) {
         self.videos = videos
         self.animationNamespace = animationNamespace
         self.uploaderNameOverride = uploaderNameOverride
-        self.headerHorizontalPadding = headerHorizontalPadding
         self.isEmbedded = isEmbedded
-        self.header = header()
     }
 
     @ViewBuilder
@@ -42,8 +36,6 @@ struct VideoListView<Header: View>: View {
 
     @ViewBuilder
     private var embeddedContent: some View {
-        header
-
         switch videoDisplayStyle {
         case .row:
             LazyVStack(spacing: 0) {
@@ -88,9 +80,6 @@ struct VideoListView<Header: View>: View {
 
     private var rowList: some View {
         List {
-            header
-                .listRowSeparator(.hidden)
-
             ForEach(videos) { video in
                 Button {
                     play(video)
@@ -108,13 +97,6 @@ struct VideoListView<Header: View>: View {
 
     private var gridList: some View {
         ScrollView {
-            if headerHorizontalPadding {
-                header
-                    .padding(.horizontal)
-            } else {
-                header
-            }
-
             LazyVGrid(
                 columns: gridColumns,
                 alignment: .leading,
@@ -155,7 +137,7 @@ struct VideoListView<Header: View>: View {
         content
             .matchedTransitionSource(id: AnimationTransitionSource.video(video.videoId), in: animationNamespace)
     }
-    
+
     private func play(_ video: ThumbVideoItem) {
         globalStateManager.selectedVideo = video.videoId
         globalStateManager.activeTransitionSource = .video(video.videoId)

@@ -248,9 +248,9 @@ struct UserView: View {
                     globalStateManager.showSettings(destination: .profile)
                 }
             } else {
-//                Button(.message, systemImage: "message") {}
-//                    .labelStyle(.iconOnly)
-//                    .buttonBorderShape(.circle)
+                // Button(.message, systemImage: "message") {}
+                //     .labelStyle(.iconOnly)
+                //     .buttonBorderShape(.circle)
 
                 Button {
                     requireAuthentication {
@@ -289,9 +289,7 @@ struct UserView: View {
                 animationNamespace: animationNamespace,
                 uploaderNameOverride: profile.displayName,
                 isEmbedded: true
-            ) {
-                EmptyView()
-            }
+            )
         case .empty:
             ContentUnavailableView(
                 String(localized: .userNoVideos),
