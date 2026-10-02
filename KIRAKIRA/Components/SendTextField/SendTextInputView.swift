@@ -16,18 +16,15 @@ final class SendTextInputView: UIView, UITextViewDelegate {
 
     var onSizeChange: (() -> Void)?
 
-    var cornerRadius: CGFloat = 20
+    var cornerRadius: CGFloat { initialHeight / 2 }
 
     private enum Metrics {
         static let minimumHeight: CGFloat = 40
         static let maximumLines: CGFloat = 6
-        static let textLeading: CGFloat = 16
-        static let textVerticalInset: CGFloat = 9
-        static let addButtonWidth: CGFloat = 40
-        static let addButtonSpacing: CGFloat = 8
+        static let padding: CGFloat = 8
+        static let textLeading: CGFloat = padding * 2
         static let actionWidth: CGFloat = 38
         static let actionHeight: CGFloat = 28
-        static let actionInset: CGFloat = 7
     }
 
     override init(frame: CGRect) {
@@ -41,15 +38,11 @@ final class SendTextInputView: UIView, UITextViewDelegate {
         addSubview(glassContainer)
         glassContainer.contentView.addSubview(fieldBackground)
         glassContainer.contentView.addSubview(addButton)
-        fieldBackground.cornerConfiguration = .capsule(maximumRadius: cornerRadius)
         fieldBackground.layer.cornerCurve = .continuous
         fieldBackground.clipsToBounds = true
 
         textView.backgroundColor = .clear
         textView.textColor = .label
-        textView.textContainerInset = UIEdgeInsets(
-            top: Metrics.textVerticalInset, left: 0, bottom: Metrics.textVerticalInset, right: 0
-        )
         textView.contentInsetAdjustmentBehavior = .never
         textView.contentInset = .zero
         textView.automaticallyAdjustsScrollIndicatorInsets = false
@@ -133,6 +126,10 @@ final class SendTextInputView: UIView, UITextViewDelegate {
         let font = UIFont.preferredFont(forTextStyle: .body, compatibleWith: traitCollection)
         textView.font = font
         placeholderLabel.font = font
+        textView.textContainerInset = UIEdgeInsets(
+            top: textVerticalInset, left: 0, bottom: textVerticalInset, right: 0
+        )
+        fieldBackground.cornerConfiguration = .corners(radius: .fixed(cornerRadius))
         applyTextAttributes()
     }
 
@@ -163,12 +160,22 @@ final class SendTextInputView: UIView, UITextViewDelegate {
         onSizeChange?()
     }
 
+    private var lineHeight: CGFloat { textView.font?.lineHeight ?? 22 }
+
+    private var initialHeight: CGFloat {
+        max(Metrics.minimumHeight, ceil(lineHeight + Metrics.padding * 2))
+    }
+
+    private var textVerticalInset: CGFloat {
+        (initialHeight - lineHeight) / 2
+    }
+
     private var buttonAreaWidth: CGFloat {
-        Metrics.actionWidth * (sendButton.isHidden ? 1 : 2) + Metrics.actionInset * 2
+        Metrics.actionWidth * (sendButton.isHidden ? 1 : 2) + Metrics.padding * 2
     }
 
     private var addButtonAreaWidth: CGFloat {
-        addButton.isHidden ? 0 : Metrics.addButtonWidth + Metrics.addButtonSpacing
+        addButton.isHidden ? 0 : initialHeight + Metrics.padding
     }
 
     private func textWidth(for width: CGFloat) -> CGFloat {
@@ -176,7 +183,7 @@ final class SendTextInputView: UIView, UITextViewDelegate {
     }
 
     private var maximumTextHeight: CGFloat {
-        ceil((textView.font?.lineHeight ?? 22) * Metrics.maximumLines) + Metrics.textVerticalInset * 2
+        ceil(lineHeight * Metrics.maximumLines + textVerticalInset * 2)
     }
 
     private func textHeight(for width: CGFloat) -> CGFloat {
@@ -191,11 +198,11 @@ final class SendTextInputView: UIView, UITextViewDelegate {
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         let height = textHeight(for: textWidth(for: size.width))
-        return CGSize(width: size.width, height: max(Metrics.minimumHeight, min(height, maximumTextHeight)))
+        return CGSize(width: size.width, height: max(initialHeight, min(height, maximumTextHeight)))
     }
 
     override var intrinsicContentSize: CGSize {
-        let height = bounds.width > 0 ? sizeThatFits(bounds.size).height : Metrics.minimumHeight
+        let height = bounds.width > 0 ? sizeThatFits(bounds.size).height : initialHeight
         return CGSize(width: UIView.noIntrinsicMetric, height: height)
     }
 
@@ -208,8 +215,8 @@ final class SendTextInputView: UIView, UITextViewDelegate {
         glassContainer.frame = bounds
         let leading = addButtonAreaWidth
         addButton.frame = CGRect(
-            x: 0, y: bounds.height - Metrics.addButtonWidth,
-            width: Metrics.addButtonWidth, height: Metrics.addButtonWidth
+            x: 0, y: bounds.height - initialHeight,
+            width: initialHeight, height: initialHeight
         )
         fieldBackground.frame = CGRect(x: leading, y: 0, width: max(0, bounds.width - leading), height: bounds.height)
         let fieldWidth = fieldBackground.bounds.width
@@ -240,13 +247,18 @@ final class SendTextInputView: UIView, UITextViewDelegate {
                 height: placeholderHeight
             )
         }
-        let actionY = fieldBackground.bounds.height - Metrics.actionInset - Metrics.actionHeight
+        // Lift the actions slightly for optical alignment, keeping their bottom offset fixed as text grows.
+        let opticalOffset = UIFontMetrics(forTextStyle: .body).scaledValue(
+            for: 2, compatibleWith: traitCollection
+        )
+        let actionBottomInset = (initialHeight - Metrics.actionHeight) / 2 + opticalOffset
+        let actionY = fieldBackground.bounds.height - actionBottomInset - Metrics.actionHeight
         emojiButton.frame = CGRect(
-            x: fieldWidth - buttonAreaWidth + Metrics.actionInset, y: actionY,
+            x: fieldWidth - buttonAreaWidth + Metrics.padding, y: actionY,
             width: Metrics.actionWidth, height: Metrics.actionHeight
         )
         sendButton.frame = CGRect(
-            x: fieldWidth - Metrics.actionInset - Metrics.actionWidth, y: actionY,
+            x: fieldWidth - Metrics.padding - Metrics.actionWidth, y: actionY,
             width: Metrics.actionWidth, height: Metrics.actionHeight
         )
     }
