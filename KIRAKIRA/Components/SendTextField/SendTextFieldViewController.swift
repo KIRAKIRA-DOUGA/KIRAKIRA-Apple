@@ -16,18 +16,35 @@ final class SendTextFieldViewController: UIViewController {
             name: UIResponder.keyboardWillChangeFrameNotification, object: nil
         )
         NotificationCenter.default.addObserver(
-            self, selector: #selector(keyboardWillShow),
+            self, selector: #selector(keyboardWillShow(_:)),
             name: UIResponder.keyboardWillShowNotification, object: nil
         )
         NotificationCenter.default.addObserver(
-            self, selector: #selector(keyboardWillHide),
+            self, selector: #selector(keyboardWillHide(_:)),
             name: UIResponder.keyboardWillHideNotification, object: nil
         )
     }
 
-    private func updateMargins() {
+    private func updateMargins(notification: Notification? = nil) {
         let closedPadding = min(32, max(18, containerView.bottomCornerRadius - composerView.cornerRadius))
-        containerView.padding = isKeyboardVisible ? 18 : closedPadding
+        let padding: CGFloat = isKeyboardVisible ? 18 : closedPadding
+        guard containerView.padding != padding else { return }
+        guard let notification, !UIAccessibility.isReduceMotionEnabled else {
+            containerView.padding = padding
+            return
+        }
+
+        containerView.layoutIfNeeded()
+        let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? 0.25
+        let curve =
+            notification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt
+            ?? UInt(UIView.AnimationCurve.easeInOut.rawValue)
+        let options = UIView.AnimationOptions(rawValue: curve << 16)
+            .union([.beginFromCurrentState, .allowUserInteraction])
+        UIView.animate(withDuration: duration, delay: 0, options: options) {
+            self.containerView.padding = padding
+            self.containerView.layoutIfNeeded()
+        }
     }
 
     @objc private func keyboardFrameWillChange(_ notification: Notification) {
@@ -38,17 +55,17 @@ final class SendTextFieldViewController: UIViewController {
         // Floating keyboards also use the open-keyboard padding. SwiftUI decides
         // whether the host needs to move; no keyboard height is added here.
         isKeyboardVisible = window.bounds.intersects(keyboardFrame)
-        updateMargins()
+        updateMargins(notification: notification)
     }
 
-    @objc private func keyboardWillShow() {
+    @objc private func keyboardWillShow(_ notification: Notification) {
         guard view.window != nil else { return }
         isKeyboardVisible = true
-        updateMargins()
+        updateMargins(notification: notification)
     }
 
-    @objc private func keyboardWillHide() {
+    @objc private func keyboardWillHide(_ notification: Notification) {
         isKeyboardVisible = false
-        updateMargins()
+        updateMargins(notification: notification)
     }
 }
