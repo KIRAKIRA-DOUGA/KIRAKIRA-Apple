@@ -26,7 +26,7 @@ final class SendTextFieldViewController: UIViewController {
     }
 
     private func updateMargins(notification: Notification? = nil) {
-        let closedPadding = min(32, max(18, containerView.bottomCornerRadius - composerView.cornerRadius))
+        let closedPadding = min(32, max(18, containerView.bottomCornerRadius - SendTextInputView.Metrics.cornerRadius))
         let padding: CGFloat = isKeyboardVisible ? 18 : closedPadding
         guard containerView.padding != padding else { return }
         guard let notification, !UIAccessibility.isReduceMotionEnabled else {

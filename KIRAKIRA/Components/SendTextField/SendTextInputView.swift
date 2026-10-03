@@ -16,15 +16,14 @@ final class SendTextInputView: UIView, UITextViewDelegate {
 
     var onSizeChange: (() -> Void)?
 
-    var cornerRadius: CGFloat { initialHeight / 2 }
-
-    private enum Metrics {
+    enum Metrics {
         static let minimumHeight: CGFloat = 40
-        static let maximumLines: CGFloat = 6
+        static let maximumHeight: CGFloat = 160
         static let padding: CGFloat = 8
         static let textLeading: CGFloat = padding * 2
         static let actionWidth: CGFloat = 38
         static let actionHeight: CGFloat = 28
+        static let cornerRadius: CGFloat = 24
     }
 
     override init(frame: CGRect) {
@@ -40,6 +39,7 @@ final class SendTextInputView: UIView, UITextViewDelegate {
         glassContainer.contentView.addSubview(addButton)
         fieldBackground.layer.cornerCurve = .continuous
         fieldBackground.clipsToBounds = true
+        fieldBackground.cornerConfiguration = .corners(radius: .fixed(Metrics.cornerRadius))
 
         textView.backgroundColor = .clear
         textView.textColor = .label
@@ -57,7 +57,10 @@ final class SendTextInputView: UIView, UITextViewDelegate {
         placeholderLabel.isAccessibilityElement = false
         fieldBackground.contentView.addSubview(placeholderLabel)
 
-        addButton.configuration?.image = UIImage(systemName: "plus")
+        addButton.configuration?.image = UIImage(
+            systemName: "plus",
+            withConfiguration: UIImage.SymbolConfiguration(pointSize: 16)
+        )
         addButton.configuration?.cornerStyle = .capsule
         addButton.accessibilityLabel = String(localized: .menuMore)
         emojiButton.setImage(UIImage(systemName: "face.smiling"), for: .normal)
@@ -129,7 +132,6 @@ final class SendTextInputView: UIView, UITextViewDelegate {
         textView.textContainerInset = UIEdgeInsets(
             top: textVerticalInset, left: 0, bottom: textVerticalInset, right: 0
         )
-        fieldBackground.cornerConfiguration = .corners(radius: .fixed(cornerRadius))
         applyTextAttributes()
     }
 
@@ -163,7 +165,7 @@ final class SendTextInputView: UIView, UITextViewDelegate {
     private var lineHeight: CGFloat { textView.font?.lineHeight ?? 22 }
 
     private var initialHeight: CGFloat {
-        max(Metrics.minimumHeight, ceil(lineHeight + Metrics.padding * 2))
+        min(Metrics.maximumHeight, max(Metrics.minimumHeight, lineHeight + Metrics.padding * 2))
     }
 
     private var textVerticalInset: CGFloat {
@@ -175,15 +177,15 @@ final class SendTextInputView: UIView, UITextViewDelegate {
     }
 
     private var addButtonAreaWidth: CGFloat {
-        addButton.isHidden ? 0 : initialHeight + Metrics.padding
+        addButton.isHidden ? 0 : addButtonSize + Metrics.padding
+    }
+
+    private var addButtonSize: CGFloat {
+        44
     }
 
     private func textWidth(for width: CGFloat) -> CGFloat {
         max(1, width - addButtonAreaWidth - Metrics.textLeading - buttonAreaWidth)
-    }
-
-    private var maximumTextHeight: CGFloat {
-        ceil(lineHeight * Metrics.maximumLines + textVerticalInset * 2)
     }
 
     private func textHeight(for width: CGFloat) -> CGFloat {
@@ -198,7 +200,7 @@ final class SendTextInputView: UIView, UITextViewDelegate {
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         let height = textHeight(for: textWidth(for: size.width))
-        return CGSize(width: size.width, height: max(initialHeight, min(height, maximumTextHeight)))
+        return CGSize(width: size.width, height: max(initialHeight, min(height, Metrics.maximumHeight)))
     }
 
     override var intrinsicContentSize: CGSize {
@@ -215,8 +217,8 @@ final class SendTextInputView: UIView, UITextViewDelegate {
         glassContainer.frame = bounds
         let leading = addButtonAreaWidth
         addButton.frame = CGRect(
-            x: 0, y: bounds.height - initialHeight,
-            width: initialHeight, height: initialHeight
+            x: 0, y: bounds.height - (initialHeight + addButtonSize) / 2,
+            width: addButtonSize, height: addButtonSize
         )
         fieldBackground.frame = CGRect(x: leading, y: 0, width: max(0, bounds.width - leading), height: bounds.height)
         let fieldWidth = fieldBackground.bounds.width
