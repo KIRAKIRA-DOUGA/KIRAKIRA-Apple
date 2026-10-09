@@ -8,21 +8,22 @@ struct HomeView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
+            VideoListView(
+                videos: homeVideoViewModel.state.value ?? [],
+                animationNamespace: animationNamespace,
+            )
+            .opacity(homeVideoViewModel.state.value != nil && globalStateManager.isSplashFinished ? 1 : 0)
+            .overlay {
                 switch homeVideoViewModel.state {
-                case .success(let videos) where globalStateManager.isSplashFinished,
-                    .loading(previous: .some(let videos)) where globalStateManager.isSplashFinished:
-                    HomeVideoListView(
-                        videos: videos,
-                        animationNamespace: animationNamespace,
-                    )
-                    .transition(.opacity)
+                case .success where globalStateManager.isSplashFinished,
+                    .loading(previous: .some) where globalStateManager.isSplashFinished:
+                    EmptyView()
                 case .idle, .loading, .success:
                     LoadingView()
                 case .error(let msg):
                     ErrorView(errorMessage: msg)
                 default:
-                    Color.clear
+                    EmptyView()
                 }
             }
             .animation(.easeInOut(duration: 0.25), value: homeVideoViewModel.state)

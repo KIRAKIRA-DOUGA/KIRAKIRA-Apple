@@ -104,7 +104,6 @@ struct WizardForm<Content: View, Footer: View>: View {
                     .frame(maxWidth: 360)
                     .padding(.horizontal, horizontalPadding)
                     .padding(.bottom, UIDevice.current.userInterfaceIdiom == .phone ? 0 : 38)
-                    .padding(.bottom, globalStateManager.isShowingKeyboard ? 16 : 0)
             }
         }
     }

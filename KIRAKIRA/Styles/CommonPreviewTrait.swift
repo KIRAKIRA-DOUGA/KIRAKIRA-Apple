@@ -1,13 +1,26 @@
 import SwiftUI
 
 struct CommonPreviewTrait: PreviewModifier {
-    static func makeSharedContext() throws -> GlobalStateManager {
-        return GlobalStateManager()
+    struct Context {
+        let globalState: GlobalStateManager
+        let defaults: UserDefaults
     }
 
-    func body(content: Content, context: GlobalStateManager) -> some View {
+    static func makeSharedContext() throws -> Context {
+        let suiteName = "Preview.Common"
+        let defaults = UserDefaults(suiteName: suiteName)!
+        defaults.removePersistentDomain(forName: suiteName)
+
+        return Context(
+            globalState: GlobalStateManager(),
+            defaults: defaults
+        )
+    }
+
+    func body(content: Content, context: Context) -> some View {
         content
-            .environment(context)
+            .environment(context.globalState)
+            .defaultAppStorage(context.defaults)
     }
 }
 

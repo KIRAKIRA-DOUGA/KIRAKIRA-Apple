@@ -1,10 +1,20 @@
-import RichText
 import SwiftUI
 
-struct CommentsView: View {
+struct CommentsView<Header: View>: View {
     let videoId: Int
     let commentViewModel: CommentViewModel
-    @Environment(GlobalStateManager.self) private var globalStateManager
+    private let header: Header
+
+    init(
+        videoId: Int,
+        commentViewModel: CommentViewModel,
+        @ViewBuilder header: () -> Header = { EmptyView() }
+    ) {
+        self.videoId = videoId
+        self.commentViewModel = commentViewModel
+        self.header = header()
+    }
+
     @State private var sendContent: String = ""
 
     private func sendComment() {
@@ -12,44 +22,64 @@ struct CommentsView: View {
     }
 
     var body: some View {
-        ZStack {
-            switch commentViewModel.state {
-            case .idle, .loading(previous: nil):
-                LoadingView()
-            case .success(let comments), .loading(previous: .some(let comments)):
-                List(comments) { comment in
-                    CommentItemView(comment: comment)
+        scrollContent
+            .overlay {
+                switch commentViewModel.state {
+                case .idle, .loading(previous: nil):
+                    LoadingView()
+                case .error(let msg):
+                    ErrorView(errorMessage: msg)
+                default:
+                    EmptyView()
                 }
-            case .error(let msg):
-                ErrorView(errorMessage: msg)
-            default:
-                Color.clear
+            }
+            .animation(.easeInOut(duration: 0.25), value: commentViewModel.state)
+            .refreshable {
+                await commentViewModel.fetch(of: videoId)
+            }
+            .safeAreaBar(edge: .bottom, spacing: 0) {
+                SendTextField(
+                    text: $sendContent,
+                    prompt: .comment,
+                    onSend: { sendComment() },
+                    showAddButton: true
+                )
+            }
+            .ignoresSafeArea(.container, edges: .bottom)
+            .scrollDismissesKeyboard(.interactively)
+    }
+
+    private var scrollContent: some View {
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 0) {
+                header
+                commentRows
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .scrollBounceBehavior(.always)
+    }
+
+    private var commentRows: some View {
+        ForEach(commentViewModel.state.value ?? []) { comment in
+            VStack(spacing: 0) {
+                CommentItemView(comment: comment)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                    .padding(.vertical, 12)
+                Divider()
+                    .padding(.leading)
             }
         }
-        .animation(.easeInOut(duration: 0.25), value: commentViewModel.state)
-        .task {
-            await commentViewModel.fetch(of: videoId)
-        }
-        .refreshable {
-            await commentViewModel.fetch(of: videoId)
-        }
-        .safeAreaBar(edge: .bottom) {
-            SendTextField(
-                text: $sendContent,
-                prompt: .comment,
-                onSend: { sendComment() },
-                showAddButton: true
-            )
-            .padding(.horizontal)
-            .padding(.bottom, globalStateManager.isShowingKeyboard ? 16 : 0)
-        }
-        .listStyle(.plain)
-        .scrollDismissesKeyboard(.immediately)
     }
 }
 
 #Preview(traits: .commonPreviewTrait) {
+    @Previewable @State var commentViewModel = CommentViewModel()
     NavigationStack {
-        CommentsView(videoId: 1, commentViewModel: CommentViewModel())
+        CommentsView(videoId: 1, commentViewModel: commentViewModel)
+    }
+    .task {
+        await commentViewModel.fetch(of: 1)
     }
 }

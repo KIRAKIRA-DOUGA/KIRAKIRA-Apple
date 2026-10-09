@@ -1,4 +1,3 @@
-import RichText
 import SwiftUI
 
 struct CommentItemView: View {
@@ -41,8 +40,9 @@ struct CommentItemView: View {
                         .foregroundStyle(.secondary)
                     }
 
-                    TextView(comment.text)
+                    Text(comment.text)
                         .font(.body)
+                        .textSelection(.enabled)
 
                     HStack(spacing: 24) {
                         HStack(spacing: 16) {
