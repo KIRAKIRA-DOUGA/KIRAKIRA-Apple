@@ -4,6 +4,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(GlobalStateManager.self) private var globalStateManager
     @State private var authManager = AuthManager.shared
+    @State private var operationInProgress = false
 
     var body: some View {
         @Bindable var globalStateManager = globalStateManager
@@ -16,9 +17,7 @@ struct SettingsView: View {
                             Label(.settingsProfile, systemImage: "person.crop.circle")
                         }
                         
-                        NavigationLink {
-                            
-                        } label: {
+                        NavigationLink(value: SettingsPath.privacy) {
                             Label(.settingsPrivacy, systemImage: "hand.raised")
                         }
                         
@@ -90,6 +89,8 @@ struct SettingsView: View {
                 switch route {
                 case .profile:
                     SettingsProfileView()
+                case .privacy:
+                    SettingsPrivacyView()
                 case .security:
                     SettingsSecurityView(path: $globalStateManager.settingsPath)
                 case .changeEmailPasswordVerification:
@@ -104,23 +105,40 @@ struct SettingsView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(.close, systemImage: "xmark", role: .close, action: { dismiss() })
+                    Button(.close, systemImage: "xmark", role: .close) {
+                        guard !operationInProgress else { return }
+                        dismiss()
+                    }
+                    .disabled(operationInProgress)
                 }
             }
             #if !os(macOS)
                 .navigationBarTitleDisplayMode(.inline)
             #endif
         }
+        .onPreferenceChange(SettingsOperationInProgressPreferenceKey.self) { operationInProgress = $0 }
+        .interactiveDismissDisabled(operationInProgress)
     }
 }
 
 enum SettingsPath: Hashable {
     case profile
+    case privacy
     case security
     case changeEmailPasswordVerification
     case changeEmailNewAddress
     case changeEmailNewAddressVerification
     case changeEmailSuccess
+}
+
+// MARK: - Child operation dismissal protection
+
+struct SettingsOperationInProgressPreferenceKey: PreferenceKey {
+    static let defaultValue = false
+
+    static func reduce(value: inout Bool, nextValue: () -> Bool) {
+        value = value || nextValue()
+    }
 }
 
 #Preview(traits: .commonPreviewTrait) {

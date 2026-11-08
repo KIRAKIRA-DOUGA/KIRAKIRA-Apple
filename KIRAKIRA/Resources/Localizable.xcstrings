@@ -1,6 +1,181 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "PRIVACY_AGE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Age" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "年龄" } }
+      }
+    },
+    "PRIVACY_FOLLOWING" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Following" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关注" } }
+      }
+    },
+    "PRIVACY_FOLLOWERS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Followers" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "粉丝" } }
+      }
+    },
+    "PRIVACY_PUBLIC" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Public" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "公开" } }
+      }
+    },
+    "PRIVACY_FOLLOWERS_ONLY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Followers only" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "仅关注者" } }
+      }
+    },
+    "PRIVACY_HIDDEN" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Hidden" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "隐藏" } }
+      }
+    },
+    "PRIVACY_SET_ALL" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Set all to" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "全部设为" } }
+      }
+    },
+    "PRIVACY_SET_ALL_HINT" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Applies to all five privacy settings." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "应用于全部五项隐私设置。" } }
+      }
+    },
+    "PRIVACY_PERSONAL_INFORMATION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Personal information" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "个人信息" } }
+      }
+    },
+    "PRIVACY_SOCIAL_COLLECTIONS" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Social & collections" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "社交与收藏" } }
+      }
+    },
+    "PRIVACY_RESET" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reset" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重置" } }
+      }
+    },
+    "PRIVACY_RESET_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reset privacy settings?" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重置隐私设置？" } }
+      }
+    },
+    "PRIVACY_RESET_MESSAGE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your birthday, age, following, followers, and collections will all be public." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "生日、年龄、关注、粉丝和收藏将全部设为公开。" } }
+      }
+    },
+    "PRIVACY_LOADING" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Loading privacy settings…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在加载隐私设置…" } }
+      }
+    },
+    "PRIVACY_SAVING" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Saving privacy settings…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在保存隐私设置…" } }
+      }
+    },
+    "PRIVACY_SAVED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings saved" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "设置已保存" } }
+      }
+    },
+    "PRIVACY_CONFIRMATION_PENDING" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Privacy settings need confirmation" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "隐私设置待确认" } }
+      }
+    },
+    "PRIVACY_CONFIRMATION_DESCRIPTION" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "The change may have been saved. Sync with the server before making further changes." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "更改可能已保存，请先重新同步服务器上的设置，再继续修改。" } }
+      }
+    },
+    "PRIVACY_RETRY_SYNC" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sync again" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重新同步" } }
+      }
+    },
+    "PRIVACY_RETRY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Retry" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重试" } }
+      }
+    },
+    "PRIVACY_SIGN_IN_TITLE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sign in to manage privacy" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "登录后管理隐私" } }
+      }
+    },
+    "PRIVACY_SIGN_IN_REQUIRED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Close settings and sign in again to manage your privacy." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "请关闭设置并重新登录，以管理你的隐私设置。" } }
+      }
+    },
+    "PRIVACY_LOAD_FAILED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Unable to load privacy settings" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "无法加载隐私设置" } }
+      }
+    },
+    "PRIVACY_INVALID_RESPONSE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "The server returned invalid privacy settings. Please sync again." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "服务器返回的隐私设置无效，请重新同步。" } }
+      }
+    },
+    "PRIVACY_REQUEST_REJECTED" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "The server rejected the privacy settings request. Please try again." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "服务器未接受隐私设置请求，请重试。" } }
+      }
+    },
     "" : {
       "shouldTranslate" : false
     },

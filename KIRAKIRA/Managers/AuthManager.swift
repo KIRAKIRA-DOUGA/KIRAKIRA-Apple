@@ -9,6 +9,8 @@ final class AuthManager {
 
     private(set) var accounts: [Credentials] = []
     private(set) var credentials: Credentials?
+    // Explicit session transitions only; profile refreshes must not restart account-scoped work.
+    private(set) var sessionRevision = 0
     var isLoading = false
     var isRefreshingProfiles = false
     var errorMessage: String?
@@ -22,8 +24,20 @@ final class AuthManager {
     private let guestModeDefaultsKey = "accountGuestMode"
     private let logger = Logger(subsystem: "moe.kirakira", category: "Auth")
     private let apiService = APIService.shared
+    private let defaults: UserDefaults
+    private let accountStore: (([Credentials]) -> Void)?
+
+    /// In-memory accounts and an isolated defaults suite allow deterministic session tests.
+    init(accounts: [Credentials], defaults: UserDefaults, accountStore: @escaping ([Credentials]) -> Void) {
+        self.defaults = defaults
+        self.accountStore = accountStore
+        self.accounts = accounts
+        self.credentials = accounts.first
+    }
 
     private init() {
+        self.defaults = .standard
+        self.accountStore = nil
         accounts = KeychainService.shared.read(
             service: serviceName,
             account: accountsKey,
@@ -42,8 +56,8 @@ final class AuthManager {
             KeychainService.shared.delete(service: serviceName, account: legacyAccountKey)
         }
 
-        guard !UserDefaults.standard.bool(forKey: guestModeDefaultsKey) else { return }
-        let selectedID = UserDefaults.standard.string(forKey: currentAccountDefaultsKey)
+        guard !defaults.bool(forKey: guestModeDefaultsKey) else { return }
+        let selectedID = defaults.string(forKey: currentAccountDefaultsKey)
         credentials = accounts.first { $0.uuid == selectedID } ?? accounts.first
     }
 
@@ -201,15 +215,17 @@ final class AuthManager {
     func switchAccount(to id: String) {
         guard let account = accounts.first(where: { $0.id == id }) else { return }
         credentials = account
-        UserDefaults.standard.set(account.uuid, forKey: currentAccountDefaultsKey)
-        UserDefaults.standard.set(false, forKey: guestModeDefaultsKey)
+        sessionRevision += 1
+        defaults.set(account.uuid, forKey: currentAccountDefaultsKey)
+        defaults.set(false, forKey: guestModeDefaultsKey)
         errorMessage = nil
     }
 
     func continueAsGuest() {
         credentials = nil
-        UserDefaults.standard.removeObject(forKey: currentAccountDefaultsKey)
-        UserDefaults.standard.set(true, forKey: guestModeDefaultsKey)
+        sessionRevision += 1
+        defaults.removeObject(forKey: currentAccountDefaultsKey)
+        defaults.set(true, forKey: guestModeDefaultsKey)
         errorMessage = nil
     }
 
@@ -259,7 +275,11 @@ final class AuthManager {
     }
 
     private func persistAccounts() {
-        KeychainService.shared.save(accounts, service: serviceName, account: accountsKey)
+        if let accountStore {
+            accountStore(accounts)
+        } else {
+            KeychainService.shared.save(accounts, service: serviceName, account: accountsKey)
+        }
     }
 
     private func refreshAccountProfile(id: String) async {
@@ -289,7 +309,7 @@ final class AuthManager {
         }
     }
 
-    private func storeUpdatedAccount(_ account: Credentials) {
+    func storeUpdatedAccount(_ account: Credentials) {
         guard let index = accounts.firstIndex(where: { $0.id == account.id }) else { return }
         accounts[index] = account
         if credentials?.id == account.id { credentials = account }

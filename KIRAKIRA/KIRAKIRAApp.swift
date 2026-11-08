@@ -18,33 +18,38 @@ struct KIRAKIRAApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MainView()
-                .environment(globalStateManager)
-                .onAppear(perform: {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                        isSplashShowing = false
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                            isSplashHitAllowed = false
+            // Hosted unit tests must never initialize real accounts or start production requests.
+            if NSClassFromString("XCTestCase") != nil {
+                Color.clear
+            } else {
+                MainView()
+                    .environment(globalStateManager)
+                    .onAppear(perform: {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                            isSplashShowing = false
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                isSplashHitAllowed = false
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                                globalStateManager.isSplashFinished = true
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                isSplashVisible = false
+                            }
                         }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                            globalStateManager.isSplashFinished = true
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            isSplashVisible = false
+                    })
+                    .overlay {
+                        if isSplashVisible {
+                            LaunchScreenView(isShowing: isSplashShowing, isHitAllowed: isSplashHitAllowed)
                         }
                     }
-                })
-                .overlay {
-                    if isSplashVisible {
-                        LaunchScreenView(isShowing: isSplashShowing, isHitAllowed: isSplashHitAllowed)
+                    .task {
+                        appearanceManager.updateWindowStyle()
                     }
-                }
-                .task {
-                    appearanceManager.updateWindowStyle()
-                }
-                .onChange(of: globalColorScheme) {
-                    appearanceManager.updateWindowStyle()
-                }
+                    .onChange(of: globalColorScheme) {
+                        appearanceManager.updateWindowStyle()
+                    }
+            }
         }
     }
 }

@@ -12,18 +12,34 @@
 		8DFD93612EDC9D1000F18746 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8DFD93602EDC9D1000F18746 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		A17A00000000000000000007 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 456EE3FB2ED24D6B0040A84A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 456EE4022ED24D6B0040A84A;
+			remoteInfo = KIRAKIRA;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		4567B2272EDABEDC00235173 /* .swift-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-format"; sourceTree = "<group>"; };
 		4567B2292EDAC52C00235173 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		4567B22B2EDAC53C00235173 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4567B22C2EDAC53C00235173 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		456EE4032ED24D6B0040A84A /* KIRAKIRA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KIRAKIRA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A17A00000000000000000009 /* KIRAKIRATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KIRAKIRATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		456EE4052ED24D6B0040A84A /* KIRAKIRA */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = KIRAKIRA;
+			sourceTree = "<group>";
+		};
+		A17A00000000000000000008 /* KIRAKIRATests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = KIRAKIRATests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -39,6 +55,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A17A00000000000000000004 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -50,6 +73,7 @@
 				4567B2292EDAC52C00235173 /* .gitignore */,
 				4567B2272EDABEDC00235173 /* .swift-format */,
 				456EE4052ED24D6B0040A84A /* KIRAKIRA */,
+				A17A00000000000000000008 /* KIRAKIRATests */,
 				456EE4042ED24D6B0040A84A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				456EE4032ED24D6B0040A84A /* KIRAKIRA.app */,
+				A17A00000000000000000009 /* KIRAKIRATests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -89,6 +114,27 @@
 			productName = KIRAKIRA;
 			productReference = 456EE4032ED24D6B0040A84A /* KIRAKIRA.app */;
 			productType = "com.apple.product-type.application";
+		};
+		A17A00000000000000000001 /* KIRAKIRATests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A17A00000000000000000002 /* Build configuration list for PBXNativeTarget "KIRAKIRATests" */;
+			buildPhases = (
+				A17A00000000000000000003 /* Sources */,
+				A17A00000000000000000004 /* Frameworks */,
+				A17A00000000000000000005 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A17A00000000000000000006 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A17A00000000000000000008 /* KIRAKIRATests */,
+			);
+			name = KIRAKIRATests;
+			productName = KIRAKIRATests;
+			productReference = A17A00000000000000000009 /* KIRAKIRATests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -129,12 +175,20 @@
 			projectRoot = "";
 			targets = (
 				456EE4022ED24D6B0040A84A /* KIRAKIRA */,
+				A17A00000000000000000001 /* KIRAKIRATests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		456EE4012ED24D6B0040A84A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A17A00000000000000000005 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -151,7 +205,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A17A00000000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A17A00000000000000000006 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 456EE4022ED24D6B0040A84A /* KIRAKIRA */;
+			targetProxy = A17A00000000000000000007 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		456EE40C2ED24D6C0040A84A /* Debug */ = {
@@ -286,6 +355,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 44F35H7N76;
@@ -308,6 +378,7 @@
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = moe.kirakira;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
@@ -327,7 +398,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 44F35H7N76;
@@ -350,6 +421,7 @@
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = moe.kirakira;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
@@ -361,6 +433,40 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
+			};
+			name = Release;
+		};
+		A17A0000000000000000000A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = moe.kirakira.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KIRAKIRA.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KIRAKIRA";
+			};
+			name = Debug;
+		};
+		A17A0000000000000000000B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = moe.kirakira.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KIRAKIRA.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KIRAKIRA";
 			};
 			name = Release;
 		};
@@ -381,6 +487,15 @@
 			buildConfigurations = (
 				456EE40F2ED24D6C0040A84A /* Debug */,
 				456EE4102ED24D6C0040A84A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A17A00000000000000000002 /* Build configuration list for PBXNativeTarget "KIRAKIRATests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A17A0000000000000000000A /* Debug */,
+				A17A0000000000000000000B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

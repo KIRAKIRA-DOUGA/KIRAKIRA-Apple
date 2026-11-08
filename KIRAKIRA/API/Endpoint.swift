@@ -9,6 +9,8 @@ enum Endpoint {
     case register
     case logout
     case getSelfInfo
+    case getPrivacySettings
+    case updatePrivacySettings
     case getUserInfo(uid: Int)
     case getUserVideos(uid: Int)
     case getFollowStats(uid: Int)
@@ -48,6 +50,10 @@ enum Endpoint {
             return "/user/logout"
         case .getSelfInfo:
             return "/user/self"
+        case .getPrivacySettings:
+            return "/user/settings"
+        case .updatePrivacySettings:
+            return "/user/settings/update"
         case .getUserInfo(let uid):
             return "/user/info?uid=\(uid)"
         case .getUserVideos(let uid):
@@ -95,7 +101,8 @@ enum Endpoint {
             .checkTwoFactor, .checkEmailExists, .checkUsername:
             return .get
         case .login, .register, .getSelfInfo, .followUser, .unfollowUser, .blockUser, .hideUser,
-            .updateBrowsingHistory, .checkInvitationCode, .sendEmailVerificationCode:
+            .updateBrowsingHistory, .checkInvitationCode, .sendEmailVerificationCode,
+            .getPrivacySettings, .updatePrivacySettings:
             return .post
         case .unblockUser, .showUser:
             return .delete
