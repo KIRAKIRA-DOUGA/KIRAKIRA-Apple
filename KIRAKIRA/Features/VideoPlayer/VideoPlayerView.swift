@@ -98,6 +98,9 @@ struct VideoPlayerView: View {
                     Button(role: .close, action: { dismiss() })
                 }
             }
+            .toolbarBackground(.black, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
             .sheet(isPresented: $isShowingLogin) {
                 AuthView()
             }
