@@ -18,7 +18,11 @@ final class SettingsPrivacyViewModel {
     private(set) var state: LoadingState<PrivacySettings> = .idle
     private(set) var values: [PrivacyItem: PrivacyVisibility] = [:]
     private(set) var isSaving = false
+    private(set) var isConfirmingSave = false
+    private(set) var saveSucceeded = false
+    var showConfirmationError = false
     private(set) var confirmationPending = false
+    private var pendingValues: [PrivacyItem: PrivacyVisibility]?
     private(set) var requiresSignIn = false
     private(set) var revision: Int?
     var confirmReset = false
@@ -61,7 +65,11 @@ final class SettingsPrivacyViewModel {
         state = .idle
         values = [:]
         isSaving = false
+        isConfirmingSave = false
+        saveSucceeded = false
+        showConfirmationError = false
         confirmationPending = false
+        pendingValues = nil
         requiresSignIn = false
         confirmReset = false
         clearMessage()
@@ -69,23 +77,33 @@ final class SettingsPrivacyViewModel {
 
     func load() async {
         synchronizeSession()
-        guard let credentials = session.credentials, !requiresSignIn, !busy else { return }
+        guard let credentials = session.credentials, !requiresSignIn, !busy, !Task.isCancelled else { return }
         let expected = session.sessionRevision
         let operation = Operation()
         readOperation = operation
+        isConfirmingSave = confirmationPending
+        showConfirmationError = false
+        saveSucceeded = false
         confirmReset = false
         clearMessage()
         state.beginLoading()
         defer {
-            if readOperation === operation { readOperation = nil }
+            if readOperation === operation {
+                readOperation = nil
+                isConfirmingSave = false
+            }
         }
         do {
             let settings = try await service.load(credentials: credentials)
             try Task.checkCancellation()
             guard current(expected), readOperation === operation else { return }
+            // A read always restores the server's actual settings. Only matching the
+            // attempted values acknowledges the uncertain save as successful.
+            saveSucceeded = confirmationPending && pendingValues == settings.values
             state = .success(settings)
             values = settings.values
             confirmationPending = false
+            pendingValues = nil
         } catch is CancellationError {
             guard current(expected), readOperation === operation else { return }
             state.cancelLoading()
@@ -97,6 +115,9 @@ final class SettingsPrivacyViewModel {
             }
             if PrivacySettingsError.isUnauthorized(error) {
                 invalidateAuthorization()
+            } else if confirmationPending {
+                state.cancelLoading()
+                showConfirmationError = true
             } else if state.value != nil {
                 state.cancelLoading()
                 message = error.localizedDescription
@@ -136,38 +157,54 @@ final class SettingsPrivacyViewModel {
         let operation = Operation()
         saveOperation = operation
         clearMessage()
+        saveSucceeded = false
+        showConfirmationError = false
+        pendingValues = updated
         values = updated
         isSaving = true
         saveTask = Task { [weak self, service] in
+            guard let self, self.current(expected), self.saveOperation === operation else { return }
+            var shouldConfirm = false
             do {
+                try Task.checkCancellation()
                 let result = try await service.save(original: original, values: updated, credentials: credentials)
                 try Task.checkCancellation()
-                guard let self, self.current(expected), self.saveOperation === operation else { return }
+                guard self.current(expected), self.saveOperation === operation else { return }
                 switch result {
                 case .confirmed(let settings):
                     self.state = .success(settings)
                     self.values = settings.values
+                    self.pendingValues = nil
+                    self.saveSucceeded = true
                     self.savedMessage = true
                     self.message = String(localized: .privacySaved)
                 case .unconfirmed:
                     self.confirmationPending = true
+                    shouldConfirm = true
                 }
             } catch is CancellationError {
-                guard let self, self.current(expected), self.saveOperation === operation else { return }
+                guard self.current(expected), self.saveOperation === operation else { return }
                 self.confirmationPending = true
             } catch {
-                guard let self, self.current(expected), self.saveOperation === operation else { return }
+                guard self.current(expected), self.saveOperation === operation else { return }
                 if Task.isCancelled {
                     self.confirmationPending = true
                 } else if PrivacySettingsError.isUnauthorized(error) {
                     self.invalidateAuthorization()
                 } else {
+                    self.pendingValues = nil
                     self.values = original.values
                     self.message = error.localizedDescription
                 }
             }
-            guard let self, self.current(expected), self.saveOperation === operation else { return }
+            guard self.current(expected), self.saveOperation === operation else { return }
             self.isSaving = false
+            // An uncertain write gets one read, never another save. Read-only
+            // confirmation must not prevent leaving the screen.
+            if shouldConfirm && !Task.isCancelled {
+                await self.load()
+            }
+            guard self.current(expected), self.saveOperation === operation else { return }
             self.saveOperation = nil
             self.saveTask = nil
         }
@@ -180,6 +217,9 @@ final class SettingsPrivacyViewModel {
         saveOperation = nil
         if isSaving { confirmationPending = true }
         isSaving = false
+        isConfirmingSave = false
+        saveSucceeded = false
+        showConfirmationError = false
         readOperation = nil
         state.cancelLoading()
         confirmReset = false
@@ -205,6 +245,10 @@ final class SettingsPrivacyViewModel {
         values = [:]
         confirmReset = false
         confirmationPending = false
+        pendingValues = nil
+        isConfirmingSave = false
+        saveSucceeded = false
+        showConfirmationError = false
         clearMessage()
     }
 }

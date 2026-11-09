@@ -29,24 +29,24 @@ final class PrivacySettingsServiceTests: XCTestCase {
         XCTAssertTrue(transport.reads.isEmpty)
     }
 
-    func testMissingUIDRequiresReadWithSameCredentials() async throws {
+    func testMissingUIDLeavesConfirmationReadToCaller() async throws {
         let transport = MockPrivacyTransport()
         transport.updateHandler = { _, _ in try PrivacyTestSupport.response(uid: nil, visibility: .private) }
         transport.readHandler = { _ in try PrivacyTestSupport.response(visibility: .private) }
         let result = try await save(transport)
-        XCTAssertEqual(result, .confirmed(PrivacyTestSupport.settings(visibility: .private)))
-        XCTAssertEqual(transport.reads, [PrivacyTestSupport.credentials()])
-        XCTAssertEqual(transport.updates.first?.1, transport.reads.first)
+        XCTAssertEqual(result, .unconfirmed)
+        XCTAssertTrue(transport.reads.isEmpty)
+        XCTAssertEqual(transport.updates.first?.1, PrivacyTestSupport.credentials())
     }
 
-    func testAcceptedWriteReadFailureIsPendingAndNeverReplayed() async throws {
+    func testAcceptedWriteWithoutUIDDoesNotAutomaticallyReadOrReplay() async throws {
         let transport = MockPrivacyTransport()
         transport.updateHandler = { _, _ in try PrivacyTestSupport.response(uid: nil) }
         transport.readHandler = { _ in throw URLError(.timedOut) }
         let result = try await save(transport)
         XCTAssertEqual(result, .unconfirmed)
         XCTAssertEqual(transport.updates.count, 1)
-        XCTAssertEqual(transport.reads.count, 1)
+        XCTAssertTrue(transport.reads.isEmpty)
     }
 
     func testWrongValuesAndMissingKnownEntriesArePending() async throws {
@@ -133,7 +133,7 @@ final class PrivacySettingsServiceTests: XCTestCase {
         XCTAssertTrue(transport.reads.isEmpty)
     }
 
-    func testConfirmationReadHTTP200AuthenticationFailureThrowsInsteadOfBecomingPending() async throws {
+    func testExplicitConfirmationReadHTTP200AuthenticationFailureThrows() async throws {
         let transport = MockPrivacyTransport()
         transport.updateHandler = { _, _ in try PrivacyTestSupport.response(uid: nil, visibility: .private) }
         transport.readHandler = { _ in
@@ -142,8 +142,11 @@ final class PrivacySettingsServiceTests: XCTestCase {
                 "message": "获取用户个性设置失败，用户验证时未通过"
             ])
         }
+        let result = try await save(transport)
+        XCTAssertEqual(result, .unconfirmed)
+        XCTAssertTrue(transport.reads.isEmpty)
         do {
-            _ = try await save(transport)
+            _ = try await PrivacySettingsService(transport: transport).load(credentials: PrivacyTestSupport.credentials())
             XCTFail("Confirmation authentication failure must throw")
         } catch {
             guard case PrivacySettingsError.unauthorized = error else {

@@ -127,9 +127,11 @@ final class SettingsPrivacyViewModelTests: XCTestCase {
         service.saveHandler = { _, _, _ in .unconfirmed }
         let model = SettingsPrivacyViewModel(service: service, session: MockPrivacySession())
         await model.load()
+        service.loadHandler = { _ in throw URLError(.timedOut) }
         model.selectAll(.private)
         await model.waitForSave()
         XCTAssertTrue(model.confirmationPending)
+        XCTAssertTrue(model.showConfirmationError)
         XCTAssertFalse(model.editable)
         XCTAssertNil(model.message)
         model.selectAll(.following)
@@ -333,6 +335,227 @@ final class SettingsPrivacyViewModelTests: XCTestCase {
         XCTAssertTrue(model.confirmationPending)
         XCTAssertNil(model.message)
         XCTAssertFalse(model.isSaving)
+    }
+
+    func testUnconfirmedSaveAutomaticallyReadsOnceAndConfirmsMatchingValues() async {
+        let service = MockPrivacyService()
+        let gate = PrivacyAsyncGate<PrivacySettings>()
+        let model = SettingsPrivacyViewModel(service: service, session: MockPrivacySession())
+        await model.load()
+        service.saveHandler = { _, _, _ in .unconfirmed }
+        service.loadHandler = { _ in try await gate.value() }
+        model.selectAll(.private)
+        await gate.waitUntilStarted()
+        XCTAssertFalse(model.isSaving)
+        XCTAssertTrue(model.isConfirmingSave)
+        XCTAssertTrue(model.confirmationPending)
+        XCTAssertFalse(model.editable)
+        XCTAssertFalse(model.saveSucceeded)
+        XCTAssertFalse(model.showConfirmationError)
+        XCTAssertNil(model.message)
+        XCTAssertEqual(model.state.value, PrivacyTestSupport.settings())
+        XCTAssertEqual(model.values, PrivacyTestSupport.values(.private))
+        gate.resume(.success(PrivacyTestSupport.settings(visibility: .private)))
+        await model.waitForSave()
+        XCTAssertFalse(model.isConfirmingSave)
+        XCTAssertFalse(model.confirmationPending)
+        XCTAssertTrue(model.saveSucceeded)
+        XCTAssertTrue(model.editable)
+        XCTAssertNil(model.message)
+        XCTAssertEqual(service.loadCount, 2)
+        XCTAssertEqual(service.savedValues.count, 1)
+    }
+
+    func testConfirmationUsesActualValuesWithoutFalselyAcknowledgingSave() async {
+        let service = MockPrivacyService()
+        let model = SettingsPrivacyViewModel(service: service, session: MockPrivacySession())
+        await model.load()
+        service.saveHandler = { _, _, _ in .unconfirmed }
+        service.loadHandler = { _ in PrivacyTestSupport.settings(visibility: .following) }
+        model.selectAll(.private)
+        await model.waitForSave()
+        XCTAssertEqual(model.uniformVisibility, .following)
+        XCTAssertTrue(model.editable)
+        XCTAssertFalse(model.confirmationPending)
+        XCTAssertFalse(model.saveSucceeded)
+        XCTAssertFalse(model.showConfirmationError)
+        XCTAssertEqual(service.loadCount, 2)
+        XCTAssertEqual(service.savedValues.count, 1)
+    }
+
+    func testConfirmationAlertCanBeDismissedAndReadRetriesNeverResave() async {
+        let service = MockPrivacyService()
+        let model = SettingsPrivacyViewModel(service: service, session: MockPrivacySession())
+        await model.load()
+        service.saveHandler = { _, _, _ in .unconfirmed }
+        service.loadHandler = { _ in throw URLError(.timedOut) }
+        model.selectAll(.private)
+        await model.waitForSave()
+        XCTAssertTrue(model.showConfirmationError)
+        XCTAssertNil(model.message)
+        XCTAssertEqual(model.state.value, PrivacyTestSupport.settings())
+        model.showConfirmationError = false
+        XCTAssertTrue(model.confirmationPending)
+        XCTAssertFalse(model.editable)
+        model.selectAll(.following)
+        await model.load()
+        XCTAssertTrue(model.showConfirmationError)
+        XCTAssertTrue(model.confirmationPending)
+        XCTAssertNil(model.message)
+        XCTAssertEqual(service.loadCount, 3)
+        XCTAssertEqual(service.savedValues.count, 1)
+        service.loadHandler = { _ in PrivacyTestSupport.settings(visibility: .private) }
+        await model.load()
+        XCTAssertFalse(model.showConfirmationError)
+        XCTAssertTrue(model.saveSucceeded)
+        XCTAssertTrue(model.editable)
+        XCTAssertEqual(service.savedValues.count, 1)
+    }
+
+    func testCancelledConfirmationPreservesPendingAndSuppressesAlert() async {
+        let service = MockPrivacyService()
+        let gate = PrivacyAsyncGate<PrivacySettings>()
+        let model = SettingsPrivacyViewModel(service: service, session: MockPrivacySession())
+        await model.load()
+        service.saveHandler = { _, _, _ in .unconfirmed }
+        service.loadHandler = { _ in try await gate.value() }
+        model.selectAll(.private)
+        await gate.waitUntilStarted()
+        model.saveTask?.cancel()
+        gate.resume(.failure(URLError(.timedOut)))
+        await model.waitForSave()
+        XCTAssertFalse(model.isConfirmingSave)
+        XCTAssertTrue(model.confirmationPending)
+        XCTAssertFalse(model.showConfirmationError)
+        XCTAssertFalse(model.saveSucceeded)
+        XCTAssertNil(model.message)
+        XCTAssertNotNil(model.state.value)
+    }
+
+    func testLeavingDuringConfirmationIgnoresLateResponseAndCanReadOnReturn() async {
+        let service = MockPrivacyService()
+        let gate = PrivacyAsyncGate<PrivacySettings>()
+        let model = SettingsPrivacyViewModel(service: service, session: MockPrivacySession())
+        await model.load()
+        service.saveHandler = { _, _, _ in .unconfirmed }
+        service.loadHandler = { _ in try await gate.value() }
+        model.selectAll(.private)
+        await gate.waitUntilStarted()
+        let finished = model.saveTask
+        model.disappear()
+        XCTAssertFalse(model.isConfirmingSave)
+        XCTAssertFalse(model.isSaving)
+        XCTAssertTrue(model.confirmationPending)
+        service.loadHandler = { _ in PrivacyTestSupport.settings(visibility: .following) }
+        await model.load()
+        gate.resume(.success(PrivacyTestSupport.settings(visibility: .private)))
+        await finished?.value
+        XCTAssertEqual(model.uniformVisibility, .following)
+        XCTAssertFalse(model.saveSucceeded)
+        XCTAssertFalse(model.showConfirmationError)
+        XCTAssertTrue(model.editable)
+    }
+
+    func testSessionTransitionDuringConfirmationSuppressesOldFeedback() async {
+        let service = MockPrivacyService()
+        let session = MockPrivacySession()
+        let gate = PrivacyAsyncGate<PrivacySettings>()
+        let model = SettingsPrivacyViewModel(service: service, session: session)
+        await model.load()
+        service.saveHandler = { _, _, _ in .unconfirmed }
+        service.loadHandler = { _ in try await gate.value() }
+        model.selectAll(.private)
+        await gate.waitUntilStarted()
+        let finished = model.saveTask
+        session.transition(to: PrivacyTestSupport.credentials(uid: 2, uuid: "test-session-b"))
+        model.synchronizeSession()
+        service.loadHandler = { _ in PrivacyTestSupport.settings(uid: 2, visibility: .following) }
+        await model.load()
+        gate.resume(.success(PrivacyTestSupport.settings(visibility: .private)))
+        await finished?.value
+        XCTAssertEqual(model.state.value?.uid, 2)
+        XCTAssertEqual(model.uniformVisibility, .following)
+        XCTAssertFalse(model.isConfirmingSave)
+        XCTAssertFalse(model.confirmationPending)
+        XCTAssertFalse(model.saveSucceeded)
+        XCTAssertFalse(model.showConfirmationError)
+        XCTAssertNil(model.message)
+    }
+
+    func testRealServiceMissingUIDHasOneReadOnlyConfirmationOutsideSaving() async throws {
+        for actual: PrivacyVisibility? in [.private, .following, nil] {
+            let transport = MockPrivacyTransport()
+            let gate = PrivacyAsyncGate<PrivacySettingsResponseDTO>()
+            let model = SettingsPrivacyViewModel(
+                service: PrivacySettingsService(transport: transport),
+                session: MockPrivacySession()
+            )
+            await model.load()
+            transport.updateHandler = { _, _ in try PrivacyTestSupport.response(uid: nil, visibility: .private) }
+            transport.readHandler = { _ in try await gate.value() }
+            model.selectAll(.private)
+            await gate.waitUntilStarted()
+            XCTAssertFalse(model.isSaving)
+            XCTAssertTrue(model.isConfirmingSave)
+            XCTAssertEqual(transport.updates.count, 1)
+            XCTAssertEqual(transport.reads.count, 2)
+            XCTAssertEqual(transport.updates.first?.1, transport.reads.last)
+            if let actual {
+                gate.resume(.success(try PrivacyTestSupport.response(visibility: actual)))
+            } else {
+                gate.resume(.failure(URLError(.timedOut)))
+            }
+            await model.waitForSave()
+            XCTAssertEqual(transport.updates.count, 1)
+            XCTAssertEqual(transport.reads.count, 2)
+            XCTAssertFalse(model.isConfirmingSave)
+            XCTAssertEqual(model.showConfirmationError, actual == nil)
+            XCTAssertEqual(model.confirmationPending, actual == nil)
+            XCTAssertEqual(model.saveSucceeded, actual == .private)
+            XCTAssertEqual(model.uniformVisibility, actual ?? .private)
+            XCTAssertNil(model.message)
+        }
+    }
+
+    func testRealServiceConfirmationUnauthorizedClearsData() async {
+        let transport = MockPrivacyTransport()
+        let model = SettingsPrivacyViewModel(
+            service: PrivacySettingsService(transport: transport),
+            session: MockPrivacySession()
+        )
+        await model.load()
+        transport.updateHandler = { _, _ in try PrivacyTestSupport.response(uid: nil, visibility: .private) }
+        transport.readHandler = { _ in
+            try PrivacyTestSupport.decode([
+                "success": false,
+                "message": "获取用户个性设置失败，用户验证时未通过"
+            ])
+        }
+        model.selectAll(.private)
+        await model.waitForSave()
+        XCTAssertTrue(model.requiresSignIn)
+        XCTAssertTrue(model.values.isEmpty)
+        XCTAssertFalse(model.confirmationPending)
+        XCTAssertFalse(model.showConfirmationError)
+        XCTAssertFalse(model.saveSucceeded)
+        XCTAssertFalse(model.isSaving)
+        XCTAssertFalse(model.isConfirmingSave)
+        XCTAssertEqual(transport.updates.count, 1)
+        XCTAssertEqual(transport.reads.count, 2)
+    }
+
+    func testCancelledBeforeSaveStartsDoesNotSendRequest() async {
+        let service = MockPrivacyService()
+        let model = SettingsPrivacyViewModel(service: service, session: MockPrivacySession())
+        await model.load()
+        model.selectAll(.private)
+        model.saveTask?.cancel()
+        await model.waitForSave()
+        XCTAssertTrue(service.savedValues.isEmpty)
+        XCTAssertFalse(model.isSaving)
+        XCTAssertFalse(model.isConfirmingSave)
+        XCTAssertFalse(model.showConfirmationError)
+        XCTAssertNil(model.message)
     }
 
     func testGuestAndSessionChangeClearPresentationsAndValues() async {

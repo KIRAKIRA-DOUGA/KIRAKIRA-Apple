@@ -1,14 +1,18 @@
 import SwiftUI
 
 struct SettingsPrivacyView: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var authManager = AuthManager.shared
     @State private var model = SettingsPrivacyViewModel()
+    @State private var saveFeedback: UUID?
 
-    private var busy: Bool { model.isCurrentSession && model.busy }
+    private var savingOrConfirming: Bool { model.isCurrentSession && (model.isSaving || model.isConfirmingSave) }
     private var saving: Bool { model.isCurrentSession && model.isSaving }
     private var loaded: Bool { model.isCurrentSession && model.isSignedIn && model.state.value != nil }
 
     var body: some View {
+        @Bindable var model = model
+
         Group {
             if !model.isCurrentSession {
                 PrivacyStatusView(status: .loading)
@@ -17,12 +21,10 @@ struct SettingsPrivacyView: View {
             } else if model.state.isInitialLoading || model.state == .idle {
                 PrivacyStatusView(status: .loading)
             } else if let message = model.state.errorMessage {
-                PrivacyStatusView(status: .error(message), retry: model.load)
+                ErrorView(errorMessage: message)
+                    .refreshable { await model.load() }
             } else {
                 Form {
-                    if model.confirmationPending {
-                        PrivacyConfirmationSection(syncing: busy, sync: model.load)
-                    }
                     if model.state.value != nil {
                         PrivacySettingsForm(
                             values: model.values,
@@ -32,6 +34,7 @@ struct SettingsPrivacyView: View {
                     }
                 }
                 .scrollContentBackground(.hidden)
+                .scrollBounceBehavior(.always, axes: .vertical)
                 .refreshable { await model.load() }
             }
         }
@@ -42,23 +45,74 @@ struct SettingsPrivacyView: View {
         .interactiveDismissDisabled(saving)
         .preference(key: SettingsOperationInProgressPreferenceKey.self, value: saving)
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                if model.isCurrentSession && model.isSaving {
-                    ProgressView()
-                        .accessibilityLabel(Text(.privacySaving))
-                } else if loaded {
-                    actionsMenu
+            if loaded {
+                ToolbarItem(placement: .primaryAction) {
+                    Group {
+                        if savingOrConfirming {
+                            ProgressView()
+                                .controlSize(.regular)
+                                .accessibilityLabel(model.isSaving ? Text(.privacySaving) : Text(.privacyConfirming))
+                                .transition(.opacity)
+                        } else if saveFeedback != nil {
+                            Image(systemName: "checkmark")
+                                .accessibilityLabel(Text(.privacySaved))
+                                .transition(.opacity)
+                        } else {
+                            actionsMenu
+                                .transition(.opacity)
+                        }
+                    }
+                    .frame(width: 24, height: 24)
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: savingOrConfirming)
                 }
             }
         }
+        .alert(.privacyConfirmationPending, isPresented: $model.showConfirmationError) {
+            Button(.errorTryAgain) { Task { await model.load() } }
+            Button(.actionCancel, role: .cancel) {}
+        } message: {
+            Text(.privacyConfirmationDescription)
+        }
         .task(id: authManager.sessionRevision) { await model.load() }
-        .onChange(of: authManager.sessionRevision) { model.synchronizeSession() }
+        .task(id: saveFeedback) {
+            guard let feedback = saveFeedback else { return }
+            do {
+                try await Task.sleep(for: .seconds(2))
+            } catch {
+                return
+            }
+            guard saveFeedback == feedback else { return }
+            withAnimation(reduceMotion ? nil : .snappy) {
+                saveFeedback = nil
+            }
+        }
+        .onChange(of: authManager.sessionRevision) {
+            saveFeedback = nil
+            model.synchronizeSession()
+        }
+        .onChange(of: savingOrConfirming) { _, inProgress in
+            if inProgress { saveFeedback = nil }
+        }
+        .onChange(of: model.saveSucceeded) { _, succeeded in
+            guard succeeded, model.isCurrentSession, model.isSignedIn else { return }
+            withAnimation(reduceMotion ? nil : .snappy) {
+                saveFeedback = UUID()
+            }
+        }
         .onChange(of: model.message) { _, message in
-            guard let message, model.isCurrentSession else { return }
-            ToastManager.shared.show(message, style: model.savedMessage ? .success : .error)
+            guard let message else { return }
+            if model.isCurrentSession && model.isSignedIn && !model.savedMessage {
+                ToastManager.shared.show(message, style: .error)
+            }
             model.clearMessage()
         }
-        .onDisappear { model.disappear() }
+        .sensoryFeedback(.success, trigger: saveFeedback) { _, newValue in
+            newValue != nil
+        }
+        .onDisappear {
+            saveFeedback = nil
+            model.disappear()
+        }
     }
 
     private var actionsMenu: some View {
@@ -146,50 +200,15 @@ private struct PrivacySettingsForm: View {
     }
 }
 
-// MARK: - Unconfirmed write
-
-private struct PrivacyConfirmationSection: View {
-    let syncing: Bool
-    let sync: () async -> Void
-
-    var body: some View {
-        Section {
-            Label {
-                Text(.privacyConfirmationPending)
-            } icon: {
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .foregroundStyle(.orange)
-            }
-
-            Button {
-                Task { await sync() }
-            } label: {
-                HStack {
-                    Label(.privacyRetrySync, systemImage: "arrow.trianglehead.2.clockwise")
-                    Spacer()
-                    if syncing {
-                        ProgressView()
-                    }
-                }
-            }
-            .disabled(syncing)
-        } footer: {
-            Text(.privacyConfirmationDescription)
-        }
-    }
-}
-
-// MARK: - Loading and error states
+// MARK: - Loading and signed-out states
 
 private struct PrivacyStatusView: View {
     enum Status {
         case loading
         case signedOut
-        case error(String)
     }
 
     let status: Status
-    var retry: () async -> Void = {}
 
     var body: some View {
         switch status {
@@ -202,15 +221,6 @@ private struct PrivacyStatusView: View {
                 Label(.privacySignInTitle, systemImage: "hand.raised")
             } description: {
                 Text(.privacySignInRequired)
-            }
-        case .error(let message):
-            ContentUnavailableView {
-                Label(.privacyLoadFailed, systemImage: "exclamationmark.triangle")
-            } description: {
-                Text(verbatim: message)
-            } actions: {
-                Button(.privacyRetry) { Task { await retry() } }
-                    .buttonStyle(.borderedProminent)
             }
         }
     }
@@ -291,7 +301,6 @@ extension PrivacyVisibility {
 #Preview("待确认 · English") {
     NavigationStack {
         Form {
-            PrivacyConfirmationSection(syncing: false, sync: {})
             PrivacySettingsForm(
                 values: Dictionary(uniqueKeysWithValues: PrivacyItem.allCases.map { ($0, .private) }),
                 enabled: false,
@@ -304,5 +313,5 @@ extension PrivacyVisibility {
 }
 
 #Preview("加载中") { PrivacyStatusView(status: .loading) }
-#Preview("加载失败") { PrivacyStatusView(status: .error(String(localized: "ERROR_NETWORK_REQUEST_FAILED"))) }
+#Preview("加载失败") { ErrorView(errorMessage: String(localized: "ERROR_NETWORK_REQUEST_FAILED")) }
 #Preview("游客") { PrivacyStatusView(status: .signedOut) }

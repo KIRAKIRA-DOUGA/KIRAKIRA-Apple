@@ -47,13 +47,10 @@ struct PrivacySettingsService: PrivacySettingsServiceProtocol {
             try response.validateSuccess()
             accepted = true
 
-            // Rosales can echo a payload without uid. Only an account-scoped read can confirm it.
-            let saved: PrivacySettings
-            if response.userSettings?.uid == nil {
-                saved = try await load(credentials: credentials)
-            } else {
-                saved = try response.validated(expectedUID: credentials.uid)
-            }
+            // Rosales can echo a payload without uid. Let the caller own the
+            // account-scoped confirmation read separately from the write lifecycle.
+            guard response.userSettings?.uid != nil else { return .unconfirmed }
+            let saved = try response.validated(expectedUID: credentials.uid)
             try Task.checkCancellation()
             guard saved.values == values,
                 PrivacyItem.allCases.allSatisfy({ item in saved.entries.contains { $0.id == item.rawValue } })
