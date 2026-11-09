@@ -28,6 +28,8 @@ enum Endpoint {
     case checkEmailExists(email: String)
     case checkUsername(username: String)
     case checkInvitationCode
+    case getMyInvitationCode
+    case createInvitationCode
     case sendEmailVerificationCode
 
     var baseURL: String { "https://rosales.kirakira.moe" }
@@ -89,6 +91,10 @@ enum Endpoint {
             return "/user/checkUsername?username=\(username.urlQueryEncoded)"
         case .checkInvitationCode:
             return "/user/checkInvitationCode"
+        case .getMyInvitationCode:
+            return "/user/myInvitationCode"
+        case .createInvitationCode:
+            return "/user/createInvitationCode"
         case .sendEmailVerificationCode:
             return "/user/sendGeneralEmailVerificationCode"
         }
@@ -98,11 +104,11 @@ enum Endpoint {
         switch self {
         case .getVideo, .getHomeVideos, .getVideoComments, .getVideoDanmaku, .getUserInfo, .getUserVideos,
             .logout, .getFollowStats, .getFollowingList, .getFollowerList, .getBrowsingHistory,
-            .checkTwoFactor, .checkEmailExists, .checkUsername:
+            .checkTwoFactor, .checkEmailExists, .checkUsername, .getMyInvitationCode:
             return .get
         case .login, .register, .getSelfInfo, .followUser, .unfollowUser, .blockUser, .hideUser,
             .updateBrowsingHistory, .checkInvitationCode, .sendEmailVerificationCode,
-            .getPrivacySettings, .updatePrivacySettings:
+            .getPrivacySettings, .updatePrivacySettings, .createInvitationCode:
             return .post
         case .unblockUser, .showUser:
             return .delete

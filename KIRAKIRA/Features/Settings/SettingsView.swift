@@ -31,9 +31,7 @@ struct SettingsView: View {
                             Label(.settingsBlockAndHide, systemImage: "nosign")
                         }
                         
-                        NavigationLink {
-                            
-                        } label: {
+                        NavigationLink(value: SettingsPath.invitations) {
                             Label(.invitationCode, systemImage: "gift")
                         }
                     } header: {
@@ -91,6 +89,8 @@ struct SettingsView: View {
                     SettingsProfileView()
                 case .privacy:
                     SettingsPrivacyView()
+                case .invitations:
+                    SettingsInvitationsView()
                 case .security:
                     SettingsSecurityView(path: $globalStateManager.settingsPath)
                 case .changeEmailPasswordVerification:
@@ -124,6 +124,7 @@ struct SettingsView: View {
 enum SettingsPath: Hashable {
     case profile
     case privacy
+    case invitations
     case security
     case changeEmailPasswordVerification
     case changeEmailNewAddress
