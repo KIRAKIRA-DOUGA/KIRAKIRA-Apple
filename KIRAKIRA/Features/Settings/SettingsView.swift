@@ -25,9 +25,7 @@ struct SettingsView: View {
                             Label(.security, systemImage: "lock")
                         }
                         
-                        NavigationLink {
-                            
-                        } label: {
+                        NavigationLink(value: SettingsPath.blocking) {
                             Label(.settingsBlockAndHide, systemImage: "nosign")
                         }
                         
@@ -91,6 +89,10 @@ struct SettingsView: View {
                     SettingsPrivacyView()
                 case .invitations:
                     SettingsInvitationsView()
+                case .blocking:
+                    SettingsBlockingView()
+                case .blockingRules(let category):
+                    SettingsBlockingRulesView(category: category)
                 case .security:
                     SettingsSecurityView(path: $globalStateManager.settingsPath)
                 case .changeEmailPasswordVerification:
@@ -125,6 +127,8 @@ enum SettingsPath: Hashable {
     case profile
     case privacy
     case invitations
+    case blocking
+    case blockingRules(BlockingRuleCategory)
     case security
     case changeEmailPasswordVerification
     case changeEmailNewAddress

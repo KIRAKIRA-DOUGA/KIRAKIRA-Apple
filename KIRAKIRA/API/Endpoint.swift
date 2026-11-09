@@ -22,6 +22,10 @@ enum Endpoint {
     case unblockUser
     case hideUser
     case showUser
+    case getBlockingRules(category: BlockingRuleCategory, page: Int, pageSize: Int)
+    case addBlockingRule(category: BlockingRuleCategory)
+    case removeBlockingRule(category: BlockingRuleCategory)
+    case searchBlockingTags(query: String)
     case getBrowsingHistory(videoTitle: String?)
     case updateBrowsingHistory
     case checkTwoFactor(email: String)
@@ -78,6 +82,18 @@ enum Endpoint {
             return "/block/hideuser"
         case .showUser:
             return "/block/delete/hideuser"
+        case .getBlockingRules(let category, let page, let pageSize):
+            return "/block/list?type=\(category.rawValue)&page=\(page)&pageSize=\(pageSize)"
+        case .addBlockingRule(let category):
+            return "/block/\(category.blockingPathComponent)"
+        case .removeBlockingRule(let category):
+            return "/block/delete/\(category.blockingPathComponent)"
+        case .searchBlockingTags(let query):
+            var components = URLComponents()
+            components.path = "/video/tag/search"
+            components.queryItems = [URLQueryItem(name: "tagName", value: query)]
+            // Encode '+' as well, avoiding form-style query parsers treating it as a space.
+            return components.string?.replacingOccurrences(of: "+", with: "%2B") ?? "/video/tag/search"
         case .getBrowsingHistory(let videoTitle):
             guard let videoTitle, !videoTitle.isEmpty else { return "/history/filter" }
             return "/history/filter?videoTitle=\(videoTitle.urlQueryEncoded)"
@@ -104,13 +120,14 @@ enum Endpoint {
         switch self {
         case .getVideo, .getHomeVideos, .getVideoComments, .getVideoDanmaku, .getUserInfo, .getUserVideos,
             .logout, .getFollowStats, .getFollowingList, .getFollowerList, .getBrowsingHistory,
-            .checkTwoFactor, .checkEmailExists, .checkUsername, .getMyInvitationCode:
+            .checkTwoFactor, .checkEmailExists, .checkUsername, .getMyInvitationCode,
+            .getBlockingRules, .searchBlockingTags:
             return .get
         case .login, .register, .getSelfInfo, .followUser, .unfollowUser, .blockUser, .hideUser,
             .updateBrowsingHistory, .checkInvitationCode, .sendEmailVerificationCode,
-            .getPrivacySettings, .updatePrivacySettings, .createInvitationCode:
+            .getPrivacySettings, .updatePrivacySettings, .createInvitationCode, .addBlockingRule:
             return .post
-        case .unblockUser, .showUser:
+        case .unblockUser, .showUser, .removeBlockingRule:
             return .delete
         }
     }
@@ -123,6 +140,16 @@ enum Endpoint {
 
     var url: URL? {
         URL(string: baseURL + path)
+    }
+}
+
+private extension BlockingRuleCategory {
+    var blockingPathComponent: String {
+        switch self {
+        case .block: "user"
+        case .hide: "hideuser"
+        case .tag, .keyword, .regex: rawValue
+        }
     }
 }
 
