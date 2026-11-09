@@ -10,7 +10,6 @@ struct VideoPlayerView: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @State private var authManager = AuthManager.shared
     @State private var isShowingLogin = false
-    @State private var isShowingEditTag = false
     @State private var viewModel = VideoViewModel()
     @State private var commentViewModel = CommentViewModel()
     @State private var danmakuViewModel = DanmakuViewModel()
@@ -103,9 +102,6 @@ struct VideoPlayerView: View {
             .toolbarColorScheme(.dark, for: .navigationBar)
             .sheet(isPresented: $isShowingLogin) {
                 AuthView()
-            }
-            .sheet(isPresented: $isShowingEditTag) {
-                EditTagView()
             }
             .alert(
                 String(localized: .errorOperationFailed),
@@ -334,6 +330,11 @@ struct VideoPlayerView: View {
                     .textSelection(.enabled)
             }
 
+            let tags = video.tags
+            if !tags.isEmpty {
+                VideoTagsView(tags: tags)
+            }
+
             // 操作
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
@@ -403,15 +404,6 @@ struct VideoPlayerView: View {
                 .contentTransition(.symbolEffect(.replace.offUp.byLayer))
                 .buttonStyle(.bordered)
                 .foregroundStyle(.primary)
-            }
-            .scrollClipDisabled()
-
-            ScrollView(.horizontal, showsIndicators: false) {
-                Button {
-                    isShowingEditTag = true
-                } label: {
-                    Text(.videoOpenTagEditor)
-                }
             }
             .scrollClipDisabled()
         }

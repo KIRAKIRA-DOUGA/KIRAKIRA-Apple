@@ -21,8 +21,14 @@ struct VideoItem: Codable, Identifiable, Equatable {
     let `description`: String
     let videoCategory: String
     let copyright: String
+    let videoTagList: [VideoTag]?
 
     var id: Int { videoId }
+
+    var tags: [VideoTag] {
+        var seen = Set<Int>()
+        return (videoTagList ?? []).filter { $0.tagId > 0 && seen.insert($0.tagId).inserted }
+    }
 
     static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.videoId == rhs.videoId
