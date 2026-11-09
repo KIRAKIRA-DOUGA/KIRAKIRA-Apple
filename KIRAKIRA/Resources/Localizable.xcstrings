@@ -905,6 +905,23 @@
         }
       }
     },
+    "CATEGORY_MISC" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Misc"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "综合"
+          }
+        }
+      }
+    },
     "CATEGORY_MUSIC" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -323,7 +323,7 @@ struct VideoPlayerView: View {
 
                     }
 
-                    Label(video.videoCategory, systemImage: "square.grid.2x2")
+                    VideoCategoryLabel(code: video.videoCategory)
                 }
                 .font(.callout)
                 .foregroundStyle(.secondary)
@@ -455,6 +455,65 @@ struct VideoPlayerView: View {
     var danmaku: some View {
         DanmakuView(videoId: videoId, danmakuViewModel: danmakuViewModel)
     }
+}
+
+fileprivate struct VideoCategoryLabel: View {
+    let code: String
+    @Environment(\.locale) private var locale
+
+    var body: some View {
+        if !code.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            Label {
+                if let category = VideoCategory(rawValue: code) {
+                    Text(localizedTitle(for: category))
+                } else {
+                    Text(verbatim: code)
+                }
+            } icon: {
+                Image(systemName: "square.grid.2x2")
+            }
+        }
+    }
+
+    private func localizedTitle(for category: VideoCategory) -> LocalizedStringResource {
+        var title = category.title
+        title.locale = locale
+        return title
+    }
+}
+
+private struct VideoCategoryPreview: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            ForEach(VideoCategory.allCases, id: \.rawValue) { category in
+                VideoCategoryLabel(code: category.rawValue)
+            }
+            VideoCategoryLabel(code: "future_category")
+            VideoCategoryLabel(code: "**custom category**")
+            VideoCategoryLabel(code: "")
+            VideoCategoryLabel(code: " \n\t")
+        }
+        .font(.callout)
+        .foregroundStyle(.secondary)
+        .padding()
+    }
+}
+
+#Preview("分区 · 简体中文", traits: .sizeThatFitsLayout) {
+    VideoCategoryPreview()
+        .environment(\.locale, Locale(identifier: "zh-Hans"))
+}
+
+#Preview("Categories · English · Dark", traits: .sizeThatFitsLayout) {
+    VideoCategoryPreview()
+        .environment(\.locale, Locale(identifier: "en"))
+        .preferredColorScheme(.dark)
+}
+
+#Preview("分区 · 辅助功能字号", traits: .sizeThatFitsLayout) {
+    VideoCategoryPreview()
+        .environment(\.locale, Locale(identifier: "zh-Hans"))
+        .environment(\.dynamicTypeSize, .accessibility5)
 }
 
 private enum VideoUploaderFollowError: LocalizedError {
