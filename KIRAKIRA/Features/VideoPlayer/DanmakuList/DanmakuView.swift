@@ -19,6 +19,8 @@ struct DanmakuView: View {
             switch danmakuViewModel.state {
             case .idle, .loading(previous: nil):
                 LoadingView()
+            case .empty:
+                ContentUnavailableView(.videoDanmakuEmpty, systemImage: "text.bubble")
             case .error(let msg):
                 ErrorView(errorMessage: msg)
             default:
@@ -27,6 +29,7 @@ struct DanmakuView: View {
         }
         .animation(.easeInOut(duration: 0.25), value: danmakuViewModel.state)
         .listStyle(.plain)
+        .scrollBounceBehavior(.always, axes: .vertical)
         .refreshable {
             await danmakuViewModel.fetch(of: videoId)
         }

@@ -1,7 +1,21 @@
 import Foundation
 
-struct DanmakuResponseDTO: Codable {
+nonisolated struct DanmakuResponseDTO: Decodable {
     let danmaku: [DanmakuDTO]
+
+    private enum CodingKeys: String, CodingKey {
+        case success, danmaku
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard try container.decode(Bool.self, forKey: .success) else {
+            throw DecodingError.dataCorruptedError(
+                forKey: .success, in: container, debugDescription: "Danmaku request was rejected."
+            )
+        }
+        danmaku = try container.decodeIfPresent([DanmakuDTO].self, forKey: .danmaku) ?? []
+    }
 }
 
 struct DanmakuDTO: Codable, Identifiable, Equatable {

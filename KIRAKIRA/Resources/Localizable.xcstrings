@@ -1058,6 +1058,40 @@
         }
       }
     },
+    "VIDEO_COMMENTS_EMPTY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No comments yet"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无评论"
+          }
+        }
+      }
+    },
+    "VIDEO_DANMAKU_EMPTY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No danmaku yet"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无弹幕"
+          }
+        }
+      }
+    },
     "COMMENT" : {
       "extractionState" : "manual",
       "localizations" : {

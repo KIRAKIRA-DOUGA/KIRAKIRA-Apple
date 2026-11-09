@@ -54,6 +54,10 @@ struct CommentsView<Header: View>: View {
             LazyVStack(alignment: .leading, spacing: 0) {
                 header
                 commentRows
+                if case .empty = commentViewModel.state {
+                    ContentUnavailableView(.videoCommentsEmpty, systemImage: "bubble")
+                        .frame(maxWidth: .infinity)
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
